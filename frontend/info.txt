@@ -1,0 +1,1 @@
+All frontend interface logic and componenets go in this folder.
