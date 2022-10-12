@@ -13,3 +13,10 @@ RUN npm install
 COPY . .
 
 CMD ["npm", "start"]
+
+# Navigate to directory with the Dockerfile
+# run
+# docker build -t express .
+# When finished run 
+# docker run -p 3000:3000 express
+# Test by going to localhost:3000 and look for Hello World text
