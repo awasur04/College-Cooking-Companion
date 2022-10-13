@@ -1,3 +1,10 @@
+//TO run the server.js you need to be in the directory for the backend folder
+//Then run the command "npm install"
+//Finally after it installs the dependencies you can run "node server.js" and the application will start
+
+//After you have installed the dependencies once on your machine all you will need to use to start the server is node server.js
+
+
 const express = require("express");
 const bodyParser = require("body-parser");
 
