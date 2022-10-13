@@ -7,8 +7,20 @@
 
 <body>
     <div id="app">
-        {{ message }}
+        <h1>{{ message }}</h1>
         <h1></h1>
+        <table>
+            <tr>
+                <th>Recipe</th>
+                <th>Picture</th>
+                <th>Go to</th>
+            </tr>
+            <tr>
+                <td>{{ recipe }}</td>
+                <td>{{ image }}</td>
+                <td><button>Go to</button></td>
+            </tr>
+        </table>
         <button v-on:click="updateMessage()">Update</button>
     </div>
 
@@ -16,13 +28,17 @@
         var app = new Vue({
             el: '#app',
             data: {
-                message: 'Vue.js second example with CDN'
+                message: 'College Cooking Companion recipes list',
+                image: '',
+                recipe: ""
             },
             methods: {
                 updateMessage() {
-                    // console.log("Gotta update the message " + this.message);
-                    console.log("Hello")
+                    this.recipe = 'Chicken'
                 }
+            },
+            beforeMount() {
+                this.recipe = 'Toast'
             }
         })
     </script>
