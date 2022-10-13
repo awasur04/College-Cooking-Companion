@@ -1,0 +1,9 @@
+#from specifies the repo to build off of
+#env specifies the environment variables, which in this case is the password
+#the copy uses files to configure the build, which must be rebuilt if changes to these files need to be reflected
+
+FROM mysql:latest
+ENV MYSQL_ROOT_PASSWORD=root
+#COPY ./my.cnf /etc/mysql/conf.d/my.cnf
+#COPY ./db_users.sql /docker-entrypoint-initdb.d
+
