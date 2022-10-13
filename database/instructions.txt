@@ -1,0 +1,17 @@
+To run:
+    1 docker build -t <test-name> .
+        -updates the latest configuration of the <test-name> image
+        Where:
+        -t specifies the name of the image
+        . specifies the working directory from where to build the image
+    2 docker run -d <test-name> -p 3305:3306
+        -starts the container and makes the local host a listener
+        Where:
+        -p is the port configuration
+            Note: format is to:from, and running 'netstat -ab' in the terminal will show busy ports if the 'to' port is taken
+        -d assigns the container to run detatched
+        -Note: normally the mysql_root_password needs to be set but we define it in the dockerfile
+    2b docker exec -it <containerID> /bin/bash
+        -puts you inside the container's directory for troubleshooting purposes
+    
+    NOTE: To connect to the DB, use the 'to' port and user=root password=root
