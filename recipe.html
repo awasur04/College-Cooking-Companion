@@ -17,7 +17,7 @@
             </tr>
             <tr>
                 <td>{{ recipe }}</td>
-                <td>{{ image }}</td>
+                <td><img :src="image"></td>
                 <td><button>Go to</button></td>
             </tr>
         </table>
@@ -29,7 +29,7 @@
             el: '#app',
             data: {
                 message: 'College Cooking Companion recipes list',
-                image: '',
+                image: 'https://spoonacular.com/recipeImages/639492-312x231.jpg',
                 recipe: ""
             },
             methods: {
