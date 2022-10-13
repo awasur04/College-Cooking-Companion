@@ -17,4 +17,4 @@ app.get('/', (req, res) =>
     res.send(JSON.stringify(recipes));
 })
 
-app.listen(port, () => console.log(`Hello world app listening on port ${port}!`));
+app.listen(port, () => console.log(`Testing API listening on port ${port}!`));
