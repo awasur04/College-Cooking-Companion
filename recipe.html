@@ -1,0 +1,29 @@
+<html>
+<head>
+    <title>Vue powered CCC</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <!-- <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script> -->
+</head>
+
+<body>
+    <div id="app">
+        {{ message }}
+    </div>
+    <button v-on:click="updateMessage()">Update</button>
+
+    <script>
+        var app = new Vue({
+            el: '#app',
+            data: {
+                message: 'Vue.js second example with CDN'
+            },
+            methods: {
+                updateMessage() {
+                    // console.log("Gotta update the message " + this.message);
+                    console.log("Hello")
+                }
+            }
+        })
+    </script>
+</body>
+</html>
