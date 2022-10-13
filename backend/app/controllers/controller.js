@@ -1,40 +1,35 @@
 const db = require("../models");
-const Tutorial = db.tutorials;
+const Tutorial = db.user;
 const Op = db.Sequelize.Op;
 
 //ALL NEEDS FUNCTIONALITY
 
-// Create and Save a new Tutorial
+// Create and Save a new User
 exports.create = (req, res) => {
   
 };
 
-// Retrieve all Tutorials from the database.
+// Retrieve all Uers from the database.
 exports.findAll = (req, res) => {
   
 };
 
-// Find a single Tutorial with an id
+// Find a single User with an id
 exports.findOne = (req, res) => {
   
 };
 
-// Update a Tutorial by the id in the request
+// Update a User by the id in the request
 exports.update = (req, res) => {
   
 };
 
-// Delete a Tutorial with the specified id in the request
+// Delete a User with the specified id in the request
 exports.delete = (req, res) => {
   
 };
 
-// Delete all Tutorials from the database.
+// Delete all Users from the database.
 exports.deleteAll = (req, res) => {
-  
-};
-
-// Find all published Tutorials
-exports.findAllPublished = (req, res) => {
   
 };
