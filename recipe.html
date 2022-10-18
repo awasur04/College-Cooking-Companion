@@ -21,6 +21,7 @@
                 <td><img :src="image"></td>
                 <td><button>Go to</button></td>
             </tr>
+            <div v-html="rows" id ="app"></div>
         </table>
         <button v-on:click="updateMessage()">Update</button>
     </div>
@@ -29,6 +30,7 @@
         var app = new Vue({
             el: '#app',
             data: {
+                rows: '',
                 message: 'College Cooking Companion recipes list',
                 image: '',
                 recipe: "",
@@ -422,6 +424,33 @@
             },
             methods: {
                 updateMessage() {
+                    // Vanilla JS method of appending the table rows
+                    // let r = document.createElement('tr');
+                    // this.recipesReturned.forEach((i) => {
+                    //     const tdTitle = document.createElement('td');
+                    //     tdTitle.innerHTML = String(i.title);
+                    //     tr.appendChild(tdTitle);
+                    
+                    //     const tdImg = document.createElement('td');
+                    //     tdImg.innerHTML = `<img src="${String(i.image)}" />`;
+                    //     tr.appendChild(tdImg);
+                    
+                    //     const tdButton = document.createElement('td');
+                    //     tdButton.innerHTML = '<button>Go to</button>';
+                    //     tr.appendChild(tdButton);
+                    // });
+                    
+                    // Update the table live with Vue v-html directive. Not working as expected right now
+                    let r = "<tr> ";
+                    this.recipesReturned.forEach((i) => {
+                        r += "<td> ";
+                        r += String(i.title)
+                        let imgSrc = i.image
+                        r += "<img src=\"" + imgSrc + "\" />";
+                        r += "</td><td><button>Go to</button></td></tr>"; 
+                    })
+                    console.log(r)
+                    this.rows = r
                     this.recipe = this.recipesReturned[1].title
                     this.image = this.recipesReturned[1].image
                 }
