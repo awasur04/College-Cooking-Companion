@@ -29,7 +29,7 @@
             el: '#app',
             data: {
                 message: 'College Cooking Companion recipes list',
-                image: 'https://spoonacular.com/recipeImages/639492-312x231.jpg',
+                image: '',
                 recipe: ""
             },
             methods: {
@@ -39,6 +39,7 @@
             },
             beforeMount() {
                 this.recipe = 'Toast'
+                this.image = 'https://spoonacular.com/recipeImages/639492-312x231.jpg'
             }
         })
     </script>
