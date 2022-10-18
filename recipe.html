@@ -426,12 +426,12 @@
                     this.image = this.recipesReturned[1].image
                 }
             },
-            beforeMount() {
-                this.recipesReturned.forEach((i) => {
-                    console.log(i.title)
-                })
-                this.recipe = this.recipesReturned[0].title
-                this.image = this.recipesReturned[0].image
+                beforeMount() {
+                    this.recipesReturned.forEach((i) => {
+                        console.log(i.title)
+                    })
+                    this.recipe = this.recipesReturned[0].title
+                    this.image = this.recipesReturned[0].image
             }
         })
     </script>
