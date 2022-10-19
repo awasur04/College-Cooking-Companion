@@ -20,8 +20,6 @@
             data: {
                 rows: '',
                 message: 'College Cooking Companion recipes list',
-                image: '',
-                recipe: "",
                 recipesReturned: [{
                     "id": 639492,
                     "title": "Cinnamon Twists",
@@ -412,7 +410,7 @@
             },
             methods: {
                 updateMessage() {
-                    // Update the table live with Vue v-html directive.
+                    // Update the table live with Vue v-html directive. 
                     this.rows = "";
                     this.getRecipes().forEach((i) => {
                         this.addRow(i);
