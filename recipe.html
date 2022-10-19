@@ -10,19 +10,7 @@
     <div id="app">
         <h1>{{ message }}</h1>
         <h1></h1>
-        <table>
-            <tr>
-                <th>Recipe</th>
-                <th>Picture</th>
-                <th>Go to</th>
-            </tr>
-            <tr>
-                <td>{{ recipe }}</td>
-                <td><img :src="image"></td>
-                <td><button>Go to</button></td>
-            </tr>
-            <div v-html="rows" id ="app"></div>
-        </table>
+        <table v-html="rows" id="app"></table>
         <button v-on:click="updateMessage()">Update</button>
     </div>
 
@@ -424,22 +412,6 @@
             },
             methods: {
                 updateMessage() {
-                    // Vanilla JS method of appending the table rows
-                    // let r = document.createElement('tr');
-                    // this.recipesReturned.forEach((i) => {
-                    //     const tdTitle = document.createElement('td');
-                    //     tdTitle.innerHTML = String(i.title);
-                    //     tr.appendChild(tdTitle);
-                    
-                    //     const tdImg = document.createElement('td');
-                    //     tdImg.innerHTML = `<img src="${String(i.image)}" />`;
-                    //     tr.appendChild(tdImg);
-                    
-                    //     const tdButton = document.createElement('td');
-                    //     tdButton.innerHTML = '<button>Go to</button>';
-                    //     tr.appendChild(tdButton);
-                    // });
-                    
                     // Update the table live with Vue v-html directive. Not working as expected right now
                     let r = "<tr> ";
                     this.recipesReturned.forEach((i) => {
