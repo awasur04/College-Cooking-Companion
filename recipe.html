@@ -413,26 +413,23 @@
             methods: {
                 updateMessage() {
                     // Update the table live with Vue v-html directive. Not working as expected right now
-                    let r = "<tr> ";
+                    this.rows = "";
                     this.recipesReturned.forEach((i) => {
-                        r += "<td> ";
-                        r += String(i.title)
-                        let imgSrc = i.image
-                        r += "<img src=\"" + imgSrc + "\" />";
-                        r += "</td><td><button>Go to</button></td></tr>"; 
+                        this.addRow(i);
                     })
-                    console.log(r)
-                    this.rows = r
-                    this.recipe = this.recipesReturned[1].title
-                    this.image = this.recipesReturned[1].image
+                },
+                addRow(object) {
+                    let r = "<tr>";
+                    r += "<td>";
+                    r += String(object.title);
+                    let imgSrc = object.image;
+                    r += "<img src=\"" + imgSrc + "\" />";
+                    r += "</td><td><button>Go to</button></td></tr>"; 
+                    this.rows += r;
                 }
             },
             beforeMount() {
-                this.recipesReturned.forEach((i) => {
-                    console.log(i.title)
-                })
-                this.recipe = this.recipesReturned[0].title
-                this.image = this.recipesReturned[0].image
+                this.addRow(this.recipesReturned[0]);
             }
         })
     </script>
