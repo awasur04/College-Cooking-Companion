@@ -414,7 +414,7 @@
                 updateMessage() {
                     // Update the table live with Vue v-html directive. Not working as expected right now
                     this.rows = "";
-                    this.recipesReturned.forEach((i) => {
+                    this.getRecipes().forEach((i) => {
                         this.addRow(i);
                     })
                 },
@@ -424,12 +424,17 @@
                     r += String(object.title);
                     let imgSrc = object.image;
                     r += "<img src=\"" + imgSrc + "\" />";
+                    let recID = object.id;
                     r += "</td><td><button>Go to</button></td></tr>"; 
                     this.rows += r;
+                },
+                getRecipes() {
+                    // TODO Implement this to work with Node backend
+                    return this.recipesReturned;
                 }
             },
             beforeMount() {
-                this.addRow(this.recipesReturned[0]);
+                this.addRow(this.getRecipes()[0]);
             }
         })
     </script>
