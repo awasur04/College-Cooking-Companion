@@ -7,14 +7,21 @@
 
 const express = require('express');
 const recipes = require('./recipes.json');
+const instructions = require('./instructions.json');
 
 const app = express();
 const port = 3000;
 
-app.get('/', (req, res) =>
+app.get('/recipes', (res) =>
 {
     res.header("Content-Type",'application/json');
     res.send(JSON.stringify(recipes));
-})
+});
+
+app.get('/instructions', (res) =>
+{
+    res.header("Content-Type",'application/json');
+    res.send(JSON.stringify(instructions));
+});
 
 app.listen(port, () => console.log(`Testing API listening on port ${port}!`));
