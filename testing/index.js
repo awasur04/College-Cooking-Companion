@@ -12,6 +12,11 @@ const instructions = require('./instructions.json');
 const app = express();
 const port = 3000;
 
+
+//let runType = process.argv.slice(2);
+//console.log("\nArgs: " + runType);
+//require('child_process').fork('some_code.js');
+
 app.get('/recipes', (res) =>
 {
     res.header("Content-Type",'application/json');
