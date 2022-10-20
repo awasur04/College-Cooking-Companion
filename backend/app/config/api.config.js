@@ -12,7 +12,8 @@ module.exports =
 
 	TEST:
 	{
-		IP: "localhost:3000",
+		HOST: "localhost",
+		PORT: 3000,
 		RECIPES_ENDPOINT: '/recipes',
 		INSTRUCTIONS_ENDPOINT: '/instructions',
 	},
