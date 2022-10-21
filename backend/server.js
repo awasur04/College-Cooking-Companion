@@ -31,5 +31,10 @@ app.listen(PORT, () =>
 {
   console.log(`Server is running on port ${PORT}.`);
 
-  recipe_controller.find(ingredients = ["eggs", "salt", "milk", "butter", "yeast"]);
+  let output = recipe_controller.findRecipes(ingredients = ["eggs", "salt", "milk", "butter", "yeast"], displayCheck);
 });
+
+function displayCheck(output)
+{
+  console.log(output);
+}
