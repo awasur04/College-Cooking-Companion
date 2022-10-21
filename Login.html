@@ -1,0 +1,70 @@
+<html>
+
+<head>
+    <title>Vue powered CCC</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <!-- <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script> -->
+</head>
+
+<body>
+
+    <div id="app">
+        <h1>LOGIN</h1>
+        <form action="/url" method="PUT" id="email">
+            <p>Email address</p>
+            <input type="email">
+        </form>
+        <form action="/url" method="PUT" id="password">
+            <p>Password</p>
+            <input type="password">
+        </form>
+        <h1></h1>
+        <button v-on:click="login()">Login</button>
+    </div>
+
+</body>
+
+<script>
+    var app = new Vue({
+        el: "#app",
+        data: {
+
+        },
+        methods: {
+            login() {
+                console.log("Button pressed!");
+                let email = document.getElementById("email").children[1].value;
+                if(!this.isValidEmailFormat(email)) {
+                    alert("Invalid email format");
+                    return;
+                }
+                let password = document.getElementById("password").children[1].value;
+                password = this.hashPassword(password);
+
+                // TODO Pass email and password to Node server
+                // Get back either 0 for failed UUID or new UUID
+                this.loggedInUUID(0);
+                // TODO Redirect to landing page
+                window.location.href = "https://www.youtube.com/watch?v=dQw4w9WgXcQ"; // Test redirect 
+            },
+            loggedInUUID(uuid) {
+                sessionStorage.setItem("UUID", uuid); // TODO Set UUID to UUID from Node server
+                return 0;
+            },
+            isValidEmailFormat(email) {
+                var pattern = /^\w+@[a-zA-Z_]+?\.[a-zA-Z]{2,3}$/; 
+                if(email.match(pattern) === null) {
+                    return false;
+                } else {
+                    return true;
+                }
+            },
+            hashPassword(password) {
+                // TODO Select and implement password hashing algo
+                return password;
+            }
+        }
+    })
+</script>
+
+</html>
