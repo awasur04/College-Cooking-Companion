@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+
+  <title>College Cook Companion</title>
+
+  <meta charset="UTF-8" />
+
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+
+  <meta name="College Cook Companion" content="Recipes for those on a budget" />
+  <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+
+</head>
+
+<body>
+    <div id="app">
+    <h1>Welcome to the College Cook Companion</h1>
+    <button>Login</button>
+    <button>Create account</button>
+    <h1></h1>
+    <textarea>Enter ingredients you have</textarea>
+    <button>Save ingredients</button>
+    <textarea>Special parameters</textarea>
+    <button>Save parameters</button>
+    <h2></h2>
+    <button>Get free recipes</button>
+    <button>Get recipes with shopping</button>
+    <h2></h2>
+    </div>
+    
+
+</body>
+
+<script>
+
+    var app = new Vue({
+        el: "#app",
+        data: {
+            loggedIn: false
+        },
+        methods: {
+            logout() {
+                sessionStorage.removeItem("UUID");
+                window.location.href = "https://www.youtube.com/watch?v=dQw4w9WgXcQ"; // Test redirect 
+            }
+
+        },
+        beforeMount(){
+            if(sessionStorage.getItem("UUID") != 0 && sessionStroage.getItem("UUID") != null) {
+                this.loggedIn = true;
+            }
+        }
+    })
+
+</script>
+
+</html>
