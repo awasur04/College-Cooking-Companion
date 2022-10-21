@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+    <title>College Cook Companion</title>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width,initial-scale=1"/>
+    <meta name="College Cook Companion" content="Recipies for those on a budget"/>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+</head>
+
+<body>
+    <div id="app">
+    <h1>ACCOUNT CREATION PAGE</h1>
+    <form action="/url" method="PUT" id="email">
+        <p>Email address</p>
+        <input type="email">
+    </form>
+    <form action="/url" method="PUT" id="fname">
+        <p>First name</p>
+        <input type="text">
+    </form>
+    <form action="/url" method="PUT" id="password">
+        <p>Password</p>
+        <input type="password">
+    </form>
+    <h1></h1>
+    <button v-on:click="register()">Submit</button>
+</div>
+</body>
+
+<script>
+
+    var app = new Vue({
+        el: "#app",
+        data: {
+
+        },
+        methods: {
+            isValidEmailFormat(email) {
+                var pattern = /^\w+@[a-zA-Z_]+?\.[a-zA-Z]{2,3}$/; 
+                if(email.match(pattern) === null) {
+                    return false;
+                } else {
+                    return true;
+                }
+            },
+            loggedInUUID(uuid) {
+                sessionStorage.setItem("UUID", uuid); // TODO Set UUID to UUID from Node server
+                return 0;
+            },
+            register() {
+                var email = document.getElementById("email").children[1].value;
+                if(!this.isValidEmailFormat(email)) {
+                    alert("Invalid email format");
+                    return;
+                }
+                var fname = document.getElementById("fname").children[1].value;
+                var password = document.getElementById("password").children[1].value;
+                password = this.hashPassword(password);
+                // TODO Pass all values to Node server 
+                // TODO Get UUID from Node server
+                this.loggedInUUID(0);
+                window.location.href = "https://www.youtube.com/watch?v=dQw4w9WgXcQ"; // Test redirect
+            },
+            hashPassword(password) {
+                // TODO Select and implement password hashing algo
+                return password;
+            }
+        }
+    })
+
+</script>
+
+</html>
