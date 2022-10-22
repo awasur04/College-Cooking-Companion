@@ -13,15 +13,15 @@
 
 
   // Retrieve a single Tutorial with id
-  router.get("getoneuser/:id", user.findOne);
+  router.get("/getoneuser/id", user.findOne);
 
   // Update a Tutorial with id
-  router.put("updateoneuser/:id", user.update);
+  router.put("/updateoneuser/id", user.update);
 
   // Delete a Tutorial with id
-  router.delete("deleteoneuser/:id", user.delete);
+  router.delete("/deleteoneuser/id", user.delete);
 
   // Delete all Tutorials
-  router.delete("kamikaze/", user.deleteAll);
+  router.delete("/kamikaze", user.deleteAll);
 
   module.exports = router;
