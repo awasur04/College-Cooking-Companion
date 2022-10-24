@@ -75,11 +75,19 @@
             },
             saveIngredients() {
                 var ing = document.getElementById("ingredientsField").value;
+                this.validateIngredients(ing);
                 this.sendData(ing);
             },
             saveParameters() {
                 var param = document.getElementById("parametersField").value;
+                this.validateParameters(param);
                 this.sendData(param);
+            },
+            validateIngredients(ingredients) {
+                // TODO Implement at a later date
+            },
+            validateParameters(parameters) {
+                // TODO Impement at a later date
             },
             saveAll() {
                 this.saveIngredients();
