@@ -75,11 +75,11 @@
             },
             saveIngredients() {
                 var ing = document.getElementById("ingredientsField").value;
-                sendData(ing);
+                this.sendData(ing);
             },
             saveParameters() {
                 var param = document.getElementById("parametersField").value;
-                sendData(param);
+                this.sendData(param);
             },
             saveAll() {
                 this.saveIngredients();
@@ -87,6 +87,7 @@
             },
             sendData(obj) {
                 // TODO Send the object to the server
+                console.log("Sending data...");
             }
 
         },
