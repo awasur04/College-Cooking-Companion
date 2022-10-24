@@ -2,9 +2,32 @@ const recipe = require("../models/recipe");
 const config = require("../config/api.config");
 
 //REPLACE WITH HTTPS
-const https = require("http");
+let https;
+let apiOption;
+let runMode;
 
-const { Console } = require("console");
+
+exports.setUp = (runType) =>
+{
+	runMode = runType;
+	if (runType == "dev")
+	{
+		https = require("http");
+		apiOption = 
+		{
+			host: config.TEST.IP,
+			port: config.TEST.PORT,
+		}
+	}
+	else
+	{
+		https = require("https");
+		apiOption =
+		{
+			host: config.SPOONACULAR.HOST
+		};
+	}
+}
 
 // Query the recipes. Pass in an array of ingredients
 exports.findRecipes = (ingredients, cb) =>
@@ -18,15 +41,16 @@ exports.findRecipes = (ingredients, cb) =>
 		}
 	}
 
-	const options =
+	if (runMode == "dev")
 	{
-		//host: config.SPOONACULAR.HOST,
-		//path: `/recipes/findByIngredients?ingredients=${ingredients}&number=5&apiKey=${config.SPOONACULAR.API_KEY}`,
-		host: config.TEST.IP,
-		port: config.TEST.PORT
+		apiOption.path = config.TEST.RECIPES_ENDPOINT;
+	} else {
+		apiOption.path = config.SPOONACULAR.RECIPES_ENDPOINT + `?ingredients=${ingredients}&number=5&apiKey=${config.SPOONACULAR.API_KEY}`;
 	}
 
-	https.get(options, (response) =>
+	
+
+	https.get(apiOption, (response) =>
 	{
 		let responseData = "";
 
