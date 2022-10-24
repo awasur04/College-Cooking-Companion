@@ -26,8 +26,8 @@
     <textarea id="parametersField">Special parameters</textarea>
     <button v-on:click="saveParameters()">Save parameters</button>
     <h2></h2>
-    <button>Get free recipes</button>
-    <button>Get recipes with shopping</button>
+    <button v-on:click="getFreeRecipes()">Get free recipes</button>
+    <button v-on:click="getPaidRecipes()">Get recipes with shopping</button>
     <h2></h2>
     </div>
     
@@ -88,8 +88,23 @@
             sendData(obj) {
                 // TODO Send the object to the server
                 console.log("Sending data...");
+            },
+            getFreeRecipes() {
+                if(this.loggedIn) {
+                    this.saveAll();
+                }
+                this.storeResult({test: "free"});
+            },
+            getPaidRecipes() {
+                if(this.loggedIn) {
+                    this.saveAll();
+                }
+                this.storeResult({test: "paid"})
+            },
+            storeResult(res) {
+                sessionStorage.setItem("Returned Recipes", res);
+                window.location.href = "recipe.html";
             }
-
         },
         beforeMount(){
             if(sessionStorage.getItem("UUID") != 0 && sessionStorage.getItem("UUID") != null) {
