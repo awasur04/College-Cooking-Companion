@@ -18,8 +18,8 @@
 <body>
     <div id="app">
     <h1>Welcome to the College Cook Companion</h1>
-    <button>Login</button>
-    <button>Create account</button>
+    <button v-on:click="userSignIn()">{{ userLoginStatus }}</button>
+    <button v-on:click="userCreateFavorites()">{{ createNewOrFavorites }}</button>
     <h1></h1>
     <textarea>Enter ingredients you have</textarea>
     <button>Save ingredients</button>
@@ -39,18 +39,48 @@
     var app = new Vue({
         el: "#app",
         data: {
-            loggedIn: false
+            loggedIn: false,
+            userLoginStatus: "",
+            createNewOrFavorites: ""
         },
         methods: {
             logout() {
                 sessionStorage.removeItem("UUID");
-                window.location.href = "https://www.youtube.com/watch?v=dQw4w9WgXcQ"; // Test redirect 
+                window.location.href = "file:///C:/Users/ecwho/Documents/Capstone/LandingPage.html"; // Test redirect 
+            },
+            login() {
+                window.location.href = "file:///C:/Users/ecwho/Documents/Capstone/Login.html";
+            },
+            userSignIn() {
+                if(this.loggedIn) {
+                    this.logout();
+                } else {
+                    this.login();
+                }
+            },
+            newUser() {
+
+            },
+            favorites() {
+
+            },
+            userCreateFavorites() {
+                if(this.loggedIn) {
+                    this.favorites();
+                } else {
+                    this.favorites();
+                }
             }
 
         },
         beforeMount(){
-            if(sessionStorage.getItem("UUID") != 0 && sessionStroage.getItem("UUID") != null) {
+            if(sessionStorage.getItem("UUID") != 0 && sessionStorage.getItem("UUID") != null) {
                 this.loggedIn = true;
+                this.userLoginStatus = "Logout";
+                this.createNewOrFavorites = "Favorites";
+            } else {
+                this.userLoginStatus = "Login";
+                this.createNewOrFavorites = "Signup";
             }
         }
     })
