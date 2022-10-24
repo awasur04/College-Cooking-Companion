@@ -75,13 +75,18 @@
             },
             saveIngredients() {
                 var ing = document.getElementById("ingredientsField").value;
+                sendData(ing);
             },
             saveParameters() {
                 var param = document.getElementById("parametersField").value;
+                sendData(param);
             },
             saveAll() {
                 this.saveIngredients();
                 this.saveParameters();
+            },
+            sendData(obj) {
+                // TODO Send the object to the server
             }
 
         },
