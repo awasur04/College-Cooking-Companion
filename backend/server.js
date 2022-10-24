@@ -19,20 +19,35 @@ app.use(bodyParser.json());
 // parse requests of content-type - application/x-www-form-urlencoded
 app.use(bodyParser.urlencoded({ extended: true }));
 
-// simple route
-app.get("/", (req, res) =>
-{
-  res.json({ message: "Welcome to college cooking companions application." });
-});
+let runType = process.argv.slice(2);
 
-// set port, listen for requests
-const PORT = process.env.PORT || 8080;
-app.listen(PORT, () =>
+if (runType == "dev")
 {
-  console.log(`Server is running on port ${PORT}.`);
+  require('child_process').fork('../testing/index.js');
+  recipe_controller.setUp(runType);
+  runServer();
+}
+else if (runType == "prod")
+{
+  recipe_controller.setUp(runType);
+  runServer();
+}
+else
+{
+  console.log("\nPlease select a run type `dev`, `prod` -- Example run case `node server.js dev`");
+}
 
-  let output = recipe_controller.findRecipes(ingredients = ["eggs", "salt", "milk", "butter", "yeast"], displayCheck);
-});
+function runServer()
+{
+  // set port, listen for requests
+  const PORT = process.env.PORT || 8080;
+  app.listen(PORT, () =>
+  { 
+    console.log(`Server is running on port ${PORT}.`);
+
+    let output = recipe_controller.findRecipes(ingredients = ["eggs", "salt", "milk", "butter", "yeast"], displayCheck);
+  });
+}
 
 function displayCheck(output)
 {
