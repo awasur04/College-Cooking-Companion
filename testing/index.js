@@ -14,15 +14,15 @@ const port = 3000;
 
 
 
-app.get('/recipes', (res) =>
+app.get('/recipes', (req, res) =>
 {
-    res.header("Content-Type",'application/json');
+    res.header("Content-Type", 'application/json');
     res.send(JSON.stringify(recipes));
 });
 
-app.get('/instructions', (res) =>
+app.get('/instructions', (req, res) =>
 {
-    res.header("Content-Type",'application/json');
+    res.header("Content-Type", 'application/json');
     res.send(JSON.stringify(instructions));
 });
 
