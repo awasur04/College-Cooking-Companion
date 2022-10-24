@@ -22,9 +22,9 @@
     <button v-on:click="userCreateFavorites()">{{ createNewOrFavorites }}</button>
     <h1></h1>
     <textarea>Enter ingredients you have</textarea>
-    <button>Save ingredients</button>
+    <button v-on:click="saveIngredients()">Save ingredients</button>
     <textarea>Special parameters</textarea>
-    <button>Save parameters</button>
+    <button v-on:click="saveParameters()">Save parameters</button>
     <h2></h2>
     <button>Get free recipes</button>
     <button>Get recipes with shopping</button>
@@ -45,6 +45,7 @@
         },
         methods: {
             logout() {
+                this.saveAll();
                 sessionStorage.removeItem("UUID");
                 window.location.href = "LandingPage.html"; // Test redirect 
             },
@@ -62,6 +63,7 @@
                 window.location.href = "CreateAccount.html";
             },
             favorites() {
+                this.saveAll();
                 window.location.href = "Favorites.html";
             },
             userCreateFavorites() {
@@ -70,6 +72,16 @@
                 } else {
                     this.favorites();
                 }
+            },
+            saveIngredients() {
+
+            },
+            saveParameters() {
+
+            },
+            saveAll() {
+                this.saveIngredients();
+                this.saveParameters();
             }
 
         },
