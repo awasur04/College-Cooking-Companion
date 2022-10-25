@@ -1,8 +1,14 @@
-const recipe = require("../models/recipe");
+const Recipe = require("../models/recipe");
 const config = require("../config/api.config");
+const Ingredient = require("../models/ingredient");
 
 //REPLACE WITH HTTPS
+let https = require("https");
 
+
+//STILL LEFT TO DO
+//Get recipe by id search
+//Get pdf widget of recipe
 
 exports.findRecipeById = (recipeId, cb) =>
 {
@@ -28,6 +34,23 @@ exports.findRecipeById = (recipeId, cb) =>
 		{
 			responseData = responseData + chunk.toString();
 		});
+
+		response.on('end', () =>
+		{
+			//Format our data response chunk into json format
+			const jsonData = JSON.parse(responseData);
+			let recipeList = Promise.resolve(processRecipes(jsonData));
+			recipeList.then((recipes) =>
+			{
+				cb(recipes);
+			})
+		});
+
+	}).on('error', (e) => 
+	{
+		console.log("ERROR: Spoonacular API could not be reached.\nMessage: " + e.message);
+		cb(undefined);
+	})
 }
 
 // Query the recipes. Pass in an array of ingredients
@@ -42,16 +65,21 @@ exports.findRecipes = (ingredients, cb) =>
 		}
 	}
 
-	if (runMode == "dev")
+	let testOptions =
 	{
-		apiOption.path = config.TEST.RECIPES_ENDPOINT;
-	} else {
-		apiOption.path = config.SPOONACULAR.RECIPES_ENDPOINT + `?ingredients=${ingredients}&number=5&apiKey=${config.SPOONACULAR.API_KEY}`;
-	}
+		host: config.TEST.HOST,
+		port: config.TEST.PORT,
+		path: config.TEST.RECIPES_ENDPOINT,
+	};
 
-	
+	let options =
+	{
+		host: config.SPOONACULAR.HOST,
+		path: config.SPOONACULAR.FIND_BY_INGREDIENTS + `?ingredients=${ingredients}&number=5&apiKey=${config.SPOONACULAR.API_KEY}`,
+	};
 
-	https.get(apiOption, (response) =>
+
+	https.get(options, (response) =>
 	{
 		let responseData = "";
 
@@ -64,7 +92,11 @@ exports.findRecipes = (ingredients, cb) =>
 		{
 			//Format our data response chunk into json format
 			const jsonData = JSON.parse(responseData);
-			processRecipes(jsonData);
+			let recipeList = Promise.resolve(processRecipes(jsonData));
+			recipeList.then((recipes) =>
+			{
+				cb(recipes);
+			})
 		});
 
 	}).on('error', (e) => 
@@ -85,8 +117,14 @@ async function processRecipes(inputJSON)
 		let currentImage = inputJSON[i].image;
 
 		let currentIngredients = getIngredients(inputJSON[i].usedIngredients, inputJSON[i].missedIngredients);
+
+		let currentNutrition = await getNutrition(currentId);
 		let currentInstructions = await getInstructions(currentId);
+
+		let recipe = new Recipe(currentId, currentTitle, currentImage, currentIngredients[0], currentIngredients[1], currentInstructions, currentNutrition);
+		recipeList.push(recipe);
 	}
+	return recipeList;
 }
 
 
@@ -107,7 +145,7 @@ function getIngredients(usedIngredients, missingIngredients)
 		missingIngredientList.push(ing);
 	}
 
-	return ingredientList;
+	return [ownedIngredientList, missingIngredientList];
 }
 
 function getInstructions(recipeId)
