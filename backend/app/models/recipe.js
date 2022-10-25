@@ -1,6 +1,6 @@
-class Recipe
+module.exports = class Recipe
 {
-	constructor(id, title, image, ingredients, instructions, nutrition)
+	constructor(id, title, image, oIngredients, mIngredient, instructions, nutrition)
 	{
 		this.id = id;
 		this.title = title;

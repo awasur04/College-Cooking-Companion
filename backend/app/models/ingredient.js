@@ -1,4 +1,4 @@
-class Ingredient
+module.exports = class Ingredient
 {
 	constructor(id, name, image, amount, currentlyOwned)
 	{
