@@ -5,9 +5,15 @@ module.exports = class Recipe
 		this.id = id;
 		this.title = title;
 		this.image = image;
-		this.ingredients = ingredients;
+		this.ownedIngredients = oIngredients;
+		this.missingIngredients = mIngredient;
 		this.instructions = instructions;
 		this.nutrition = nutrition;
+	}
+
+	getIngredientList()
+	{
+		return this.ownedIngredients.concat(this.missingIngredients);
 	}
 
 }
