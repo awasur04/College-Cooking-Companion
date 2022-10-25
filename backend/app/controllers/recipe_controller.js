@@ -1,13 +1,25 @@
+//FILE: recipe_controller.js
+//DESCRIPTION: TO retrieve recipes and information from spoonacular.com api
+//AUTHOR: Adam Rusaw (https://github.com/awasur04)
+//EXPORTS:
+//		getRecipePDF(recipeId, cb)
+//		findRecipeById(recipeId, cb)
+//		findRecipes(ingredients, cb)
 
 const Recipe = require("../models/recipe");
 const config = require("../config/api.config");
 const Ingredient = require("../models/ingredient");
 let https = require("https");
 
-
 //#region EXPORTS
 
-//Retrieve a URL which points to a recipe widget PDF
+//FUNCTION: getRecipePDF
+//DESCRIPTION: Retrieve the recipe pdf widget from spoonacular API
+//INPUT:
+//		recipeId(number): The ID of the recipe you wish to search for
+//		cb(function): Callback function for the found data to be passed to
+//OUTPUT:
+//		The recipe PDF will be passed to the callback function in the form of a URL
 exports.getRecipePDF = (recipeId, cb) =>
 {
 	let testOptions =
@@ -48,7 +60,13 @@ exports.getRecipePDF = (recipeId, cb) =>
 	})
 }
 
-//Search for a recipe when given the id
+//FUNCTION: findRecipeById
+//DESCRIPTION: Retrieve the recipe from spoonacular API when given an ID
+//INPUT:
+//		recipeId(number): The ID of the recipe you wish to search for
+//		cb(function): Callback function for the found data to be passed to
+//OUTPUT:
+//		The recipe object will be passed on to the callback function
 exports.findRecipeById = (recipeId, cb) =>
 {
 	let testOptions =
@@ -92,7 +110,13 @@ exports.findRecipeById = (recipeId, cb) =>
 	})
 }
 
-// Query the recipes. Pass in an array of ingredients
+//FUNCTION: findRecipes
+//DESCRIPTION: Retrieve 5 recipes from the spoonacular API with matching ingredients
+//INPUT:
+//		ingredients(string array): An array of ingredients to search with (eg. ["eggs", "milk", "flour"])
+//		cb(function): Callback function for the found data to be passed to
+//OUTPUT:
+//		An array of recipe objects will be passed to the callback function
 exports.findRecipes = (ingredients, cb) =>
 {
 	//Add + sign for all ingredients after the first
@@ -148,6 +172,13 @@ exports.findRecipes = (ingredients, cb) =>
 //#endregion
 
 //#region PARSE JSON DATA
+
+//FUNCTION: processRecipes
+//DESCRIPTION: Driver code to parse the json found when querying spoonacular API by ingredients
+//INPUT:
+//		inputJSON(JSON string): Returned JSON data from HTTPS Get request
+//OUTPUT:
+//		Will return a promise with the found recipe results
 async function processRecipes(inputJSON)
 {
 	let recipeList = [];
@@ -169,6 +200,12 @@ async function processRecipes(inputJSON)
 	return recipeList;
 }
 
+//FUNCTION: processRecipeById
+//DESCRIPTION: Driver code to parse the json found when querying spoonacular API by recipe ID
+//INPUT:
+//		inputJSON(JSON string): Returned JSON data from HTTPS Get request
+//OUTPUT:
+//		Will return a promise with the found recipe results
 async function processRecipeById(inputJSON)
 {
 	let emptyArray = [];
@@ -182,8 +219,17 @@ async function processRecipeById(inputJSON)
 	let recipe = new Recipe(currentId, currentTitle, currentImage, currentIngredients[0], currentIngredients[1], currentInstructions, currentNutrition);
 	return recipe;
 }
+//#endregion
 
+//#region GET RECIPE INFORMATION
 
+//FUNCTION: getIngredients
+//DESCRIPTION: Creates Ingredient objects from the used and missing ingredients
+//INPUT:
+//		usedIngredients(array of JSON data): The ingredients reutned which we used as search parameters
+//		missingIngredients(array of JSON data): The ingredients reutned which we did not use as search parameters
+//OUTPUT:
+//		Tuple(Used, Missing) array of ingredient objects
 function getIngredients(usedIngredients, missingIngredients)
 {
 	let ownedIngredientList = [];
@@ -204,6 +250,12 @@ function getIngredients(usedIngredients, missingIngredients)
 	return [ownedIngredientList, missingIngredientList];
 }
 
+//FUNCTION: getInstructions
+//DESCRIPTION: Queries spoonacular and gathers all instructions for creating the recipe
+//INPUT:
+//		recipeId(number): The recipe ID to get instructions for
+//OUTPUT:		
+//		Promise: Returns a Promise which will resolve to the recipe instruction in a string array.
 function getInstructions(recipeId)
 {
 	return new Promise(function (resolve, reject)
@@ -260,7 +312,12 @@ function getInstructions(recipeId)
 	});
 }
 
-
+//FUNCTION: getNutrition
+//DESCRIPTION: Queries spoonacular and gathers all nutrition data for the recipe
+//INPUT:
+//		recipeId(number): The recipe ID to get instructions for
+//OUTPUT:		
+//		Promise: Returns a Promise which will resolve to an object with recipe nutrition information.
 function getNutrition(recipeId)
 {
 	return new Promise(function (resolve, reject)
