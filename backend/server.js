@@ -7,6 +7,7 @@
 
 const express = require("express");
 const bodyParser = require("body-parser");
+const routes = require('./app/routes/routes');
 const app = express();
 const db = require("./app/models");
 const recipe_controller = require("./app/controllers/recipe_controller");
@@ -16,6 +17,14 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
 
+app.use('/routes', routes)
+
+
+// simple route
+app.get("/", (req, res) =>
+{
+  res.json({ message: "Welcome to college cooking companions application." });
+});
 
 
 // set port, listen for requests
