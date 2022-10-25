@@ -1,8 +1,7 @@
+
 const Recipe = require("../models/recipe");
 const config = require("../config/api.config");
 const Ingredient = require("../models/ingredient");
-
-//REPLACE WITH HTTPS
 let https = require("https");
 
 
@@ -10,19 +9,22 @@ let https = require("https");
 //Get recipe by id search
 //Get pdf widget of recipe
 
+
+//#region EXPORTS
+//Search for a recipe when given the id
 exports.findRecipeById = (recipeId, cb) =>
 {
 	let testOptions =
 	{
 		host: config.TEST.HOST,
 		port: config.TEST.PORT,
-		path: config.TEST.RECIPES_ENDPOINT,
+		path: config.TEST.ID_ENDPOINT,
 	};
 
 	let options =
 	{
 		host: config.SPOONACULAR.HOST,
-		path: config.SPOONACULAR.FIND_BY_INGREDIENTS + `?ingredients=${ingredients}&number=5&apiKey=${config.SPOONACULAR.API_KEY}`,
+		path: config.SPOONACULAR.ID_START + recipeId + config.SPOONACULAR.ID_END + `?&apiKey=${config.SPOONACULAR.API_KEY}`,
 	};
 
 
@@ -39,10 +41,10 @@ exports.findRecipeById = (recipeId, cb) =>
 		{
 			//Format our data response chunk into json format
 			const jsonData = JSON.parse(responseData);
-			let recipeList = Promise.resolve(processRecipes(jsonData));
-			recipeList.then((recipes) =>
+			let foundRecipe = Promise.resolve(processRecipeById(jsonData));
+			foundRecipe.then((recipe) =>
 			{
-				cb(recipes);
+				cb(recipe);
 			})
 		});
 
@@ -106,6 +108,9 @@ exports.findRecipes = (ingredients, cb) =>
 	})
 };
 
+//#endregion
+
+//#region PARSE JSON DATA
 async function processRecipes(inputJSON)
 {
 	let recipeList = [];
@@ -125,6 +130,20 @@ async function processRecipes(inputJSON)
 		recipeList.push(recipe);
 	}
 	return recipeList;
+}
+
+async function processRecipeById(inputJSON)
+{
+	let emptyArray = [];
+
+	let currentId = inputJSON.id;
+	let currentTitle = inputJSON.title;
+	let currentImage = inputJSON.image;
+	let currentIngredients = getIngredients(inputJSON.extendedIngredients, emptyArray);
+	let currentNutrition = await getNutrition(currentId);
+	let currentInstructions = await getInstructions(currentId);
+	let recipe = new Recipe(currentId, currentTitle, currentImage, currentIngredients[0], currentIngredients[1], currentInstructions, currentNutrition);
+	return recipe;
 }
 
 
@@ -267,3 +286,4 @@ function getNutrition(recipeId)
 		request.end();
 	});
 }
+//#endregion
