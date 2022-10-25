@@ -88,6 +88,7 @@ function processRecipes(inputJSON)
 		{
 			console.log(used[j].name);
 		}
+		let currentInstructions = await getInstructions(currentId);
 	}
 }
 
@@ -111,7 +112,62 @@ function getIngredients(usedIngredients, missingIngredients)
 	return ingredientList;
 }
 
-function getInstructions()
+function getInstructions(recipeId)
 {
+	return new Promise(function (resolve, reject)
+	{
+		let recipeInstructions = [];
+
+		let testOptions =
+		{
+			host: config.TEST.HOST,
+			port: config.TEST.PORT,
+			path: config.TEST.INSTRUCTIONS_ENDPOINT,
+		};
+
+		let options =
+		{
+			host: config.SPOONACULAR.HOST,
+			path: config.SPOONACULAR.GET_INSTRUCTIONS_START + recipeId + config.SPOONACULAR.GET_INSTRUCTIONS_END + `?apiKey=${config.SPOONACULAR.API_KEY}`,
+		};
+
+		let request = https.get(options, (response) =>
+		{
+
+			if (response.statucCode < 200 || response >= 300)
+			{
+				return reject(new Error('statusCode=' + resolve.statucCode));
+			}
+
+			let responseData = "";
+
+			response.on('data', (chunk) =>
+			{
+				responseData = responseData + chunk.toString();
+			});
+
+			response.on('end', () =>
+			{
+				//Format our data response chunk into json format
+				const jsonData = JSON.parse(responseData);
+
+				for (let j = 0; j < jsonData[0].steps.length; j++)
+				{
+					recipeInstructions[j] = jsonData[0].steps[j].step;
+				}
+				resolve(recipeInstructions);
+			});
+		});
+
+		request.on('error', (err) =>
+		{
+			reject(err);
+		});
+
+		request.end();
+	});
+}
+
+
 
 }
