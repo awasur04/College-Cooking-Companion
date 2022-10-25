@@ -5,9 +5,10 @@ module.exports =
 		API_KEY: "",
 		HOST: "api.spoonacular.com",
 		FIND_BY_INGREDIENTS: "/recipes/findByIngredients",
-		//GET_INSTRUCTIONS: `https://api.spoonacular.com/recipes/${id}/findByIngredients`,
-		//GET_PDF: `https://api.spoonacular.com/recipes/${id}/card`,
-		//NUTRITON: `https://api.spoonacular.com/food/menuItems/${id}/nutritionWidget.png`,
+		GET_INSTRUCTIONS_START: `/recipes/`,
+		GET_INSTRUCTIONS_END: '/analyzedInstructions',
+		NUTRITON_START: `/recipes/`,
+		NUTRITON_END: `/nutritionWidget.json`,
 	},
 
 	TEST:
