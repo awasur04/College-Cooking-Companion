@@ -3,7 +3,8 @@ module.exports =
 	SPOONACULAR:
 	{
 		API_KEY: "",
-		HOST: "api.spoonacular.com/recipes/",
+		HOST: "api.spoonacular.com",
+		RECIPES: '/recipes/',
 		FIND_BY_INGREDIENTS: "findByIngredients",
 		GET_INSTRUCTIONS_ENDPOINT: '/analyzedInstructions',
 		NUTRITON_ENDPOINT: `/nutritionWidget.json`,
