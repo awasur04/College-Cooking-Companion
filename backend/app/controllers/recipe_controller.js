@@ -5,11 +5,49 @@ const Ingredient = require("../models/ingredient");
 let https = require("https");
 
 
-//STILL LEFT TO DO
-//Get pdf widget of recipe
-
-
 //#region EXPORTS
+
+//Retrieve a URL which points to a recipe widget PDF
+exports.getRecipePDF = (recipeId, cb) =>
+{
+	let testOptions =
+	{
+		host: config.TEST.HOST,
+		port: config.TEST.PORT,
+		path: config.TEST.PDF_ENDPOINT,
+	};
+
+	let options =
+	{
+		host: config.SPOONACULAR.HOST,
+		path: config.SPOONACULAR.RECIPES + recipeId + config.SPOONACULAR.PDF_ENDPOINT + `?&apiKey=${config.SPOONACULAR.API_KEY}`,
+	};
+
+
+	https.get(options, (response) =>
+	{
+		let responseData = "";
+
+		response.on('data', (chunk) =>
+		{
+			responseData = responseData + chunk.toString();
+		});
+
+		response.on('end', () =>
+		{
+			//Format our data response chunk into json format
+			const jsonData = JSON.parse(responseData);
+			let recipePDF = jsonData.url;
+			cb(recipePDF);
+		});
+
+	}).on('error', (e) => 
+	{
+		console.log("ERROR: Spoonacular API could not be reached.\nMessage: " + e.message);
+		cb(undefined);
+	})
+}
+
 //Search for a recipe when given the id
 exports.findRecipeById = (recipeId, cb) =>
 {
@@ -23,7 +61,7 @@ exports.findRecipeById = (recipeId, cb) =>
 	let options =
 	{
 		host: config.SPOONACULAR.HOST,
-		path: recipeId + config.SPOONACULAR.ID_ENDPOINT + `?&apiKey=${config.SPOONACULAR.API_KEY}`,
+		path: config.SPOONACULAR.RECIPES + recipeId + config.SPOONACULAR.ID_ENDPOINT + `?&apiKey=${config.SPOONACULAR.API_KEY}`,
 	};
 
 
@@ -76,7 +114,7 @@ exports.findRecipes = (ingredients, cb) =>
 	let options =
 	{
 		host: config.SPOONACULAR.HOST,
-		path: config.SPOONACULAR.FIND_BY_INGREDIENTS + `?ingredients=${ingredients}&number=5&apiKey=${config.SPOONACULAR.API_KEY}`,
+		path: config.SPOONACULAR.RECIPES + config.SPOONACULAR.FIND_BY_INGREDIENTS + `?ingredients=${ingredients}&number=5&apiKey=${config.SPOONACULAR.API_KEY}`,
 	};
 
 
@@ -182,7 +220,7 @@ function getInstructions(recipeId)
 		let options =
 		{
 			host: config.SPOONACULAR.HOST,
-			path: recipeId + config.SPOONACULAR.GET_INSTRUCTIONS_ENDPOINT + `?apiKey=${config.SPOONACULAR.API_KEY}`,
+			path: config.SPOONACULAR.RECIPES + recipeId + config.SPOONACULAR.GET_INSTRUCTIONS_ENDPOINT + `?apiKey=${config.SPOONACULAR.API_KEY}`,
 		};
 
 		let request = https.get(options, (response) =>
@@ -239,7 +277,7 @@ function getNutrition(recipeId)
 		let options =
 		{
 			host: config.SPOONACULAR.HOST,
-			path: recipeId + config.SPOONACULAR.NUTRITON_ENDPOINT + `?apiKey=${config.SPOONACULAR.API_KEY}`,
+			path: config.SPOONACULAR.RECIPES + recipeId + config.SPOONACULAR.NUTRITON_ENDPOINT + `?apiKey=${config.SPOONACULAR.API_KEY}`,
 		};
 
 		let request = https.get(options, (response) =>
