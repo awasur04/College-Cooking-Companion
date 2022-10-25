@@ -6,7 +6,6 @@ let https = require("https");
 
 
 //STILL LEFT TO DO
-//Get recipe by id search
 //Get pdf widget of recipe
 
 
@@ -24,7 +23,7 @@ exports.findRecipeById = (recipeId, cb) =>
 	let options =
 	{
 		host: config.SPOONACULAR.HOST,
-		path: config.SPOONACULAR.ID_START + recipeId + config.SPOONACULAR.ID_END + `?&apiKey=${config.SPOONACULAR.API_KEY}`,
+		path: recipeId + config.SPOONACULAR.ID_ENDPOINT + `?&apiKey=${config.SPOONACULAR.API_KEY}`,
 	};
 
 
@@ -183,7 +182,7 @@ function getInstructions(recipeId)
 		let options =
 		{
 			host: config.SPOONACULAR.HOST,
-			path: config.SPOONACULAR.GET_INSTRUCTIONS_START + recipeId + config.SPOONACULAR.GET_INSTRUCTIONS_END + `?apiKey=${config.SPOONACULAR.API_KEY}`,
+			path: recipeId + config.SPOONACULAR.GET_INSTRUCTIONS_ENDPOINT + `?apiKey=${config.SPOONACULAR.API_KEY}`,
 		};
 
 		let request = https.get(options, (response) =>
@@ -240,7 +239,7 @@ function getNutrition(recipeId)
 		let options =
 		{
 			host: config.SPOONACULAR.HOST,
-			path: config.SPOONACULAR.NUTRITON_START + recipeId + config.SPOONACULAR.NUTRITON_END + `?apiKey=${config.SPOONACULAR.API_KEY}`,
+			path: recipeId + config.SPOONACULAR.NUTRITON_ENDPOINT + `?apiKey=${config.SPOONACULAR.API_KEY}`,
 		};
 
 		let request = https.get(options, (response) =>

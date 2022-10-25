@@ -3,14 +3,11 @@ module.exports =
 	SPOONACULAR:
 	{
 		API_KEY: "",
-		HOST: "api.spoonacular.com",
-		FIND_BY_INGREDIENTS: "/recipes/findByIngredients",
-		GET_INSTRUCTIONS_START: `/recipes/`,
-		GET_INSTRUCTIONS_END: '/analyzedInstructions',
-		NUTRITON_START: `/recipes/`,
-		NUTRITON_END: `/nutritionWidget.json`,
-		ID_START: '/recipes/',
-		ID_END: '/information',
+		HOST: "api.spoonacular.com/recipes/",
+		FIND_BY_INGREDIENTS: "findByIngredients",
+		GET_INSTRUCTIONS_ENDPOINT: '/analyzedInstructions',
+		NUTRITON_ENDPOINT: `/nutritionWidget.json`,
+		ID_ENDPOINT: '/information',
 	},
 
 	TEST:
