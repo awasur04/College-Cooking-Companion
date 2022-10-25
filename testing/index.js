@@ -8,6 +8,7 @@
 const express = require('express');
 const recipes = require('./recipes.json');
 const instructions = require('./instructions.json');
+const nutrition = require('./nutrition.json');
 
 const app = express();
 const port = 3000;
@@ -24,6 +25,12 @@ app.get('/instructions', (req, res) =>
 {
     res.header("Content-Type", 'application/json');
     res.send(JSON.stringify(instructions));
+});
+
+app.get('/nutrition', (req, res) =>
+{
+    res.header("Content-Type", 'application/json');
+    res.send(JSON.stringify(nutrition));
 });
 
 app.listen(port, () => console.log(`Testing API listening on port ${port}!`));

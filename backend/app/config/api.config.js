@@ -16,6 +16,7 @@ module.exports =
 		PORT: 3000,
 		RECIPES_ENDPOINT: '/recipes',
 		INSTRUCTIONS_ENDPOINT: '/instructions',
+		NUTRITION_ENDPOINT: '/nutrition',
 	},
 
 }
