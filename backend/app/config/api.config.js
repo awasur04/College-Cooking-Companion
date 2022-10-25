@@ -9,6 +9,8 @@ module.exports =
 		GET_INSTRUCTIONS_END: '/analyzedInstructions',
 		NUTRITON_START: `/recipes/`,
 		NUTRITON_END: `/nutritionWidget.json`,
+		ID_START: '/recipes/',
+		ID_END: '/information',
 	},
 
 	TEST:
@@ -18,6 +20,7 @@ module.exports =
 		RECIPES_ENDPOINT: '/recipes',
 		INSTRUCTIONS_ENDPOINT: '/instructions',
 		NUTRITION_ENDPOINT: '/nutrition',
+		ID_ENDPOINT: '/id',
 	},
 
 }
