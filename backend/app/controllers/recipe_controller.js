@@ -170,5 +170,65 @@ function getInstructions(recipeId)
 }
 
 
+function getNutrition(recipeId)
+{
+	return new Promise(function (resolve, reject)
+	{
+		let recipeNutrition = {};
 
+		let testOptions =
+		{
+			host: config.TEST.HOST,
+			port: config.TEST.PORT,
+			path: config.TEST.NUTRITION_ENDPOINT,
+		};
+
+		let options =
+		{
+			host: config.SPOONACULAR.HOST,
+			path: config.SPOONACULAR.NUTRITON_START + recipeId + config.SPOONACULAR.NUTRITON_END + `?apiKey=${config.SPOONACULAR.API_KEY}`,
+		};
+
+		let request = https.get(options, (response) =>
+		{
+			if (response.statucCode < 200 || response >= 300)
+			{
+				return reject(new Error('statusCode=' + resolve.statucCode));
+			}
+
+			let responseData = "";
+
+			response.on('data', (chunk) =>
+			{
+				responseData = responseData + chunk.toString();
+			});
+
+			response.on('end', () =>
+			{
+				//Format our data response chunk into json format
+				const jsonData = JSON.parse(responseData);
+
+				for (let i = 0; i < jsonData.bad.length; i++)
+				{
+					let title = jsonData.bad[i].title.replace(/ /g, "_");
+					recipeNutrition[title] = { Amount: jsonData.bad[i].amount, Percent_Of_Daily_Needs: jsonData.bad[i].percentOfDailyNeeds };
+				}
+
+				for (let i = 0; i < jsonData.good.length; i++)
+				{
+					let title = jsonData.good[i].title.replace(/ /g, "_");
+					recipeNutrition[title] = { Amount: jsonData.good[i].amount, Percent_Of_Daily_Needs: jsonData.good[i].percentOfDailyNeeds };
+				}
+				resolve(recipeNutrition);
+			});
+
+		});
+
+		request.on('error', (err) =>
+		{
+			reject(err);
+		});
+
+		request.end();
+	});
 }
