@@ -74,8 +74,9 @@ exports.findRecipes = (ingredients, cb) =>
 	})
 };
 
-function processRecipes(inputJSON)
+async function processRecipes(inputJSON)
 {
+	let recipeList = [];
 	for (let i = 0; i < inputJSON.length; i++)
 	{
 		//id, title, image, ingredients, instructions, nutrition
@@ -83,12 +84,7 @@ function processRecipes(inputJSON)
 		let currentTitle = inputJSON[i].title;
 		let currentImage = inputJSON[i].image;
 
-		let currentIngredients = getIngredients(inputJSON[i].usedIngredients, inputJSON[i].missedIngredients)
-		let currentInstructions = getInstructions()
-		for (let j = 0; j < used.length; j++)
-		{
-			console.log(used[j].name);
-		}
+		let currentIngredients = getIngredients(inputJSON[i].usedIngredients, inputJSON[i].missedIngredients);
 		let currentInstructions = await getInstructions(currentId);
 	}
 }
@@ -96,18 +92,19 @@ function processRecipes(inputJSON)
 
 function getIngredients(usedIngredients, missingIngredients)
 {
-	let ingredientList = [];
+	let ownedIngredientList = [];
+	let missingIngredientList = [];
 
-	for (let i = 0; i < usedIngredient.length; i++)
+	for (let i = 0; i < usedIngredients.length; i++)
 	{
-		let ing = new Ingredient(usedIngredient[i].id, usedIngredient[i].name, usedIngredient[i].image, usedIngredient[i].amount + " " + usedIngredient[i].unit, true);
-		ingredientList.push(ing);
+		let ing = new Ingredient(usedIngredients[i].id, usedIngredients[i].name, usedIngredients[i].image, usedIngredients[i].amount + " " + usedIngredients[i].unit, true);
+		ownedIngredientList.push(ing);
 	}
 
 	for (let i = 0; i < missingIngredients.length; i++)
 	{
 		let ing = new Ingredient(missingIngredients[i].id, missingIngredients[i].name, missingIngredients[i].image, missingIngredients[i].amount + " " + missingIngredients[i].unit, false);
-		ingredientList.push(ing);
+		missingIngredientList.push(ing);
 	}
 
 	return ingredientList;
