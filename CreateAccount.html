@@ -67,7 +67,7 @@
                 
                 // TODO Pass all values to Node server 
                 let valid = false;
-                const port = 8080;
+                const port = 3306;
                 fetch("localhost:${port}/register", {
                     method: "POST",
                     body: JSON.stringify(info),
