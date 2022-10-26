@@ -25,12 +25,18 @@
   router.delete("/kamikaze", controller.deleteAll);
 
   // Find recipes by ingredients
+  //Use Case: <host>/routes/recipes/ingredients
+  //Body Text ingredients:eggs,flour,sugar,yeast
   router.get("/recipes/ingredients", controller.findRecipes);
 
   //Find recipe by id
+  //Use Case: <host>/routes/recipes/id
+  //Body Text id:639492
   router.get("/recipes/id", controller.findRecipeById);
 
   //Get PDF of recipe
+  //Use Case: <host>/routes/recipes/pdf
+  //Body Text id:639492
   router.get("/recipes/pdf", controller.getRecipePDF);
 
   module.exports = router;
