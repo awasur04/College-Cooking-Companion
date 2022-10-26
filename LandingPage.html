@@ -104,25 +104,30 @@
                 // TODO Implement this to work with Node backend
                 const port = 8080;
                 let valid = false;
-                let items = document.getElementById("ingredientsField");
-                fetch("localhost:${port}/routes/recipes/ingredients",  {
-                    method: "POST",
-                    body: JSON.stringify(items),
-                    headers: {
-                        "Content-Type": "application/json"
-                    }
-                }).then(res => {
-                    if(res.ok) {
-                        console.log("Good request");
-                        valid = true;
-                    } else {
-                        console.log("Bad request");
-                    }
-                }).then(data => console.log(data))
-                .catch(error => {
-                    console.log("Could not reach login server");
-                    return;
-                })
+                let items = document.getElementById("ingredientsField").value;
+                items = this.replaceSpaces(items);
+                let ret = {
+                    ingredients: items
+                }
+                // fetch("localhost:${port}/routes/recipes/ingredients",  {
+                //     method: "POST",
+                //     body: JSON.stringify(ret),
+                //     headers: {
+                //         "Content-Type": "application/json"
+                //     }
+                // }).then(res => {
+                //     if(res.ok) {
+                //         console.log("Good request");
+                //         valid = true;
+                //     } else {
+                //         console.log("Bad request");
+                //     }
+                // }).then(data => console.log(data))
+                // .catch(error => {
+                //     console.log("Could not reach login server");
+                //     return;
+                // })
+                console.log(JSON.stringify(ret));
 
                 this.storeResult({test: "free"});
             },
@@ -134,8 +139,12 @@
             },
             storeResult(res) {
                 sessionStorage.setItem("Returned Recipes", res);
-                window.location.href = "recipe.html";
-            }
+                // window.location.href = "recipe.html";
+            },
+            replaceSpaces(name) {
+                let ret = String(name).replaceAll(" ", "");
+                return ret;
+            },
         },
         beforeMount(){
             if(sessionStorage.getItem("UUID") != 0 && sessionStorage.getItem("UUID") != null) {
