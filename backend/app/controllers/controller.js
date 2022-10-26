@@ -21,13 +21,19 @@ const testdb =mysql.createConnection({
 exports.create = (req, res) => {
     let user = new Object();
     user.fname =req.body.fname;
-    user.id =req.body.id;
-    user.lname =req.body.lname;
     user.email =req.body.email;
     user.password =req.body.password;
-    user.savedrecipes = req.body.savedrecipes;
+    user.savedrecipes = "";
+
+    if (user.fname == undefined || user.email == undefine || user.password == undefined)
+    {
+        console.log("Error undefined input");
+        res.send("User information failed validation").status(400).end();
+        return;
+    }
+
     console.log(user);
-   testdb.query("INSERT INTO users  (email,fname,lname,password,savedrecipes) VALUES (?,?,?,?,?)",[user.email,user.fname,user.lname,user.password,user.savedrecipes],(err, result) => {
+   testdb.query("INSERT INTO users  (email,fname,password,savedrecipes) VALUES (?,?,?,?)",[user.email,user.fname,user.password,user.savedrecipes],(err, result) => {
     if (err){
         console.log(err);
     }else{    
@@ -67,10 +73,17 @@ exports.update = (req, res) => {
     let user = new Object();
     user.fname =req.body.fname;
     user.id =req.body.id;
-    user.lname =req.body.lname;
     user.email =req.body.email;
     user.password =req.body.password;
     user.savedrecipes = req.body.savedrecipes;
+
+    if (user.fname == undefined || user.email == undefine || user.password == undefined || user.id == undefined || user.savedrecipes == undefined)
+    {
+        console.log("Error undefined input");
+        res.send("User information failed validation").status(400).end();
+        return;
+    }
+
     testdb.query("UPDATE users  SET fname=?,lname=?,email=?,password=?,savedrecipes=? WHERE id =?;",[user.fname,user.lname,user.email,user.password,user.savedrecipes,user.id],(err,result) =>{ 
         if (err)
         {
