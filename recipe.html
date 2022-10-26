@@ -6,7 +6,6 @@
     <meta name="viewport" content="width=device-width,initial-scale=1"/>
     <meta name="College Cook Companion" content="Recipies for those on a budget"/>
     <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
-    <!-- <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script> -->
 </head>
 
 <body>
@@ -413,7 +412,6 @@
             },
             methods: {
                 updateMessage() {
-                    // Update the table live with Vue v-html directive. 
                     this.rows = "";
                     this.getRecipes().forEach((i) => {
                         this.addRow(i);
