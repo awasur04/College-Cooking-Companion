@@ -59,10 +59,40 @@
                 var fname = document.getElementById("fname").children[1].value;
                 var password = document.getElementById("password").children[1].value;
                 password = this.hashPassword(password);
+                const info = {
+                    email: email,
+                    fname: fname,
+                    password: password
+                }
+                
                 // TODO Pass all values to Node server 
+                let valid = false;
+                const port = 8080;
+                fetch("localhost:${port}/register", {
+                    method: "POST",
+                    body: JSON.stringify(info),
+                    headers: {
+                        "Content-Type": "application/json"
+                    }
+                }).then(red => {
+                    if(res.ok) {
+                        console.log("Good request")
+                        valid = true;
+                    } else {
+                        console.log("Bad request")
+                    }
+                }).then(data => console.log(data))
+                .catch(error => {
+                    console.log("Could not reach register server");
+                    return;
+                })
                 // TODO Get UUID from Node server
-                this.loggedInUUID(0);
-                window.location.href = "LandingPage.html";
+                if(valid) {
+                    this.loggedInUUID(0);
+                    window.location.href = "LandingPage.html";
+                } else {
+                    alert("Could not reach register server");
+                }
             },
             hashPassword(password) {
                 // TODO Select and implement password hashing algo
