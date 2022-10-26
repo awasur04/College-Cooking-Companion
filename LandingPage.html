@@ -127,7 +127,6 @@
                 //     console.log("Could not reach login server");
                 //     return;
                 // })
-                console.log(JSON.stringify(ret));
 
                 this.storeResult({test: "free"});
             },
@@ -139,7 +138,7 @@
             },
             storeResult(res) {
                 sessionStorage.setItem("Returned Recipes", res);
-                // window.location.href = "recipe.html";
+                window.location.href = "recipe.html";
             },
             replaceSpaces(name) {
                 let ret = String(name).replaceAll(" ", "");
