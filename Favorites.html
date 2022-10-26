@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+    <title>College Cook Companion</title>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width,initial-scale=1"/>
+    <meta name="College Cook Companion" content="Recipies for those on a budget"/>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+</head>
+
+<body>
+    <div id="app">
+    <h1>MY FAVORITE RECIPIES</h1>
+    <p>Click on one of your favorited meals to get the recipe</p>
+    <h3>Saved by me</h3>
+    <table v-html="myFavorites" id="app"></table>
+    <h3>Sent to me</h3>
+    <table v-html="sharedFavorites" id="app"></table>
+    <!-- <ul>
+        <li>
+            <a href="https://www.youtube.com/watch?v=dQw4w9WgXcQ">Favorited recipe 1</a>
+            <button>Share</button>
+            <button>Remove</button>
+        </li>
+        <li>
+            <a href="https://www.youtube.com/watch?v=dQw4w9WgXcQ">Favorited recipe 2</a>
+            <button>Share</button>
+            <button>Remove</button>
+        </li>
+        <li>
+            <a href="https://www.youtube.com/watch?v=dQw4w9WgXcQ">Favorited recipe 3</a>
+            <button>Share</button>
+            <button>Remove</button>
+        </li>
+    </ul>
+    <h1>SHARED WITH ME</h1>
+    <ul>
+        <li>
+            <p>From Gordon Ramsay</p>
+            <a href="https://www.youtube.com/watch?v=dQw4w9WgXcQ">Shared recipe 1</a>
+            <button>Share</button>
+            <button>Remove</button>
+        </li>
+    </ul> -->
+    </div>
+</body>
+
+<script>
+    var app = new Vue({
+        el: "#app",
+        data: {
+            myFavorites: "",
+            sharedFavorites: "",
+            retrievedMyFavorites: "",
+            retrievedSharedFavorites: "",
+        },
+        methods: {
+            getMyFavorites() {
+                // TODO Implement backend retreive for myFav
+                this.myFavorites = "";
+                this.retrieveData("myFavorites").forEach((i) => {
+                    this.myFavorites += this.formatTable(i, "myFavorites");
+                })
+            },
+            getSharedFavorites() {
+                this.sharedFavorites = "";
+                this.retrieveData("sharedFavorites").forEach((i) => {
+                    this.sharedFavorites += this.formatTable(i, "sharedFavorites");
+                })
+                const that = this;
+                window.addEventListener("DOMContentLoaded", () => {
+                    that.retrieveData("sharedFavorites").forEach((i) => {
+                        let name = String(i.name).replaceAll(" ", "_");
+                        console.log(name);
+                        document.getElementById(name).addEventListener("click",() => {
+                            // that.doSomething();
+                            that.shareItem(name, "sharedFavorites");
+                        })
+                    })
+                })
+            },
+            formatTable(obj, table) {
+                let ret = "";
+                ret += "<tr><td>";
+                ret += String(obj.name);
+                ret += "</td>";
+                // ret += "</td><td><button @click=doSomething(";
+                ret += "</td><td><button id=";
+                ret += this.replaceSpaces(obj.name);
+                // ret += String(obj.name).replaceAll(" ", "_");
+                ret += ">Share</button></td><td><button>Remove</button>";
+                ret += "</tr>";
+                return ret;
+            },
+            retrieveData(table) {
+                // TODO Implement backend retrieve
+                if(table === "myFavorites") {
+                    return [{name:"Toast"},{name:"Cereal"}];
+                } else {
+                    return [{name:"French toast"}];
+                }
+            },
+            removeItem(id, table) {
+                // TODO Implement backend call to remove an item from either my or shared favorites
+                console.log("Removing item " + id + " from " + table);
+                this.refreshElements();
+            },
+            shareItem(id, table) {
+                // TODO Implement share item popup
+                console.log("Sharing item " + id);
+            },
+            refreshElements() {
+                this.getMyFavorites();
+                this.getSharedFavorites();
+            },
+            doSomething() {
+                console.log("Doing something!");
+            },
+            replaceSpaces(name) {
+                let ret = String(name).replaceAll(" ", "_");
+                return ret;
+            }
+        },
+        beforeMount() {
+            this.refreshElements();
+        }
+    })
+
+</script>
+
+</html>
