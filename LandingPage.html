@@ -23,8 +23,8 @@
     <h1></h1>
     <textarea id="ingredientsField">Enter ingredients you have</textarea>
     <button v-on:click="saveIngredients()">Save ingredients</button>
-    <textarea id="parametersField">Special parameters</textarea>
-    <button v-on:click="saveParameters()">Save parameters</button>
+    <!-- <textarea id="parametersField">Special parameters</textarea>
+    <button v-on:click="saveParameters()">Save parameters</button> -->
     <h2></h2>
     <button v-on:click="getFreeRecipes()">Get free recipes</button>
     <button v-on:click="getPaidRecipes()">Get recipes with shopping</button>
@@ -78,20 +78,20 @@
                 this.validateIngredients(ing);
                 this.sendData(ing);
             },
-            saveParameters() {
-                var param = document.getElementById("parametersField").value;
-                this.validateParameters(param);
-                this.sendData(param);
-            },
+            // saveParameters() {
+            //     var param = document.getElementById("parametersField").value;
+            //     this.validateParameters(param);
+            //     this.sendData(param);
+            // },
             validateIngredients(ingredients) {
                 // TODO Implement at a later date
             },
-            validateParameters(parameters) {
-                // TODO Impement at a later date
-            },
+            // validateParameters(parameters) {
+            //     // TODO Impement at a later date
+            // },
             saveAll() {
                 this.saveIngredients();
-                this.saveParameters();
+                // this.saveParameters();
             },
             sendData(obj) {
                 // TODO Send the object to the server
@@ -101,6 +101,29 @@
                 if(this.loggedIn) {
                     this.saveAll();
                 }
+                // TODO Implement this to work with Node backend
+                const port = 8080;
+                let valid = false;
+                let items = document.getElementById("ingredientsField");
+                fetch("localhost:${port}/routes/recipes/ingredients",  {
+                    method: "POST",
+                    body: JSON.stringify(items),
+                    headers: {
+                        "Content-Type": "application/json"
+                    }
+                }).then(res => {
+                    if(res.ok) {
+                        console.log("Good request");
+                        valid = true;
+                    } else {
+                        console.log("Bad request");
+                    }
+                }).then(data => console.log(data))
+                .catch(error => {
+                    console.log("Could not reach login server");
+                    return;
+                })
+
                 this.storeResult({test: "free"});
             },
             getPaidRecipes() {
