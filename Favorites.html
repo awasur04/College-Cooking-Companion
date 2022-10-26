@@ -18,6 +18,7 @@
     <table v-html="myFavorites" id="app"></table>
     <h3>Sent to me</h3>
     <table v-html="sharedFavorites" id="app"></table>
+    <div v-html="shareTo" id="app"></div>
     </div>
 </body>
 
@@ -29,6 +30,7 @@
             sharedFavorites: "",
             retrievedMyFavorites: "",
             retrievedSharedFavorites: "",
+            shareTo: ""
         },
         methods: {
             getMyFavorites() {
@@ -75,11 +77,34 @@
             removeItem(id, table) {
                 // TODO Implement backend call to remove an item from either my or shared favorites
                 console.log("Removing item " + id + " from " + table);
+                // TODO Bug fix: id displayed here does not have _table on it. Does not currently impact functionality
                 this.refreshElements();
             },
             shareItem(id, table) {
                 // TODO Implement share item popup
                 console.log("Sharing item " + id);
+                let addShareForm = "<h1>Send recipe to?</h1><form action='/url' method='PUT' id='email'><p>Email address</p><input type='email'></form><button id='send'>Send</button>";
+                this.shareTo = addShareForm;
+                const that = this;
+                // TODO Figure out better listener to add the button event listener
+                window.addEventListener("click", () => {
+                    // TODO Bug fix: Event stacking alerts
+                    document.getElementById("send").addEventListener("click", () => {
+                        let email = document.getElementById("email").children[1].value;
+                        console.log(email);
+                        var pattern = /^\w+@[a-zA-Z_]+?\.[a-zA-Z]{2,3}$/; 
+                        if(email.match(pattern) === null) {
+                            alert("Invalid email format");
+                            return;
+                        }
+                        // TODO Verify email is in database and send item
+                        if(true) { // Verify email is in database
+                            alert("Thank you! Recipe sent to user.");
+                            // TODO Bug fix: Throws errors when element is removed, non-critical
+                            that.shareTo = "";
+                        }
+                    })
+                })
             },
             refreshElements() {
                 this.getMyFavorites();
@@ -95,14 +120,24 @@
                     that.retrieveData(table).forEach((i) => {
                         let name = String(i.name).replaceAll(" ", "_");
                         console.log(name);
+                        // Share button
                         document.getElementById(name).addEventListener("click",() => {
                             that.shareItem(name, table);
                         })
+                        // Remove button
                         document.getElementById(name+"_"+table).addEventListener("click", () => {
                             that.removeItem(name, table);
                         })
                     })
                 })
+            }
+        },
+        isValidEmailFormat(email) {
+            var pattern = /^\w+@[a-zA-Z_]+?\.[a-zA-Z]{2,3}$/; 
+            if(email.match(pattern) === null) {
+                return false;
+            } else {
+                return true;
             }
         },
         beforeMount() {
