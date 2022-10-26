@@ -28,8 +28,8 @@
         data: {
             myFavorites: "",
             sharedFavorites: "",
-            retrievedMyFavorites: "",
-            retrievedSharedFavorites: "",
+            retrievedMyFavorites: [{name:"Toast"},{name:"Cereal"}],
+            retrievedSharedFavorites: [{name:"French_toast"}],
             shareTo: ""
         },
         methods: {
@@ -68,14 +68,29 @@
             retrieveData(table) {
                 // TODO Implement backend retrieve
                 if(table === "myFavorites") {
-                    return [{name:"Toast"},{name:"Cereal"}];
+                    return this.retrievedMyFavorites
                 } else {
-                    return [{name:"French toast"}];
+                    return this.retrievedSharedFavorites
                 }
             },
             removeItem(id, table) {
                 // TODO Implement backend call to remove an item from either my or shared favorites
-                console.log("Removing item " + id + " from " + table);
+                // TODO Bug fix: Removing items requires different method to add event listener and an extra click
+                if(table === "myFavorites") {
+                    for(var i=0; i<this.retrievedMyFavorites.length; i++) {
+                        if(this.retrievedMyFavorites[i].name === id) {
+                            this.retrievedMyFavorites.splice(i, 1);
+                            i--;
+                        }
+                    }
+                } else {
+                    for(var i=0; i<this.retrievedSharedFavorites.length; i++) {
+                        if(this.retrievedSharedFavorites[i].name === id) {
+                            this.retrievedSharedFavorites.splice(i, 1);
+                            i--;
+                        }
+                    }
+                }
                 // TODO Bug fix: id displayed here does not have _table on it. Does not currently impact functionality
                 this.refreshElements();
             },
@@ -115,10 +130,10 @@
             },
             addEventOnLoad(table) {
                 const that = this;
-                window.addEventListener("DOMContentLoaded", () => {
+                window.addEventListener("click", () => {
+                // window.addEventListener("DOMContentLoaded", () => {
                     that.retrieveData(table).forEach((i) => {
                         let name = String(i.name).replaceAll(" ", "_");
-                        console.log(name);
                         // Share button
                         document.getElementById(name).addEventListener("click",() => {
                             that.shareItem(name, table);
