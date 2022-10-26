@@ -34,7 +34,6 @@
         },
         methods: {
             login() {
-                console.log("Button pressed!");
                 let email = document.getElementById("email").children[1].value;
                 if(!this.isValidEmailFormat(email)) {
                     alert("Invalid email format");
@@ -45,8 +44,41 @@
 
                 // TODO Pass email and password to Node server
                 // Get back either 0 for failed UUID or new UUID
-                this.loggedInUUID(1);
-                window.location.href = "LandingPage.html"; // Test redirect 
+                const info = {
+                    email: email,
+                    password: password
+                }
+                console.log(info);
+
+                const port = 8080;
+                let valid = false;
+                fetch("localhost:${port}/login", {
+                    method: "POST",
+                    body: JSON.stringify(info),
+                    headers: {
+                        "Content-Type": "application/json"
+                    }
+                }). then(res => {
+                    if(res.ok) {
+                        console.log("Good request");
+                        valid = true;
+                    } else {
+                        console.log("Bad request");
+                        return;
+                    }
+                    console.log(res)
+                }).then(data => console.log(data))
+                .catch(error => {
+                    console.log("Could not reach login server");
+                    return;
+                })
+
+                if(valid) {
+                    this.loggedInUUID(1);
+                    window.location.href = "LandingPage.html"; // Test redirect 
+                } else {
+                    alert("Invalid login or could not reach server");
+                }
             },
             loggedInUUID(uuid) {
                 sessionStorage.setItem("UUID", uuid); // TODO Set UUID to UUID from Node server
