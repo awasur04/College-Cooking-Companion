@@ -21,6 +21,7 @@
             el: '#app',
             data: {
                 rows: '',
+                recipeNumber: [],
                 message: 'College Cooking Companion recipes list',
                 recipesReturned: [{
                     "id": 639492,
@@ -416,23 +417,43 @@
                     this.getRecipes().forEach((i) => {
                         this.addRow(i);
                     })
+                    this.addEventListener();
                 },
                 addRow(object) {
+                    // recipeNumber++;
                     let r = "<tr>";
                     r += "<td>";
                     r += String(object.title);
                     let imgSrc = object.image;
                     r += "<img src=\"" + imgSrc + "\" />";
                     let recID = object.id;
-                    r += "</td><td><button>Go to</button></td></tr>"; 
+                    this.recipeNumber.push(recID);
+                    r += "</td><td><button ";
+                    r += "id=" + String(recID);
+                    r += ">Go to</button></td></tr>"; 
                     this.rows += r;
                 },
                 getRecipes() {
-                    // TODO Implement this to work with Node backend
                     return this.recipesReturned;
+
+                },
+                addEventListener() {
+                    const that = this;
+                    // TODO This will be buggy
+                    window.addEventListener("click" , () =>{ 
+                        that.recipeNumber.forEach((i) => {
+                            document.getElementById(i).addEventListener("click", ()  => {
+                                let recID = String(i);
+                                sessionStorage.setItem("LoadRecipe", recID);
+                                window.location.href = "SelectedRecipe.html";
+                                // TODO Call server localhost:8080/routes/recipes/id with {id: recID}
+                            })
+                        }) 
+                    })
                 }
             },
             beforeMount() {
+                // this.addRow(sessionStorage.getItem("Returned Recipes")[0])
                 this.addRow(this.getRecipes()[0]);
             }
         })
