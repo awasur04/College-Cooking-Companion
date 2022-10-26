@@ -59,38 +59,34 @@
         methods: {
             getMyFavorites() {
                 // TODO Implement backend retreive for myFav
+                const table = "myFavorites";
                 this.myFavorites = "";
-                this.retrieveData("myFavorites").forEach((i) => {
-                    this.myFavorites += this.formatTable(i, "myFavorites");
+                this.retrieveData(table).forEach((i) => {
+                    this.myFavorites += this.formatTable(i, table);
                 })
+                this.addEventOnLoad(table);
+                // const that = this;
             },
             getSharedFavorites() {
+                const table = "sharedFavorites";
                 this.sharedFavorites = "";
-                this.retrieveData("sharedFavorites").forEach((i) => {
-                    this.sharedFavorites += this.formatTable(i, "sharedFavorites");
+                this.retrieveData(table).forEach((i) => {
+                    this.sharedFavorites += this.formatTable(i, table);
                 })
-                const that = this;
-                window.addEventListener("DOMContentLoaded", () => {
-                    that.retrieveData("sharedFavorites").forEach((i) => {
-                        let name = String(i.name).replaceAll(" ", "_");
-                        console.log(name);
-                        document.getElementById(name).addEventListener("click",() => {
-                            // that.doSomething();
-                            that.shareItem(name, "sharedFavorites");
-                        })
-                    })
-                })
+                this.addEventOnLoad(table);
             },
             formatTable(obj, table) {
+                let name = String(obj.name);
                 let ret = "";
                 ret += "<tr><td>";
-                ret += String(obj.name);
+                ret += name;
+                name = this.replaceSpaces(name);
                 ret += "</td>";
-                // ret += "</td><td><button @click=doSomething(";
                 ret += "</td><td><button id=";
-                ret += this.replaceSpaces(obj.name);
-                // ret += String(obj.name).replaceAll(" ", "_");
-                ret += ">Share</button></td><td><button>Remove</button>";
+                ret += name;
+                ret += ">Share</button></td><td><button id=";
+                ret += name + "_" + table;
+                ret += ">Remove</button>";
                 ret += "</tr>";
                 return ret;
             },
@@ -115,12 +111,24 @@
                 this.getMyFavorites();
                 this.getSharedFavorites();
             },
-            doSomething() {
-                console.log("Doing something!");
-            },
             replaceSpaces(name) {
                 let ret = String(name).replaceAll(" ", "_");
                 return ret;
+            },
+            addEventOnLoad(table) {
+                const that = this;
+                window.addEventListener("DOMContentLoaded", () => {
+                    that.retrieveData(table).forEach((i) => {
+                        let name = String(i.name).replaceAll(" ", "_");
+                        console.log(name);
+                        document.getElementById(name).addEventListener("click",() => {
+                            that.shareItem(name, table);
+                        })
+                        document.getElementById(name+"_"+table).addEventListener("click", () => {
+                            that.removeItem(name, table);
+                        })
+                    })
+                })
             }
         },
         beforeMount() {
