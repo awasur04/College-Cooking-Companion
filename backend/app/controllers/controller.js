@@ -1,9 +1,10 @@
 const db = require("../models");
+const recipe_controller = require("../controllers/recipe_controller");
 //const User = db.user;
 //const Op = db.Sequelize.Op;
 //const { defaultValueSchemable } = require("sequelize/types/utils");
 
-const mysql =require("mysql");
+const mysql = require("mysql");
 
 const bcrypt = require ('bcrypt');
 
@@ -129,4 +130,75 @@ exports.delete = (req, res) => {
 exports.deleteAll = (req, res) => {
     console.log("Testdeleteall");
     res.status(200).end();
+};
+
+//Sample body input
+//ingredients = eggs,salt,milk,butter,yeast
+exports.findRecipes = (req, res) =>
+{
+    let ingredients = req.body.ingredients;
+
+    if (ingredients == undefined)
+    {
+        res.send("No ingredients specified").status(400).end();
+        return;
+    }
+
+    recipe_controller.findRecipes(ingredients, (result) =>
+    {
+        if (result == undefined)
+        {
+            res.send("Unable to find recipes").status(503).end();
+        } else {
+            res.send(result).status(200).end();
+        }
+    })
+    
+};
+
+//Sample body input
+//id = 639492
+exports.findRecipeById = (req, res) =>
+{
+    let recipeId = req.body.id;
+    if (recipeId == undefined)
+    {
+        res.send("Unable to find recipe by id (Missing ID)").status(400).end();
+        return;
+    }
+    recipe_controller.findRecipeById(recipeId, (result) =>
+    {
+        if (result == undefined)
+        {
+            console.log("\nUNABLE TO RETRIEVE RECIPE");
+            res.send("Unable to find recipe by id").status(503).end();
+        } else {
+            res.send(result).status(200).end();
+        }
+    })
+};
+
+//Get Recipe PDF
+//Sample input
+//id = 639492
+exports.getRecipePDF = (req, res) =>
+{
+    let recipeId = req.body.id;
+
+    if (recipeId == undefined)
+    {
+        console.log("\nUNABLE TO RETRIEVE RECIPE");
+        res.send("Unable to find recipe by id (Missing ID)").status(400).end();
+        return;
+    }
+
+    recipe_controller.getRecipePDF(recipeId, (result) =>
+    {
+        if (result == undefined)
+        {
+            res.send("Unable to find recipe by id").status(503).end();
+        } else {;
+            res.send(result).status(200).end();
+        }
+    })
 };
