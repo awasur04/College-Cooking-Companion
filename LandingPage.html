@@ -21,7 +21,7 @@
     <button v-on:click="userSignIn()">{{ userLoginStatus }}</button>
     <button v-on:click="userCreateFavorites()">{{ createNewOrFavorites }}</button>
     <h1></h1>
-    <textarea id="ingredientsField">Enter ingredients you have</textarea>
+    <textarea id="ingredientsField">{{ ingredientsList }}</textarea>
     <button v-on:click="saveIngredients()">Save ingredients</button>
     <!-- <textarea id="parametersField">Special parameters</textarea>
     <button v-on:click="saveParameters()">Save parameters</button> -->
@@ -41,7 +41,9 @@
         data: {
             loggedIn: false,
             userLoginStatus: "",
-            createNewOrFavorites: ""
+            createNewOrFavorites: "",
+            ingredientsList: "Enter ingredients you have",
+            savedIngredients: "eggs,flour,sugar,yeast"
         },
         methods: {
             logout() {
@@ -150,6 +152,7 @@
                 this.loggedIn = true;
                 this.userLoginStatus = "Logout";
                 this.createNewOrFavorites = "Favorites";
+                this.ingredientsList = this.savedIngredients;
             } else {
                 this.userLoginStatus = "Login";
                 this.createNewOrFavorites = "Signup";
