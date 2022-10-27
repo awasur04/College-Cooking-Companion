@@ -157,7 +157,10 @@
         beforeMount() {
             const port = 3306;
             let valid = false;
-
+            let addFav = sessionStorage.getItem("newFavorites");
+            if(addFav != null) {
+                this.retrievedMyFavorites.push({name:this.replaceSpaces(addFav)});
+            }
             this.refreshElements();
         }
     })
