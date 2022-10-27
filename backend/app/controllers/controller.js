@@ -31,12 +31,16 @@ exports.create = (req, res) => {
     user.password="";
     //user.password =req.body.password;
     
-    bcrypt.genSalt(10, function(err, salt) {
-        bcrypt.hash(req.body.password, salt, function(err, hash) {
-        user.password = hash;
-        //console.log(hash);
-        });
-    });
+    // bcrypt.genSalt(10, function(err, salt) {
+    //     bcrypt.hash(req.body.password, salt, function(err, hash) {
+    //     user.password = hash;
+    //     //console.log(hash);
+    //     });
+    // });
+    if (user.password == "")
+    {
+        user.password =req.body.password
+    }
 
 
     user.savedrecipes = req.body.savedrecipes;
