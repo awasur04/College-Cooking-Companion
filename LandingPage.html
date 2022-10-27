@@ -152,7 +152,9 @@
                 this.loggedIn = true;
                 this.userLoginStatus = "Logout";
                 this.createNewOrFavorites = "Favorites";
-                this.ingredientsList = this.savedIngredients;
+                if(sessionStorage.getItem("UUID") == 1) {
+                    this.ingredientsList = this.savedIngredients;
+                }
             } else {
                 this.userLoginStatus = "Login";
                 this.createNewOrFavorites = "Signup";
