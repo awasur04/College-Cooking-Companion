@@ -1,28 +1,41 @@
-
+/*
+ * @name routes
+ * @author Adam Rusaw, Alonso Montelongo
+ * @version 1.0
+ * @data 10/27/2022
+ * @purpose Contains the endpoints the frontend needs to call in order to pass/retrive data to our controller file
+ * 
+ */
 
 
   const controller = require("../controllers/controller");
 
   var router = require("express").Router();
 
-  // Create a new Tutorial
+  // Calls the controller.create method to create a new user
   router.post("/create", controller.create);
 
-  // Retrieve all Tutorials
+  // Calls the controller.findAll method to retrive all users
   router.get("/all", controller.findAll);
 
+  // Calls the controller.findId method to retrive the id of the user by email
+  router.get("/userid", controller.findId);
 
-  // Retrieve a single Tutorial with id
+
+  //Calls the controller.findOne method to retive one user
   router.get("/getoneuser/id", controller.findOne);
 
-  // Update a Tutorial with id
+  //Calls the controller.findOne method to Update on user
   router.put("/updateoneuser/id", controller.update);
 
-  // Delete a Tutorial with id
+  //Calls the controller.findOne method to Update on user
+  router.put("/updateusersavedrecipes", controller.updateSavedRecipes);
+
+
+  //Calls the controller.findOne method to delete one user
   router.delete("/deleteoneuser/id", controller.delete);
 
-  // Delete all Tutorials
-  router.delete("/kamikaze", controller.deleteAll);
+
 
   // Find recipes by ingredients
   //Use Case: <host>/routes/recipes/ingredients
