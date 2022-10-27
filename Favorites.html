@@ -161,7 +161,9 @@
             if(addFav != null) {
                 this.retrievedMyFavorites.push({name:this.replaceSpaces(addFav)});
             }
-            this.refreshElements();
+            if(sessionStorage.getItem("UUID") != 2) {
+                this.refreshElements();
+            }
         }
     })
 
