@@ -5,6 +5,10 @@ const db = require("../models");
 
 const mysql =require("mysql");
 
+const bcrypt = require ('bcrypt');
+
+
+
 const testdb =mysql.createConnection({
     user: "root",
     host: "localhost",
@@ -23,7 +27,17 @@ exports.create = (req, res) => {
     user.id =req.body.id;
     user.lname =req.body.lname;
     user.email =req.body.email;
-    user.password =req.body.password;
+    user.password="";
+    //user.password =req.body.password;
+    
+    bcrypt.genSalt(10, function(err, salt) {
+        bcrypt.hash(req.body.password, salt, function(err, hash) {
+        user.password = hash;
+        //console.log(hash);
+        });
+    });
+
+
     user.savedrecipes = req.body.savedrecipes;
     console.log(user);
    testdb.query("INSERT INTO users  (email,fname,lname,password,savedrecipes) VALUES (?,?,?,?,?)",[user.email,user.fname,user.lname,user.password,user.savedrecipes],(err, result) => {
@@ -70,6 +84,12 @@ exports.update = (req, res) => {
     user.email =req.body.email;
     user.password =req.body.password;
     user.savedrecipes = req.body.savedrecipes;
+
+
+
+
+
+
     testdb.query("UPDATE users  SET fname=?,lname=?,email=?,password=?,savedrecipes=? WHERE id =?;",[user.fname,user.lname,user.email,user.password,user.savedrecipes,user.id],(err,result) =>{ 
         if (err)
         {
