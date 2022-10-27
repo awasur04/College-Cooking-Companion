@@ -261,7 +261,7 @@ function getInstructions(recipeId)
 	return new Promise(function (resolve, reject)
 	{
 		let recipeInstructions = [];
-		
+
 		let testOptions =
 		{
 			host: config.TEST.HOST,
