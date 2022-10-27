@@ -13,7 +13,7 @@
         <h1>{{ message }}</h1>
         <h1></h1>
         <table v-html="rows" id="app"></table>
-        <button v-on:click="updateMessage()">Update</button>
+        <!-- <button v-on:click="updateMessage()">Update</button> -->
     </div>
 
     <script>
@@ -453,7 +453,7 @@
             },
             beforeMount() {
                 // this.addRow(sessionStorage.getItem("Returned Recipes")[0])
-                this.addRow(this.getRecipes()[0]);
+                this.updateMessage();
             }
         })
     </script>
