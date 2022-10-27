@@ -10,7 +10,7 @@
 
 <body>
     <div id="app">
-    <h1>Recipe</h1>
+    <h1>{{ recipeName }}</h1>
     <button @click="addToFavorites()">Add to favorites</button>
     <h2>Ingredients</h2>
     <table v-html="ingredients" id="app"></table>
@@ -25,6 +25,7 @@
         var app = new Vue({
             el: '#app',
             data: {
+                recipeName: "Recipe",
                 ingredients: "",
                 instructions: '',
                 nutrition: "",
@@ -190,11 +191,13 @@
             },
             methods: {
                 addToFavorites() {
-                    
+                    alert("Added " + this.recipeName + " to favorites list");
+                    sessionStorage.setItem("newFavorites", this.recipeName);
                 },
 
             },
             beforeMount() {
+                this.recipeName = this.base.title;
                 // TODO Make server call Call server localhost:8080/routes/recipes/id with {id: recID}
                 this.base.instructions.forEach((i) => {
                     this.instructions += "<tr><td>";
