@@ -74,14 +74,14 @@
                 })
 
                 if(valid) {
-                    this.loggedInUUID(1);
+                    this.loggedInUUID(email);
                     window.location.href = "LandingPage.html"; // Test redirect 
                 } else {
                     alert("Invalid login or could not reach server");
                 }
             },
             loggedInUUID(uuid) {
-                sessionStorage.setItem("UUID", uuid); // TODO Set UUID to UUID from Node server
+                sessionStorage.setItem("UUID", uuid); // TODO Set UUID users email
                 return 0;
             },
             isValidEmailFormat(email) {

@@ -161,7 +161,7 @@
             if(addFav != null) {
                 this.retrievedMyFavorites.push({name:this.replaceSpaces(addFav)});
             }
-            if(sessionStorage.getItem("UUID") != 2) {
+            if(sessionStorage.getItem("UUID") != 2) { // TODO Fix this to take user email as UUID
                 this.refreshElements();
             }
         }
