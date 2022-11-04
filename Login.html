@@ -51,28 +51,27 @@
                 console.log(info);
 
                 const port = 3306;
-                let valid = true;
-                // let valid = false;
-                // fetch("localhost:${port}/login", {
-                //     method: "POST",
-                //     body: JSON.stringify(info),
-                //     headers: {
-                //         "Content-Type": "application/json"
-                //     }
-                // }). then(res => {
-                //     if(res.ok) {
-                //         console.log("Good request");
-                //         valid = true;
-                //     } else {
-                //         console.log("Bad request");
-                //         return;
-                //     }
-                //     console.log(res)
-                // }).then(data => console.log(data))
-                // .catch(error => {
-                //     console.log("Could not reach login server");
-                //     return;
-                // })
+                let valid = false;
+                fetch("localhost:${port}/login", {
+                    method: "POST",
+                    body: JSON.stringify(info),
+                    headers: {
+                        "Content-Type": "application/json"
+                    }
+                }). then(res => {
+                    if(res.ok) {
+                        console.log("Good request");
+                        valid = true;
+                    } else {
+                        console.log("Bad request");
+                        return;
+                    }
+                    console.log(res)
+                }).then(data => console.log(data))
+                .catch(error => {
+                    console.log("Could not reach login server");
+                    return;
+                })
 
                 if(valid) {
                     this.loggedInUUID(1);

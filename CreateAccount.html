@@ -66,27 +66,26 @@
                 }
                 
                 // TODO Pass all values to Node server 
-                let valid = true;
-                // let valid = false;
-                // const port = 3306;
-                // fetch("localhost:${port}/register", {
-                //     method: "POST",
-                //     body: JSON.stringify(info),
-                //     headers: {
-                //         "Content-Type": "application/json"
-                //     }
-                // }).then(red => {
-                //     if(res.ok) {
-                //         console.log("Good request")
-                //         valid = true;
-                //     } else {
-                //         console.log("Bad request")
-                //     }
-                // }).then(data => console.log(data))
-                // .catch(error => {
-                //     console.log("Could not reach register server");
-                //     return;
-                // })
+                let valid = false;
+                const port = 3306;
+                fetch("localhost:${port}/register", {
+                    method: "POST",
+                    body: JSON.stringify(info),
+                    headers: {
+                        "Content-Type": "application/json"
+                    }
+                }).then(red => {
+                    if(res.ok) {
+                        console.log("Good request")
+                        valid = true;
+                    } else {
+                        console.log("Bad request")
+                    }
+                }).then(data => console.log(data))
+                .catch(error => {
+                    console.log("Could not reach register server");
+                    return;
+                })
                 // TODO Get UUID from Node server
                 if(valid) {
                     this.loggedInUUID(2);
