@@ -58,7 +58,6 @@
                 }
                 var fname = document.getElementById("fname").children[1].value;
                 var password = document.getElementById("password").children[1].value;
-                password = this.hashPassword(password);
                 const info = {
                     email: email,
                     fname: fname,
@@ -93,10 +92,6 @@
                 } else {
                     alert("Could not reach register server");
                 }
-            },
-            hashPassword(password) {
-                // TODO Select and implement password hashing algo
-                return password;
             }
         }
     })
