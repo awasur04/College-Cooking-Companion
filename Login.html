@@ -58,7 +58,7 @@
                     headers: {
                         "Content-Type": "application/json"
                     }
-                }). then(res => {
+                }).then(res => {
                     if(res.ok) {
                         console.log("Good request");
                         valid = true;
@@ -67,7 +67,7 @@
                         return;
                     }
                     console.log(res)
-                }).then(data => console.log(data))
+                }).then(res => console.log(res))
                 .catch(error => {
                     console.log("Could not reach login server");
                     return;
