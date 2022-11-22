@@ -22,9 +22,9 @@ exports.create = (req, res) => {
     let user = new Object();
     user.name =req.body.name;
     user.email =req.body.email;
-    user.password="";
+    user.password=req.body.password;
     user.savedrecipes = "";
-    user.password =bcrypt.hashSync(password, bcrypt.genSaltSync(10));
+    user.password =bcrypt.hashSync(user.password, bcrypt.genSaltSync(10));
 
     // bcrypt.genSalt(10, function(err, salt) {
     //     bcrypt.hash(req.body.password, salt, function(err, hash) {
