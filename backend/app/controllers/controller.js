@@ -37,7 +37,7 @@ exports.create = (req, res) => {
         user.password =req.body.password
     }
     console.log(user);
-   testdb.query("INSERT INTO users  (email,name,password,savedrecipes) VALUES (?,?,?,?,?)",[user.email,user.name,user.password,user.savedrecipes],(err, result) => {
+   testdb.query("INSERT INTO users  (email,name,password,savedrecipes) VALUES (?,?,?,?)",[user.email,user.name,user.password,user.savedrecipes],(err, result) => {
     if (err){
         console.log(err);
     }else{    
