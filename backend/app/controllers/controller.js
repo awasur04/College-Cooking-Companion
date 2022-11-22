@@ -22,9 +22,9 @@ exports.create = (req, res) => {
     let user = new Object();
     user.name =req.body.name;
     user.email =req.body.email;
-    user.password="";
+    user.password=req.body.password;
     user.savedrecipes = "";
-    //user.password =req.body.password;
+    user.password =bcrypt.hashSync(user.password, bcrypt.genSaltSync(10));
 
     // bcrypt.genSalt(10, function(err, salt) {
     //     bcrypt.hash(req.body.password, salt, function(err, hash) {
@@ -32,10 +32,10 @@ exports.create = (req, res) => {
     //     //console.log(hash);
     //     });
     // });
-    if (user.password == "")
-    {
-        user.password =req.body.password
-    }
+    // if (user.password == "")
+    // {
+    //     user.password =req.body.password
+    // }
     console.log(user);
    testdb.query("INSERT INTO users  (email,name,password,savedrecipes) VALUES (?,?,?,?)",[user.email,user.name,user.password,user.savedrecipes],(err, result) => {
     if (err){
