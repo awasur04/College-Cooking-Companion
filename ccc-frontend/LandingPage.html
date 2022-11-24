@@ -49,10 +49,10 @@
             logout() {
                 this.saveAll();
                 sessionStorage.removeItem("UUID");
-                window.location.href = "frontend/LandingPage.html";
+                window.location.href = "LandingPage.html";
             },
             login() {
-                window.location.href = "frontend/Login.html";
+                window.location.href = "Login.html";
             },
             userSignIn() {
                 if(this.loggedIn) {
@@ -62,11 +62,11 @@
                 }
             },
             newUser() {
-                window.location.href = "frontend/CreateAccount.html";
+                window.location.href = "CreateAccount.html";
             },
             favorites() {
                 this.saveAll();
-                window.location.href = "frontend/Favorites.html";
+                window.location.href = "Favorites.html";
             },
             userCreateFavorites() {
                 if(this.loggedIn) {
@@ -140,7 +140,7 @@
             },
             storeResult(res) {
                 sessionStorage.setItem("Returned Recipes", res);
-                window.location.href = "frontend/recipe.html";
+                window.location.href = "recipe.html";
             },
             replaceSpaces(name) {
                 let ret = String(name).replaceAll(" ", "");

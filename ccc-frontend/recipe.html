@@ -444,7 +444,7 @@
                             document.getElementById(i).addEventListener("click", ()  => {
                                 let recID = String(i);
                                 sessionStorage.setItem("LoadRecipe", recID);
-                                window.location.href = "frontend/SelectedRecipe.html";
+                                window.location.href = "SelectedRecipe.html";
                                 // TODO Call server localhost:8080/routes/recipes/id with {id: recID}
                             })
                         }) 
