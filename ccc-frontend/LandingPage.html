@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+
+  <title>College Cook Companion</title>
+
+  <meta charset="UTF-8" />
+
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+
+  <meta name="College Cook Companion" content="Recipes for those on a budget" />
+  <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+
+</head>
+
+<body>
+    <div id="app">
+    <h1>Welcome to the College Cook Companion</h1>
+    <button v-on:click="userSignIn()">{{ userLoginStatus }}</button>
+    <button v-on:click="userCreateFavorites()">{{ createNewOrFavorites }}</button>
+    <h1></h1>
+    <textarea id="ingredientsField">{{ ingredientsList }}</textarea>
+    <button v-on:click="saveIngredients()">Save ingredients</button>
+    <!-- <textarea id="parametersField">Special parameters</textarea>
+    <button v-on:click="saveParameters()">Save parameters</button> -->
+    <h2></h2>
+    <button v-on:click="getFreeRecipes()">Get free recipes</button>
+    <button v-on:click="getPaidRecipes()">Get recipes with shopping</button>
+    <h2></h2>
+    </div>
+    
+
+</body>
+
+<script>
+
+    var app = new Vue({
+        el: "#app",
+        data: {
+            loggedIn: false,
+            userLoginStatus: "",
+            createNewOrFavorites: "",
+            ingredientsList: "Enter ingredients you have",
+            savedIngredients: "eggs,flour,sugar,yeast"
+        },
+        methods: {
+            logout() {
+                this.saveAll();
+                sessionStorage.removeItem("UUID");
+                window.location.href = "frontend/LandingPage.html";
+            },
+            login() {
+                window.location.href = "frontend/Login.html";
+            },
+            userSignIn() {
+                if(this.loggedIn) {
+                    this.logout();
+                } else {
+                    this.login();
+                }
+            },
+            newUser() {
+                window.location.href = "frontend/CreateAccount.html";
+            },
+            favorites() {
+                this.saveAll();
+                window.location.href = "frontend/Favorites.html";
+            },
+            userCreateFavorites() {
+                if(this.loggedIn) {
+                    this.favorites();
+                } else {
+                    this.newUser();
+                }
+            },
+            saveIngredients() {
+                var ing = document.getElementById("ingredientsField").value;
+                this.validateIngredients(ing);
+                this.sendData(ing);
+            },
+            // saveParameters() {
+            //     var param = document.getElementById("parametersField").value;
+            //     this.validateParameters(param);
+            //     this.sendData(param);
+            // },
+            validateIngredients(ingredients) {
+                // TODO Implement at a later date
+            },
+            // validateParameters(parameters) {
+            //     // TODO Impement at a later date
+            // },
+            saveAll() {
+                this.saveIngredients();
+                // this.saveParameters();
+            },
+            sendData(obj) {
+                // TODO Send the object to the server
+                console.log("Sending data...");
+            },
+            getFreeRecipes() {
+                if(this.loggedIn) {
+                    this.saveAll();
+                }
+                // TODO Implement this to work with Node backend
+                const port = 8080;
+                let valid = false;
+                let items = document.getElementById("ingredientsField").value;
+                items = this.replaceSpaces(items);
+                let ret = {
+                    ingredients: items
+                }
+                fetch("localhost:${port}/routes/recipes/ingredients",  {
+                    method: "POST",
+                    body: JSON.stringify(ret),
+                    headers: {
+                        "Content-Type": "application/json"
+                    }
+                }).then(res => {
+                    if(res.ok) {
+                        console.log("Good request");
+                        valid = true;
+                    } else {
+                        console.log("Bad request");
+                    }
+                }).then(data => console.log(data))
+                .catch(error => {
+                    console.log("Could not reach login server");
+                    return;
+                })
+
+                this.storeResult({test: "free"});
+            },
+            getPaidRecipes() {
+                if(this.loggedIn) {
+                    this.saveAll();
+                }
+                this.storeResult({test: "paid"})
+            },
+            storeResult(res) {
+                sessionStorage.setItem("Returned Recipes", res);
+                window.location.href = "frontend/recipe.html";
+            },
+            replaceSpaces(name) {
+                let ret = String(name).replaceAll(" ", "");
+                return ret;
+            },
+        },
+        beforeMount(){
+            if(sessionStorage.getItem("UUID") != 0 && sessionStorage.getItem("UUID") != null) { // TODO Fix to use email as UUID
+                this.loggedIn = true;
+                this.userLoginStatus = "Logout";
+                this.createNewOrFavorites = "Favorites";
+                if(sessionStorage.getItem("UUID") == 1) {
+                    this.ingredientsList = this.savedIngredients;
+                }
+            } else {
+                this.userLoginStatus = "Login";
+                this.createNewOrFavorites = "Signup";
+            }
+        }
+    })
+
+</script>
+
+</html>
