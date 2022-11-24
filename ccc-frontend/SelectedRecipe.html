@@ -1,0 +1,229 @@
+<html>
+
+<head>
+    <title>College Cook Companion</title>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width,initial-scale=1"/>
+    <meta name="College Cook Companion" content="Recipies for those on a budget"/>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+</head>
+
+<body>
+    <div id="app">
+    <h1>{{ recipeName }}</h1>
+    <button @click="addToFavorites()">Add to favorites</button>
+    <h2>Ingredients</h2>
+    <table v-html="ingredients" id="app"></table>
+    <h2>Instructions</h2>
+    <table v-html="instructions" id="app"></table>
+    <h2>Nutrition</h2>
+    <table v-html="nutrition" id="app"></table>
+    </div>
+
+    <script>
+
+        var app = new Vue({
+            el: '#app',
+            data: {
+                recipeName: "Recipe",
+                ingredients: "",
+                instructions: '',
+                nutrition: "",
+                base: {
+                    "id": 639492,
+    "title": "Cinnamon Twists",
+    "image": "https://spoonacular.com/recipeImages/639492-556x370.jpg",
+    "ownedIngredients": [
+        {
+            "id": 18375,
+            "name": "active yeast",
+            "image": "yeast-granules.jpg",
+            "amount": "1 package",
+            "currentlyOwned": true
+        },
+        {
+            "id": 1001,
+            "name": "butter",
+            "image": "butter-sliced.jpg",
+            "amount": "1 cup",
+            "currentlyOwned": true
+        },
+        {
+            "id": 1123,
+            "name": "eggs",
+            "image": "egg.png",
+            "amount": "2 ",
+            "currentlyOwned": true
+        },
+        {
+            "id": 1077,
+            "name": "milk",
+            "image": "milk.png",
+            "amount": "1 cup",
+            "currentlyOwned": true
+        },
+        {
+            "id": 2047,
+            "name": "salt",
+            "image": "salt.jpg",
+            "amount": "0.5 teaspoon",
+            "currentlyOwned": true
+        },
+        {
+            "id": 19335,
+            "name": "sugar",
+            "image": "sugar-in-bowl.png",
+            "amount": "1 cup",
+            "currentlyOwned": true
+        }
+    ],
+    "missingIngredients": [],
+    "instructions": [
+        "Combine 2 cups flour with yeast.",
+        "Heat and stir milk, butter or margarine, sugar and salt until warm and butter is almost completely melted.",
+        "Add this  to the flour mixture along with the eggs.Beat with an electric mixer on low speed for 30 seconds, scraping the bowl, then beat on high speed for approx. 3 minutes. Stir in as much of the remaining flour ( 2 to 2 1/3 cups) as you can.Turn out onto a lightly floured surface. Knead in enough remaining flour to make a moderately soft dough that is smooth and elastic (about 3 - 5 minutes). Shape into a ball.",
+        "Place in a lightly greased bowl. Cover and let rise in a warm place till double in size. (About 1 hour)Punch dough down. Divide in half. Cover and let rest 10 minutes.",
+        "Roll half of the dough into a 12x8 inch rectangle. Melt 3 tablespoons butter or margarine; brush half over the dough. combine 3/4 cup sugar and 2 1/2 teaspoons ground cinnamon; sprinkle half of the mixture over dough. Fold dough in half and then in half once more.",
+        "Cut strips of dough along the short end and twist sealing the seams.",
+        "Place in a baking sheet. Cover; let rise till nearly double about 30 minutes.",
+        "Bake in a 375 degree oven for 20 to 25 minutes. (Be sure to check them, they brown easily.)For the sugar glaze combine 1 cup sifted powdered sugar with 1/4 teaspoon vanilla and 1 tablespoon milk. Continue to add milk 1 teaspoon at a time until you get a drizzling consistency."
+    ],
+    "nutrition": {
+        "Calories": {
+            "Amount": "192k",
+            "Percent_Of_Daily_Needs": 9.64
+        },
+        "Fat": {
+            "Amount": "14g",
+            "Percent_Of_Daily_Needs": 22.08
+        },
+        "Saturated_Fat": {
+            "Amount": "8g",
+            "Percent_Of_Daily_Needs": 55.35
+        },
+        "Carbohydrates": {
+            "Amount": "15g",
+            "Percent_Of_Daily_Needs": 5.13
+        },
+        "Sugar": {
+            "Amount": "15g",
+            "Percent_Of_Daily_Needs": 16.86
+        },
+        "Cholesterol": {
+            "Amount": "59mg",
+            "Percent_Of_Daily_Needs": 20
+        },
+        "Sodium": {
+            "Amount": "215mg",
+            "Percent_Of_Daily_Needs": 9.38
+        },
+        "Protein": {
+            "Amount": "1g",
+            "Percent_Of_Daily_Needs": 3.36
+        },
+        "Vitamin_A": {
+            "Amount": "467IU",
+            "Percent_Of_Daily_Needs": 9.35
+        },
+        "Vitamin_B2": {
+            "Amount": "0.09mg",
+            "Percent_Of_Daily_Needs": 5.08
+        },
+        "Vitamin_B1": {
+            "Amount": "0.07mg",
+            "Percent_Of_Daily_Needs": 4.42
+        },
+        "Selenium": {
+            "Amount": "2µg",
+            "Percent_Of_Daily_Needs": 4.09
+        },
+        "Folate": {
+            "Amount": "16µg",
+            "Percent_Of_Daily_Needs": 4
+        },
+        "Vitamin_D": {
+            "Amount": "0.6µg",
+            "Percent_Of_Daily_Needs": 3.97
+        },
+        "Phosphorus": {
+            "Amount": "34mg",
+            "Percent_Of_Daily_Needs": 3.42
+        },
+        "Vitamin_E": {
+            "Amount": "0.45mg",
+            "Percent_Of_Daily_Needs": 3.03
+        },
+        "Calcium": {
+            "Amount": "27mg",
+            "Percent_Of_Daily_Needs": 2.75
+        },
+        "Vitamin_B12": {
+            "Amount": "0.16µg",
+            "Percent_Of_Daily_Needs": 2.7
+        },
+        "Vitamin_B5": {
+            "Amount": "0.25mg",
+            "Percent_Of_Daily_Needs": 2.47
+        },
+        "Zinc": {
+            "Amount": "0.2mg",
+            "Percent_Of_Daily_Needs": 1.34
+        },
+        "Vitamin_B6": {
+            "Amount": "0.02mg",
+            "Percent_Of_Daily_Needs": 1.25
+        },
+        "Potassium": {
+            "Amount": "40mg",
+            "Percent_Of_Daily_Needs": 1.16
+        },
+        "Vitamin_K": {
+            "Amount": "1µg",
+            "Percent_Of_Daily_Needs": 1.15
+        },
+        "Vitamin_B3": {
+            "Amount": "0.23mg",
+            "Percent_Of_Daily_Needs": 1.14
+        }
+    }
+                }
+
+            },
+            methods: {
+                addToFavorites() {
+                    alert("Added " + this.recipeName + " to favorites list");
+                    sessionStorage.setItem("newFavorites", this.recipeName);
+                },
+
+            },
+            beforeMount() {
+                this.recipeName = this.base.title;
+                // TODO Make server call Call server localhost:8080/routes/recipes/id with {id: recID}
+                this.base.instructions.forEach((i) => {
+                    this.instructions += "<tr><td>";
+                    // this.instructions += "<p>";
+                    this.instructions += i;
+                    // this.instructions += "</p>";
+                    this.instructions += "</td></tr>";
+                })
+                this.base.ownedIngredients.forEach((i) => {
+                    this.ingredients += "<tr><td>";
+                    this.ingredients += i.name;
+                    this.ingredients += "</td><td>";
+                    this.ingredients += i.amount;
+                    this.ingredients += "</td></tr>";
+                })
+                this.nutrition += "<tr><td>Calories</td><td>" + this.base.nutrition.Calories.Amount + "</td></tr>";
+                this.nutrition += "<tr><td>Fat</td><td>" + this.base.nutrition.Fat.Amount + "</td></tr>";
+                this.nutrition += "<tr><td>Staturated Fat</td><td>" + this.base.nutrition.Saturated_Fat.Amount + "</td></tr>";
+                this.nutrition += "<tr><td>Carbohydrates</td><td>" + this.base.nutrition.Carbohydrates.Amount + "</td></tr>";
+                this.nutrition += "<tr><td>Sugar</td><td>" + this.base.nutrition.Sugar.Amount + "</td></tr>";
+                this.nutrition += "<tr><td>Cholesterol</td><td>" + this.base.nutrition.Cholesterol.Amount + "</td></tr>";
+                this.nutrition += "<tr><td>Sodium</td><td>" + this.base.nutrition.Sodium.Amount + "</td></tr>";
+                this.nutrition += "<tr><td>Protein</td><td>" + this.base.nutrition.Protein.Amount + "</td></tr>";
+                this.nutrition += "<tr><td>Vitamin A</td><td>" + this.base.nutrition.Vitamin_A.Amount + "</td></tr>";
+            }
+        })
+    </script>
+</body>
+</html>
