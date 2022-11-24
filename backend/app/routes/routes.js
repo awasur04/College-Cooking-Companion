@@ -40,7 +40,6 @@
   // Find recipes by ingredients
   //Use Case: <host>/routes/recipes/ingredients
   //Body Text ingredients:eggs,flour,sugar,yeast
-//   router.get("/recipes/ingredients", controller.findRecipes);
   router.post("/recipes/ingredients", controller.findRecipes);
 
   //Find recipe by id
