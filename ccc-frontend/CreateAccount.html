@@ -17,7 +17,7 @@
         <p>Email address</p>
         <input type="email">
     </form>
-    <form action="/url" method="PUT" id="fname">
+    <form action="/url" method="PUT" id="name">
         <p>First name</p>
         <input type="text">
     </form>
@@ -56,11 +56,11 @@
                     alert("Invalid email format");
                     return;
                 }
-                var enteredName = document.getElementById("fname").children[1].value;
+                var enteredName = document.getElementById("name").children[1].value;
                 var enteredPassword = document.getElementById("password").children[1].value;
                 const info = {
                     email: enteredEmail,
-                    fname: enteredName,
+                    name: enteredName,
                     password: enteredPassword
                 }
 
@@ -69,11 +69,11 @@
                 // TODO Pass all values to Node server 
                 let valid = false;
                 const port = 8080;
-                fetch("localhost:8080/routes/create", {
+                fetch("http://localhost:8080/routes/create", {
                     method: "POST",
                     body: JSON.stringify(info),
                     headers: {
-                        "Content-Type": "application/json"
+                        "Content-Type": "application/json",
                     }
                 }).then(res => {
                     if(res.ok) {
