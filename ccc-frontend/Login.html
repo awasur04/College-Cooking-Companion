@@ -1,0 +1,111 @@
+<html>
+
+<head>
+    <title>College Cook Companion</title>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width,initial-scale=1"/>
+    <meta name="College Cook Companion" content="Recipies for those on a budget"/>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+</head>
+
+<body>
+
+    <div id="app">
+        <h1>LOGIN</h1>
+        <form action="/url" method="PUT" id="email">
+            <p>Email address</p>
+            <input type="email">
+        </form>
+        <form action="/url" method="PUT" id="password">
+            <p>Password</p>
+            <input type="password">
+        </form>
+        <h1></h1>
+        <button v-on:click="login()">Login</button>
+    </div>
+
+</body>
+
+<script>
+    var app = new Vue({
+        el: "#app",
+        data: {
+
+        },
+        methods: {
+            login() {
+                let email = document.getElementById("email").children[1].value;
+                if(!this.isValidEmailFormat(email)) {
+                    alert("Invalid email format");
+                    return;
+                }
+                let password = document.getElementById("password").children[1].value;
+
+                fetch("localhost:8080/routes/all", {
+                    method: "GET"
+                }). then(res => {
+                    if(res.ok) {
+                        console.log("Good")
+                    } else {
+                        console.log("Bad")
+                    }
+                }) .then(res => console.log(res))
+                .catch(error => {
+                    console.log(error)
+                })
+
+                // TODO Pass email and password to Node server
+                // Get back either 0 for failed UUID or new UUID
+                const info = {
+                    email: email,
+                    password: password
+                }
+                console.log(info);
+
+                const port = 8080;
+                let valid = false;
+                fetch("localhost:${port}/routes/login", {
+                    method: "POST",
+                    body: JSON.stringify(info),
+                    headers: {
+                        "Content-Type": "application/json"
+                    }
+                }).then(res => {
+                    if(res.ok) {
+                        console.log("Good request");
+                        valid = true;
+                    } else {
+                        console.log("Bad request");
+                        return;
+                    }
+                    console.log(res)
+                }).then(res => console.log(res))
+                .catch(error => {
+                    console.log("Could not reach login server");
+                    return;
+                })
+
+                if(valid) {
+                    this.loggedInUUID(email);
+                    window.location.href = "LandingPage.html"; // Test redirect 
+                } else {
+                    alert("Invalid login or could not reach server");
+                }
+            },
+            loggedInUUID(uuid) {
+                sessionStorage.setItem("UUID", uuid); // TODO Set UUID users email
+                return 0;
+            },
+            isValidEmailFormat(email) {
+                var pattern = /^[\w%\+\-]+(\.[\w%\+\-]+)*@[\w%\+\-]+(\.[\w%\+\-]+)+$/;
+                if(email.match(pattern) === null) {
+                    return false;
+                } else {
+                    return true;
+                }
+            }
+        }
+    })
+</script>
+
+</html>
