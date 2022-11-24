@@ -433,7 +433,8 @@
                     this.rows += r;
                 },
                 getRecipes() {
-                    return this.recipesReturned;
+                    return JSON.parse(sessionStorage.getItem("Returned Recipes"));
+                    // return this.recipesReturned;
 
                 },
                 addEventListener() {
