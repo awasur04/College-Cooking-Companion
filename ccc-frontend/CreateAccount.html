@@ -74,6 +74,7 @@
                     body: JSON.stringify(info),
                     headers: {
                         "Content-Type": "application/json",
+                        // "Access-Control-Allow-Origin": "true"
                     }
                 }).then(res => {
                     if(res.ok) {
@@ -88,7 +89,7 @@
                     return;
                 })
                 // TODO Get UUID from Node server
-                if(valid) {
+                if(valid === true) {
                     this.loggedInUUID(enteredEmail);
                     window.location.href = "LandingPage.html";
                 } else {
