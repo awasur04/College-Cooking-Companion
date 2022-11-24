@@ -41,6 +41,19 @@
                 }
                 let password = document.getElementById("password").children[1].value;
 
+                fetch("localhost:8080/routes/all", {
+                    method: "GET"
+                }). then(res => {
+                    if(res.ok) {
+                        console.log("Good")
+                    } else {
+                        console.log("Bad")
+                    }
+                }) .then(res => console.log(res))
+                .catch(error => {
+                    console.log(error)
+                })
+
                 // TODO Pass email and password to Node server
                 // Get back either 0 for failed UUID or new UUID
                 const info = {
@@ -49,9 +62,9 @@
                 }
                 console.log(info);
 
-                const port = 3306;
+                const port = 8080;
                 let valid = false;
-                fetch("localhost:${port}/login", {
+                fetch("localhost:${port}/routes/login", {
                     method: "POST",
                     body: JSON.stringify(info),
                     headers: {

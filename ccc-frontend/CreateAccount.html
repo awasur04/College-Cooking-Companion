@@ -51,23 +51,25 @@
                 return 0;
             },
             register() {
-                var email = document.getElementById("email").children[1].value;
-                if(!this.isValidEmailFormat(email)) {
+                var enteredEmail = document.getElementById("email").children[1].value;
+                if(!this.isValidEmailFormat(enteredEmail)) {
                     alert("Invalid email format");
                     return;
                 }
-                var fname = document.getElementById("fname").children[1].value;
-                var password = document.getElementById("password").children[1].value;
+                var enteredName = document.getElementById("fname").children[1].value;
+                var enteredPassword = document.getElementById("password").children[1].value;
                 const info = {
-                    email: email,
-                    fname: fname,
-                    password: password
+                    email: enteredEmail,
+                    fname: enteredName,
+                    password: enteredPassword
                 }
+
+                console.log(JSON.stringify(info));
                 
                 // TODO Pass all values to Node server 
                 let valid = false;
-                const port = 3306;
-                fetch("localhost:${port}/register", {
+                const port = 8080;
+                fetch("localhost:8080/routes/create", {
                     method: "POST",
                     body: JSON.stringify(info),
                     headers: {
@@ -75,10 +77,10 @@
                     }
                 }).then(res => {
                     if(res.ok) {
-                        console.log("Good request")
+                        console.log("Good request");
                         valid = true;
                     } else {
-                        console.log("Bad request")
+                        console.log("Bad request");
                     }
                 }).then(res => console.log(res))
                 .catch(error => {
@@ -87,7 +89,7 @@
                 })
                 // TODO Get UUID from Node server
                 if(valid) {
-                    this.loggedInUUID(email);
+                    this.loggedInUUID(enteredEmail);
                     window.location.href = "LandingPage.html";
                 } else {
                     alert("Could not reach register server");
