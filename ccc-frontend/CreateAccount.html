@@ -90,7 +90,17 @@
                 })
                 // TODO Get UUID from Node server
                 if(valid === true) {
-                    this.loggedInUUID(enteredEmail);
+                    fetch("http://localhost:8080/routes/userid", {
+                        method: "GET",
+                        body: JSON.stringify(b),
+                        headers: {
+                            "Content-Type": "application/json"
+                        }
+                    }).then(data => data.json())
+                    .then(data => {
+                        // Assuming a good server call since the previous call was valid
+                        this.loggedInUUID(data.result); // TODO Verify this is the correct JSON key
+                    })
                     window.location.href = "LandingPage.html";
                 } else {
                     alert("Could not reach register server");
