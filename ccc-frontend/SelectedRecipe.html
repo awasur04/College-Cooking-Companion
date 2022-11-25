@@ -214,8 +214,24 @@
 
             },
             beforeMount() {
+                const b = {
+                    id: sessionStorage.getItem("LoadRecipe")
+                }
+                fetch("http://localhost:8080/routes/recipes/id", {
+                    method: "GET",
+                    body: JSON.stringify(b),
+                    headers: {
+                            "Content-Type": "application/json"
+                    }
+                }).then(data => data.json())
+                .then(data => {
+                    if(data.length === 0) {
+                        console.log("Bad call!");
+                    } else {
+                        this.base = data;
+                    }
+                })
                 this.recipeName = this.base.title;
-                // TODO Make server call Call server localhost:8080/routes/recipes/id with {id: recID}
                 this.base.instructions.forEach((i) => {
                     this.instructions += "<tr><td>";
                     // this.instructions += "<p>";
