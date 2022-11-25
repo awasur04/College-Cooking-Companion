@@ -92,8 +92,8 @@
                     return;
                 }
 
-                // TODO Hit correct backend endpoint to save ingredients
-                fetch("http://localhost:8080/routes/updateoneuser/id", {
+                // TODO Test with endpoint
+                fetch("http://localhost:8080/routes/updateusersavedingredients", {
                     method: "PUT",
                     body: JSON.stringify(obj),
                     headers: {
