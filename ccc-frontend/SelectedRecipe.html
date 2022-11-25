@@ -191,6 +191,23 @@
             },
             methods: {
                 addToFavorites() {
+                    if(sessionStorage.getItem("UUID") === 0) {
+                        alert("You need to be logged in to save favorites");
+                        return;
+                    }
+
+                    const data = {
+                        id: sessionStorage.getItem("UUID"),
+                        savedrecipes: this.base.id
+                    }
+
+                    fetch("http://localhost:8080/routes/updateusersavedrecipes", {
+                        method: 'PUT',
+                        body: JSON.stringify(data),
+                        headers: {
+                            "Content-Type": "application/json"
+                        }
+                    })
                     alert("Added " + this.recipeName + " to favorites list");
                     sessionStorage.setItem("newFavorites", this.recipeName);
                 },
