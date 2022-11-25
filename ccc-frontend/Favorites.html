@@ -122,14 +122,6 @@
                 })
             }
         },
-        isValidEmailFormat(email) {
-            var pattern = /^[\w%\+\-]+(\.[\w%\+\-]+)*@[\w%\+\-]+(\.[\w%\+\-]+)+$/;
-            if(email.match(pattern) === null) {
-                return false;
-            } else {
-                return true;
-            }
-        },
         beforeMount() {
             if(sessionStorage.getItem("UUID") === 0 || sessionStorage.getItem("UUID") === null) {
                 alert("You need to be logged in to view favorites. Please log in first");
