@@ -154,13 +154,30 @@
             },
         },
         beforeMount(){
-            if(sessionStorage.getItem("UUID") != 0 && sessionStorage.getItem("UUID") != null) { // TODO Fix to use email as UUID
+            if(sessionStorage.getItem("UUID") != 0 && sessionStorage.getItem("UUID") != null) {
                 this.loggedIn = true;
                 this.userLoginStatus = "Logout";
                 this.createNewOrFavorites = "Favorites";
-                if(sessionStorage.getItem("UUID") == 1) {
-                    this.ingredientsList = this.savedIngredients;
+                const b = {
+                    id: sessionStorage.getItem("UUID")
                 }
+                fetch("http://localhost:8080/routes/getoneuser/id", {
+                    method: "GET", // This may need to be converted to a POST to work correctly 
+                    body: JSON.stringify(b),
+                    headers: {
+                        "Content-Type": "application/json"
+                    }
+                }).then(data => data.json())
+                .then(data => {
+                    // TODO Parse data to get the comma seperated list of ingredients from the database
+                    // Or add the prompt text if nothing was returned
+                    if(data.length === 0) {
+                        console.log("Bad call");
+                    } else {
+                        console.log("Good call");
+                        this.ingredientsList = "" // Set to relevant data from DB
+                    }
+                })
             } else {
                 this.userLoginStatus = "Login";
                 this.createNewOrFavorites = "Signup";
