@@ -154,7 +154,45 @@ exports.delete = (req, res) => {
     res.status(200).end();
 };
 
+exports.verifyUser =(req,res) => {
+    let user = new Object();
+    user.email = req.body.email;
+    user.password =req.body.password;
+    
+    //user.password =bcrypt.hashSync(user.password, bcrypt.genSaltSync(10));
+    console.log("User login info:\n", user);
+    let flag = new Object();
+    flag.verification = "TRUE";
+    testdb.query("SELECT password FROM  users WHERE email=?",[user.email],(err,result) =>{
+        if(err)
+        {
+            console.log(err)
+            flag.verification ="FALSE";
+            let awnser =JSON.stringify(flag);
+            res.send(awnser).status(200).end();
+        }
+        else
+        {
+            let testresult = JSON.stringify(result)
+            let hash =""
+            for(let i =14;i<testresult.length-3;i++)
+            {   hash= hash+testresult[i]
 
+            }
+            
+            const compareResult =bcrypt.compareSync(user.password,hash,)
+            console.log("compare result ",compareResult)
+            flag.verification =compareResult
+
+            res.send(flag).status(200).end();
+            
+        }
+    }
+    )
+
+
+
+};
 
 
 
