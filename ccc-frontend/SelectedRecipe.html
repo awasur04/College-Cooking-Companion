@@ -191,14 +191,47 @@
             },
             methods: {
                 addToFavorites() {
+                    if(sessionStorage.getItem("UUID") === 0) {
+                        alert("You need to be logged in to save favorites");
+                        return;
+                    }
+
+                    const data = {
+                        id: sessionStorage.getItem("UUID"),
+                        savedrecipes: this.base.id
+                    }
+
+                    fetch("http://localhost:8080/routes/updateusersavedrecipes", {
+                        method: 'PUT',
+                        body: JSON.stringify(data),
+                        headers: {
+                            "Content-Type": "application/json"
+                        }
+                    })
                     alert("Added " + this.recipeName + " to favorites list");
                     sessionStorage.setItem("newFavorites", this.recipeName);
                 },
 
             },
             beforeMount() {
+                const b = {
+                    id: sessionStorage.getItem("LoadRecipe")
+                }
+                fetch("http://localhost:8080/routes/recipes/id", {
+                    method: "GET",
+                    body: JSON.stringify(b),
+                    headers: {
+                            "Content-Type": "application/json"
+                    }
+                }).then(data => data.json())
+                .then(data => {
+                    if(data.length === 0) {
+                        console.log("Bad call!");
+                    } else {
+                        this.base = data;
+                    }
+                })
                 this.recipeName = this.base.title;
-                // TODO Make server call Call server localhost:8080/routes/recipes/id with {id: recID}
                 this.base.instructions.forEach((i) => {
                     this.instructions += "<tr><td>";
                     // this.instructions += "<p>";

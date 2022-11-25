@@ -16,9 +16,6 @@
     <p>Click on one of your favorited meals to get the recipe</p>
     <h3>Saved by me</h3>
     <table v-html="myFavorites" id="app"></table>
-    <h3>Sent to me</h3>
-    <table v-html="sharedFavorites" id="app"></table>
-    <div v-html="shareTo" id="app"></div>
     </div>
 </body>
 
@@ -27,10 +24,7 @@
         el: "#app",
         data: {
             myFavorites: "",
-            sharedFavorites: "",
             retrievedMyFavorites: [{name:"Toast"},{name:"Cereal"}],
-            retrievedSharedFavorites: [{name:"French_toast"}],
-            shareTo: ""
         },
         methods: {
             getMyFavorites() {
@@ -42,87 +36,61 @@
                 })
                 this.addEventOnLoad(table);
             },
-            getSharedFavorites() {
-                const table = "sharedFavorites";
-                this.sharedFavorites = "";
-                this.retrieveData(table).forEach((i) => {
-                    this.sharedFavorites += this.formatTable(i, table);
-                })
-                this.addEventOnLoad(table);
-            },
             formatTable(obj, table) {
                 let name = String(obj.name);
                 let ret = "";
                 ret += "<tr><td>";
                 ret += name;
                 name = this.replaceSpaces(name);
-                ret += "</td>";
                 ret += "</td><td><button id=";
-                ret += name;
-                ret += ">Share</button></td><td><button id=";
                 ret += name + "_" + table;
                 ret += ">Remove</button>";
                 ret += "</tr>";
                 return ret;
             },
             retrieveData(table) {
-                // TODO Implement backend retrieve
-                if(table === "myFavorites") {
-                    return this.retrievedMyFavorites
-                } else {
-                    return this.retrievedSharedFavorites
+                if(sessionStorage.getItem("UUID") === 0) {
+                    alert("You need to be logged in to access favorites. Please log in and try again");
+                    return;
                 }
+
+                const b = {
+                    id: sessionStorage.getItem("UUID")
+                }
+
+                fetch("http://localhost:8080/routes/getoneuser/id", {
+                    method: "GET",
+                    body: JSON.stringify(b),
+                    headers: {
+                        "Content-Type": "application/json"
+                    }
+                }).then(data => data.json())
+                .then(data => {
+                    if(data.length === 0) {
+                        console.log("Bad call");
+                    } else {
+                        console.log("Good call");
+                        // TODO Parse data from DB to only get array of favorited items
+                        this.retrievedMyFavorites = data;
+                    }
+                })
+
+                return this.retrievedMyFavorites
             },
             removeItem(id, table) {
                 // TODO Implement backend call to remove an item from either my or shared favorites
                 // TODO Bug fix: Removing items requires different method to add event listener and an extra click
-                if(table === "myFavorites") {
-                    for(var i=0; i<this.retrievedMyFavorites.length; i++) {
-                        if(this.retrievedMyFavorites[i].name === id) {
-                            this.retrievedMyFavorites.splice(i, 1);
-                            i--;
-                        }
-                    }
-                } else {
-                    for(var i=0; i<this.retrievedSharedFavorites.length; i++) {
-                        if(this.retrievedSharedFavorites[i].name === id) {
-                            this.retrievedSharedFavorites.splice(i, 1);
-                            i--;
-                        }
+                for(var i=0; i<this.retrievedMyFavorites.length; i++) {
+                    if(this.retrievedMyFavorites[i].name === id) {
+                        this.retrievedMyFavorites.splice(i, 1);
+                        i--;
                     }
                 }
                 // TODO Bug fix: id displayed here does not have _table on it. Does not currently impact functionality
                 this.refreshElements();
             },
-            shareItem(id, table) {
-                // TODO Implement share item popup
-                console.log("Sharing item " + id);
-                let addShareForm = "<h1>Send recipe to?</h1><form action='/url' method='PUT' id='email'><p>Email address</p><input type='email'></form><button id='send'>Send</button>";
-                this.shareTo = addShareForm;
-                const that = this;
-                // TODO Figure out better listener to add the button event listener
-                window.addEventListener("click", () => {
-                    // TODO Bug fix: Event stacking alerts
-                    document.getElementById("send").addEventListener("click", () => {
-                        let email = document.getElementById("email").children[1].value;
-                        console.log(email);
-                        var pattern = /^\w+@[a-zA-Z_]+?\.[a-zA-Z]{2,3}$/; 
-                        if(email.match(pattern) === null) {
-                            alert("Invalid email format");
-                            return;
-                        }
-                        // TODO Verify email is in database and send item
-                        if(true) { // Verify email is in database
-                            alert("Thank you! Recipe sent to user.");
-                            // TODO Bug fix: Throws errors when element is removed, non-critical
-                            that.shareTo = "";
-                        }
-                    }) // TODO Make execute once
-                })
-            },
             refreshElements() {
                 this.getMyFavorites();
-                this.getSharedFavorites();
             },
             replaceSpaces(name) {
                 let ret = String(name).replaceAll(" ", "_");
@@ -134,10 +102,6 @@
                 // window.addEventListener("DOMContentLoaded", () => {
                     that.retrieveData(table).forEach((i) => {
                         let name = String(i.name).replaceAll(" ", "_");
-                        // Share button
-                        document.getElementById(name).addEventListener("click",() => {
-                            that.shareItem(name, table);
-                        })
                         // Remove button
                         document.getElementById(name+"_"+table).addEventListener("click", () => {
                             that.removeItem(name, table);
@@ -155,15 +119,21 @@
             }
         },
         beforeMount() {
-            const port = 3306;
-            let valid = false;
-            let addFav = sessionStorage.getItem("newFavorites");
-            if(addFav != null) {
-                this.retrievedMyFavorites.push({name:this.replaceSpaces(addFav)});
+            if(sessionStorage.getItem("UUID") === 0 || sessionStorage.getItem("UUID") === null) {
+                alert("You need to be logged in to view favorites. Please log in first");
+                window.location.href = "Login.html";
+                return;
             }
-            if(sessionStorage.getItem("UUID") != 2) { // TODO Fix this to take user email as UUID
-                this.refreshElements();
-            }
+            this.refreshElements();
+            // const port = 3306;
+            // let valid = false;
+            // let addFav = sessionStorage.getItem("newFavorites");
+            // if(addFav != null) {
+            //     this.retrievedMyFavorites.push({name:this.replaceSpaces(addFav)});
+            // }
+            // if(sessionStorage.getItem("UUID") != 2) { // TODO Fix this to take user email as UUID
+            //     this.refreshElements();
+            // }
         }
     })
 
