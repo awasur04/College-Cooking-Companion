@@ -119,11 +119,46 @@ exports.delete = (req, res) => {
     res.status(200).end();
 };
 
+<<<<<<< Updated upstream
 // Delete all Users from the database.
 exports.deleteAll = (req, res) => {
     console.log("Testdeleteall");
     res.status(200).end();
 };
+=======
+
+// Retrieve all Uers from the database and send it to user as JSON
+exports.getSavedRecipes = (req, res) => {
+    const userID = req.body.id;
+    testdb.query("SELECT * FROM savedRecipes WHERE userID = ?", [userID], (err,result) =>
+    { 
+        if (err)
+        {
+            console.log(err)
+        }
+        else
+        {   let dbresult = result.toString().split(",");
+            let recipeList = [];
+            for (let i = 0; i < dbresult.length; i++)
+            {
+                recipe_controller.findRecipeById(dbresult[i], recipeList, (result) =>
+                {
+                    if (result == undefined)
+                    {
+                        console.log("\nUNABLE TO RETRIEVE SAVED RECIPES");
+                        recipeList.push(result);
+                    } else {
+                        res.send(result).status(200).end();
+                    }
+                })
+            }
+            let returnArray = JSON.stringify(recipeList);
+            res.send(returnArray).status(503).end();
+        }
+    })
+};
+
+>>>>>>> Stashed changes
 
 //Sample body input
 //ingredients = eggs,salt,milk,butter,yeast

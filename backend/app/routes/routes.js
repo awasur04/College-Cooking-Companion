@@ -11,6 +11,14 @@
   // Retrieve all Tutorials
   router.get("/all", controller.findAll);
 
+<<<<<<< Updated upstream
+=======
+  // Calls the controller.findId method to retrive the id of the user by email
+  router.get("/userid", controller.findId);
+
+  //Gets the user saved recipes
+  router.get("/getsavedrecipes/id", controller.getSavedRecipes);
+>>>>>>> Stashed changes
 
   // Retrieve a single Tutorial with id
   router.get("/getoneuser/id", controller.findOne);
