@@ -119,9 +119,9 @@
             }
         },
         beforeMount() {
-            if(sessionStorage.getItem("UUID") === 0) {
+            if(sessionStorage.getItem("UUID") === 0 || sessionStorage.getItem("UUID") === null) {
                 alert("You need to be logged in to view favorites. Please log in first");
-                window.location.href = "LandingPage.html";
+                window.location.href = "Login.html";
                 return;
             }
             this.refreshElements();
