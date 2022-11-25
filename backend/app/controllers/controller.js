@@ -24,6 +24,7 @@ exports.create = (req, res) => {
     user.email =req.body.email;
     user.password=req.body.password;
     user.savedrecipes = "";
+    user.ingredients ="";
     user.password =bcrypt.hashSync(user.password, bcrypt.genSaltSync(10));
 
     // bcrypt.genSalt(10, function(err, salt) {
@@ -37,7 +38,7 @@ exports.create = (req, res) => {
     //     user.password =req.body.password
     // }
     console.log(user);
-   testdb.query("INSERT INTO users  (email,name,password,savedrecipes) VALUES (?,?,?,?)",[user.email,user.name,user.password,user.savedrecipes],(err, result) => {
+   testdb.query("INSERT INTO users  (email,name,password,savedrecipes,ingredients) VALUES (?,?,?,?,?)",[user.email,user.name,user.password,user.savedrecipes,user.ingredients],(err, result) => {
     if (err){
         console.log(err);
     }else{    
@@ -114,6 +115,34 @@ exports.updateSavedRecipes= (req, res) => {
              
             }})
 };
+
+
+// Find a single User with an id and updates savedrrecipes
+exports.updateSavedRIngredients= (req, res) => {
+    let user = new Object();
+    user.id =req.body.id;
+    user.ingredients = req.body.ingredients;
+
+
+
+
+
+
+    testdb.query("UPDATE users  SET ingredients=? WHERE id =?;",[user.ingredients,user.id],(err,result) =>{ 
+        if (err)
+        {
+            console.log(err)
+        }
+        else
+        {   console.log("Success");
+            let dbresult = JSON.stringify(result);
+            res.send(dbresult).status(200).end();
+             
+            }})
+};
+
+
+
 
 // Update a User by the id in the request
 exports.findOne = (req, res) => {
