@@ -41,8 +41,6 @@
                 }
                 let password = document.getElementById("password").children[1].value;
 
-                // TODO Pass email and password to Node server
-                // Get back either 0 for failed UUID or new UUID
                 const info = {
                     email: email,
                     password: password
@@ -51,36 +49,50 @@
 
                 const port = 8080;
                 let valid = false;
-                fetch("http://localhost:${port}/routes/login", {
+                fetch("http://localhost:8080/routes/verifyUser", {
                     method: "POST",
                     body: JSON.stringify(info),
                     headers: {
                         "Content-Type": "application/json"
                     }
-                }).then(res => {
-                    if(res.ok) {
-                        console.log("Good request");
-                        valid = true;
+                }).then(res => res.json)
+                .then(res => {
+                    if(res.length === 0) {
+                        console.log("Bad call");
                     } else {
-                        console.log("Bad request");
-                        return;
+                        console.log("Good call");
+                        if(res.verification == true) {
+                            valid = true;
+                        }
                     }
-                    console.log(res)
-                }).then(res => console.log(res))
+                })
                 .catch(error => {
                     console.log("Could not reach login server");
                     return;
                 })
 
+                const b = {
+                    email: email
+                }
                 if(valid) {
-                    this.loggedInUUID(email);
-                    window.location.href = "LandingPage.html"; // Test redirect 
+                    fetch("http://localhost:8080/routes/userid", {
+                        method: "GET",
+                        body: JSON.stringify(b),
+                        headers: {
+                            "Content-Type": "application/json"
+                        }
+                    }).then(data => data.json())
+                    .then(data => {
+                        // Assuming a good server call since the previous call was valid
+                        this.loggedInUUID(data.result); // TODO Verify this is the correct JSON key
+                    })
+                    window.location.href = "LandingPage.html";
                 } else {
                     alert("Invalid login or could not reach server");
                 }
             },
             loggedInUUID(uuid) {
-                sessionStorage.setItem("UUID", uuid); // TODO Set UUID users email
+                sessionStorage.setItem("UUID", uuid);
                 return 0;
             },
             isValidEmailFormat(email) {
