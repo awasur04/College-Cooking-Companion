@@ -55,7 +55,7 @@
                 }
 
                 const b = {
-                    id: sessionStorage.getItem("UUID")
+                    id: sessionStorage.getItem("UUID"),
                 }
 
                 fetch("http://localhost:8080/routes/getoneuser/id", {
@@ -78,7 +78,6 @@
                 return this.retrievedMyFavorites
             },
             removeItem(id, table) {
-                // TODO Implement backend call to remove an item from either my or shared favorites
                 // TODO Bug fix: Removing items requires different method to add event listener and an extra click
                 for(var i=0; i<this.retrievedMyFavorites.length; i++) {
                     if(this.retrievedMyFavorites[i].name === id) {
@@ -86,6 +85,19 @@
                         i--;
                     }
                 }
+
+                const b = {
+                    id: sessionStorage.getItem("UUID"),
+                    savedrecipes: this.retrievedMyFavorites
+                }
+
+                fetch("http://localhost:8080/routes/updateusersavedrecipes", {
+                    method: "PUT",
+                    body: b,
+                    headers: {
+                        "Content-Type": "application/json"
+                    }
+                })
                 // TODO Bug fix: id displayed here does not have _table on it. Does not currently impact functionality
                 this.refreshElements();
             },
