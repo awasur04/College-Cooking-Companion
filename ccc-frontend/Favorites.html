@@ -49,7 +49,7 @@
                 return ret;
             },
             retrieveData(table) {
-                if(sessionStorage.getItem("UUID") === 0) {
+                if(sessionStorage.getItem("UUID") == null) {
                     alert("You need to be logged in to access favorites. Please log in and try again");
                     return;
                 }
@@ -66,13 +66,9 @@
                     }
                 }).then(data => data.json())
                 .then(data => {
-                    if(data.length === 0) {
-                        console.log("Bad call");
-                    } else {
-                        console.log("Good call");
-                        // TODO Parse data from DB to only get array of favorited items
-                        this.retrievedMyFavorites = data;
-                    }
+                    console.log("Good call");
+                    // TODO Parse data from DB to only get array of favorited items
+                    this.retrievedMyFavorites = data;
                 })
 
                 return this.retrievedMyFavorites
@@ -123,7 +119,7 @@
             }
         },
         beforeMount() {
-            if(sessionStorage.getItem("UUID") === 0 || sessionStorage.getItem("UUID") === null) {
+            if(sessionStorage.getItem("UUID") == null) {
                 alert("You need to be logged in to view favorites. Please log in first");
                 window.location.href = "Login.html";
                 return;
