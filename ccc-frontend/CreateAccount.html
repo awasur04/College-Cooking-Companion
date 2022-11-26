@@ -83,12 +83,8 @@
                     } else {
                         console.log("Bad request");
                     }
-                }).then(res => console.log(res))
-                .catch(error => {
-                    console.log("Could not reach register server");
-                    return;
                 })
-                // TODO Get UUID from Node server
+                
                 if(valid === true) {
                     fetch("http://localhost:8080/routes/userid", {
                         method: "GET",
