@@ -225,11 +225,7 @@
                     }
                 }).then(data => data.json())
                 .then(data => {
-                    if(data.length === 0) {
-                        console.log("Bad call!");
-                    } else {
-                        this.base = data;
-                    }
+                    this.base = data;
                 })
                 this.recipeName = this.base.title;
                 this.base.instructions.forEach((i) => {
