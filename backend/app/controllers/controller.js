@@ -20,7 +20,6 @@ const testdb =mysql.createConnection({
 // Create and Save a new User into a local database
 exports.create = (req, res) => {
     let user = new Object();
-<<<<<<< HEAD
     user.name =req.body.name;
     user.email =req.body.email;
     user.password=req.body.password;
@@ -40,22 +39,6 @@ exports.create = (req, res) => {
     // }
     console.log(user);
    testdb.query("INSERT INTO users  (email,name,password,savedrecipes,ingredients) VALUES (?,?,?,?,?)",[user.email,user.name,user.password,user.savedrecipes,user.ingredients],(err, result) => {
-=======
-    user.fname =req.body.fname;
-    user.email =req.body.email;
-    user.password =req.body.password;
-    user.savedrecipes = "";
-
-    if (user.fname == undefined || user.email == undefine || user.password == undefined)
-    {
-        console.log("Error undefined input");
-        res.send("User information failed validation").status(400).end();
-        return;
-    }
-
-    console.log(user);
-   testdb.query("INSERT INTO users  (email,fname,password,savedrecipes) VALUES (?,?,?,?)",[user.email,user.fname,user.password,user.savedrecipes],(err, result) => {
->>>>>>> 3c3fa7ed73d414c88e5bb65cafc23d1858177db5
     if (err){
         console.log(err);
     }else{    
@@ -86,31 +69,19 @@ exports.findAll = (req, res) => {
 exports.update = (req, res) => {
     let user = new Object();
     user.id =req.body.id;
-<<<<<<< HEAD
     user.name =req.body.name;
-=======
->>>>>>> 3c3fa7ed73d414c88e5bb65cafc23d1858177db5
     user.email =req.body.email;
     user.password =req.body.password;
     user.savedrecipes = req.body.savedrecipes;
 
-<<<<<<< HEAD
-
-
-
-
-
-    testdb.query("UPDATE users  SET name=?,email=?,password=?,savedrecipes=? WHERE id =?;",[user.name,user.email,user.password,user.savedrecipes,user.id],(err,result) =>{ 
-=======
-    if (user.fname == undefined || user.email == undefine || user.password == undefined || user.id == undefined || user.savedrecipes == undefined)
+    if (user.name == undefined || user.email == undefined || user.password == undefined || user.id == undefined || user.savedrecipes == undefined)
     {
         console.log("Error undefined input");
         res.send("User information failed validation").status(400).end();
         return;
     }
 
-    testdb.query("UPDATE users  SET fname=?,lname=?,email=?,password=?,savedrecipes=? WHERE id =?;",[user.fname,user.lname,user.email,user.password,user.savedrecipes,user.id],(err,result) =>{ 
->>>>>>> 3c3fa7ed73d414c88e5bb65cafc23d1858177db5
+    testdb.query("UPDATE users  SET name=?,lname=?,email=?,password=?,savedrecipes=? WHERE id =?;",[user.name,user.lname,user.email,user.password,user.savedrecipes,user.id],(err,result) =>{ 
         if (err)
         {
             console.log(err)
