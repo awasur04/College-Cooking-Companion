@@ -74,12 +74,14 @@ exports.update = (req, res) => {
     user.password =req.body.password;
     user.savedrecipes = req.body.savedrecipes;
 
+    if (user.name == undefined || user.email == undefined || user.password == undefined || user.id == undefined || user.savedrecipes == undefined)
+    {
+        console.log("Error undefined input");
+        res.send("User information failed validation").status(400).end();
+        return;
+    }
 
-
-
-
-
-    testdb.query("UPDATE users  SET name=?,email=?,password=?,savedrecipes=? WHERE id =?;",[user.name,user.email,user.password,user.savedrecipes,user.id],(err,result) =>{ 
+    testdb.query("UPDATE users  SET name=?,lname=?,email=?,password=?,savedrecipes=? WHERE id =?;",[user.name,user.lname,user.email,user.password,user.savedrecipes,user.id],(err,result) =>{ 
         if (err)
         {
             console.log(err)
@@ -183,6 +185,7 @@ exports.delete = (req, res) => {
     res.status(200).end();
 };
 
+
 exports.verifyUser =(req,res) => {
     let user = new Object();
     user.email = req.body.email;
@@ -218,9 +221,47 @@ exports.verifyUser =(req,res) => {
         }
     }
     )
+}
 
 
 
+// Delete all Users from the database.
+exports.deleteAll = (req, res) => {
+    console.log("Testdeleteall");
+    res.status(200).end();
+
+};
+
+
+// Retrieve all Uers from the database and send it to user as JSON
+exports.getSavedRecipes = (req, res) => {
+    const userID = req.body.id;
+    testdb.query("SELECT * FROM savedRecipes WHERE userID = ?", [userID], (err,result) =>
+    { 
+        if (err)
+        {
+            console.log(err)
+        }
+        else
+        {   let dbresult = result.toString().split(",");
+            let recipeList = [];
+            for (let i = 0; i < dbresult.length; i++)
+            {
+                recipe_controller.findRecipeById(dbresult[i], recipeList, (result) =>
+                {
+                    if (result == undefined)
+                    {
+                        console.log("\nUNABLE TO RETRIEVE SAVED RECIPES");
+                        recipeList.push(result);
+                    } else {
+                        res.send(result).status(200).end();
+                    }
+                })
+            }
+            let returnArray = JSON.stringify(recipeList);
+            res.send(returnArray).status(503).end();
+        }
+    })
 };
 
 

@@ -18,8 +18,12 @@
   // Calls the controller.findAll method to retrive all users
   router.get("/all", controller.findAll);
 
+
   // Calls the controller.findId method to retrive the id of the user by email
   router.get("/userid", controller.findId);
+
+  //Gets the user saved recipes
+  router.get("/getsavedrecipes/id", controller.getSavedRecipes);
 
 
   //Calls the controller.findOne method to retive one user
