@@ -66,13 +66,9 @@
                     }
                 }).then(data => data.json())
                 .then(data => {
-                    if(data.length === 0) {
-                        console.log("Bad call");
-                    } else {
-                        console.log("Good call");
-                        // TODO Parse data from DB to only get array of favorited items
-                        this.retrievedMyFavorites = data;
-                    }
+                    console.log("Good call");
+                    // TODO Parse data from DB to only get array of favorited items
+                    this.retrievedMyFavorites = data;
                 })
 
                 return this.retrievedMyFavorites
