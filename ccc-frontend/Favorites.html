@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+    <title>College Cook Companion</title>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width,initial-scale=1"/>
+    <meta name="College Cook Companion" content="Recipies for those on a budget"/>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+</head>
+
+<body>
+    <div id="app">
+    <h1>MY FAVORITE RECIPIES</h1>
+    <p>Click on one of your favorited meals to get the recipe</p>
+    <h3>Saved by me</h3>
+    <table v-html="myFavorites" id="app"></table>
+    </div>
+</body>
+
+<script>
+    var app = new Vue({
+        el: "#app",
+        data: {
+            myFavorites: "",
+            retrievedMyFavorites: [{name:"Toast"},{name:"Cereal"}],
+        },
+        methods: {
+            getMyFavorites() {
+                // TODO Implement backend retreive for myFav
+                const table = "myFavorites";
+                this.myFavorites = "";
+                this.retrieveData(table).forEach((i) => {
+                    this.myFavorites += this.formatTable(i, table);
+                })
+                this.addEventOnLoad(table);
+            },
+            formatTable(obj, table) {
+                let name = String(obj.name);
+                let ret = "";
+                ret += "<tr><td>";
+                ret += name;
+                name = this.replaceSpaces(name);
+                ret += "</td><td><button id=";
+                ret += name + "_" + table;
+                ret += ">Remove</button>";
+                ret += "</tr>";
+                return ret;
+            },
+            retrieveData(table) {
+                if(sessionStorage.getItem("UUID") == null) {
+                    alert("You need to be logged in to access favorites. Please log in and try again");
+                    return;
+                }
+
+                const b = {
+                    id: sessionStorage.getItem("UUID"),
+                }
+
+                fetch("http://localhost:8080/routes/getoneuser/id", {
+                    method: "GET",
+                    body: JSON.stringify(b),
+                    headers: {
+                        "Content-Type": "application/json"
+                    }
+                }).then(data => data.json())
+                .then(data => {
+                    console.log("Good call");
+                    // TODO Parse data from DB to only get array of favorited items
+                    this.retrievedMyFavorites = data;
+                })
+
+                return this.retrievedMyFavorites
+            },
+            removeItem(id, table) {
+                // TODO Bug fix: Removing items requires different method to add event listener and an extra click
+                for(var i=0; i<this.retrievedMyFavorites.length; i++) {
+                    if(this.retrievedMyFavorites[i].name === id) {
+                        this.retrievedMyFavorites.splice(i, 1);
+                        i--;
+                    }
+                }
+
+                const b = {
+                    id: sessionStorage.getItem("UUID"),
+                    savedrecipes: this.retrievedMyFavorites
+                }
+
+                fetch("http://localhost:8080/routes/updateusersavedrecipes", {
+                    method: "PUT",
+                    body: b,
+                    headers: {
+                        "Content-Type": "application/json"
+                    }
+                })
+                // TODO Bug fix: id displayed here does not have _table on it. Does not currently impact functionality
+                this.refreshElements();
+            },
+            refreshElements() {
+                this.getMyFavorites();
+            },
+            replaceSpaces(name) {
+                let ret = String(name).replaceAll(" ", "_");
+                return ret;
+            },
+            addEventOnLoad(table) {
+                const that = this;
+                window.addEventListener("click", () => {
+                // window.addEventListener("DOMContentLoaded", () => {
+                    that.retrieveData(table).forEach((i) => {
+                        let name = String(i.name).replaceAll(" ", "_");
+                        // Remove button
+                        document.getElementById(name+"_"+table).addEventListener("click", () => {
+                            that.removeItem(name, table);
+                        })
+                    })
+                })
+            }
+        },
+        beforeMount() {
+            if(sessionStorage.getItem("UUID") == null) {
+                alert("You need to be logged in to view favorites. Please log in first");
+                window.location.href = "Login.html";
+                return;
+            }
+            this.refreshElements();
+            // const port = 3306;
+            // let valid = false;
+            // let addFav = sessionStorage.getItem("newFavorites");
+            // if(addFav != null) {
+            //     this.retrievedMyFavorites.push({name:this.replaceSpaces(addFav)});
+            // }
+            // if(sessionStorage.getItem("UUID") != 2) { // TODO Fix this to take user email as UUID
+            //     this.refreshElements();
+            // }
+        }
+    })
+
+</script>
+
+</html>

@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+    <title>College Cook Companion</title>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width,initial-scale=1"/>
+    <meta name="College Cook Companion" content="Recipies for those on a budget"/>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+</head>
+
+<body>
+    <div id="app">
+    <h1>ACCOUNT CREATION PAGE</h1>
+    <form action="/url" method="PUT" id="email">
+        <p>Email address</p>
+        <input type="email">
+    </form>
+    <form action="/url" method="PUT" id="name">
+        <p>First name</p>
+        <input type="text">
+    </form>
+    <form action="/url" method="PUT" id="password">
+        <p>Password</p>
+        <input type="password">
+    </form>
+    <h1></h1>
+    <button v-on:click="register()">Submit</button>
+</div>
+</body>
+
+<script>
+
+    var app = new Vue({
+        el: "#app",
+        data: {
+
+        },
+        methods: {
+            isValidEmailFormat(email) {
+                var pattern = /^[\w%\+\-]+(\.[\w%\+\-]+)*@[\w%\+\-]+(\.[\w%\+\-]+)+$/;
+                if(email.match(pattern) === null) {
+                    return false;
+                } else {
+                    return true;
+                }
+            },
+            loggedInUUID(uuid) {
+                sessionStorage.setItem("UUID", uuid); // TODO Set UUID to UUID from Node server
+                return 0;
+            },
+            register() {
+                var enteredEmail = document.getElementById("email").children[1].value;
+                if(!this.isValidEmailFormat(enteredEmail)) {
+                    alert("Invalid email format");
+                    return;
+                }
+                var enteredName = document.getElementById("name").children[1].value;
+                var enteredPassword = document.getElementById("password").children[1].value;
+                const info = {
+                    email: enteredEmail,
+                    name: enteredName,
+                    password: enteredPassword
+                }
+
+                console.log(JSON.stringify(info));
+                
+                // TODO Pass all values to Node server 
+                let valid = false;
+                const port = 8080;
+                fetch("http://localhost:8080/routes/create", {
+                    method: "POST",
+                    body: JSON.stringify(info),
+                    headers: {
+                        "Content-Type": "application/json",
+                        // "Access-Control-Allow-Origin": "true"
+                    }
+                }).then(res => {
+                    if(res.ok) {
+                        console.log("Good request");
+                        valid = true;
+                    } else {
+                        console.log("Bad request");
+                    }
+                })
+                
+                if(valid === true) {
+                    fetch("http://localhost:8080/routes/userid", {
+                        method: "GET",
+                        body: JSON.stringify(b),
+                        headers: {
+                            "Content-Type": "application/json"
+                        }
+                    }).then(data => data.json())
+                    .then(data => {
+                        // Assuming a good server call since the previous call was valid
+                        this.loggedInUUID(data.result); // TODO Verify this is the correct JSON key
+                    })
+                    window.location.href = "LandingPage.html";
+                } else {
+                    alert("Could not reach register server");
+                }
+            }
+        }
+    })
+
+</script>
+
+</html>

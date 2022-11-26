@@ -1,3 +1,11 @@
+/*
+ * @name recipe
+ * @author Adam Rusaw
+ * @version 1.0
+ * @data 10/27/2022
+ * @purpose Creates the model for the recipes
+ * 
+ */
 module.exports = class Recipe
 {
 	constructor(id, title, image, oIngredients, mIngredient, instructions, nutrition)
