@@ -191,7 +191,7 @@
             },
             methods: {
                 addToFavorites() {
-                    if(sessionStorage.getItem("UUID") === 0) {
+                    if(sessionStorage.getItem("UUID") == null) {
                         alert("You need to be logged in to save favorites");
                         return;
                     }
