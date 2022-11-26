@@ -185,7 +185,7 @@ exports.delete = (req, res) => {
     res.status(200).end();
 };
 
-<<<<<<< HEAD
+
 exports.verifyUser =(req,res) => {
     let user = new Object();
     user.email = req.body.email;
@@ -221,18 +221,17 @@ exports.verifyUser =(req,res) => {
         }
     }
     )
+}
 
 
 
-=======
-<<<<<<< Updated upstream
 // Delete all Users from the database.
 exports.deleteAll = (req, res) => {
     console.log("Testdeleteall");
     res.status(200).end();
->>>>>>> 3c3fa7ed73d414c88e5bb65cafc23d1858177db5
+
 };
-=======
+
 
 // Retrieve all Uers from the database and send it to user as JSON
 exports.getSavedRecipes = (req, res) => {
@@ -264,8 +263,6 @@ exports.getSavedRecipes = (req, res) => {
         }
     })
 };
-
->>>>>>> Stashed changes
 
 
 
