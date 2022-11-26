@@ -18,8 +18,19 @@
   // Calls the controller.findAll method to retrive all users
   router.get("/all", controller.findAll);
 
+<<<<<<< HEAD
   // Calls the controller.findId method to retrive the id of the user by email
   router.get("/userid", controller.findId);
+=======
+<<<<<<< Updated upstream
+=======
+  // Calls the controller.findId method to retrive the id of the user by email
+  router.get("/userid", controller.findId);
+
+  //Gets the user saved recipes
+  router.get("/getsavedrecipes/id", controller.getSavedRecipes);
+>>>>>>> Stashed changes
+>>>>>>> 3c3fa7ed73d414c88e5bb65cafc23d1858177db5
 
 
   //Calls the controller.findOne method to retive one user
