@@ -87,7 +87,7 @@
                 this.saveIngredients();
             },
             sendData(obj) {
-                if(sessionStorage.getItem("UUID") === 0 || sessionStorage.getItem("UUID") === null) {
+                if(sessionStorage.getItem("UUID") == null) {
                     alert("You must be logged in to use this feature");
                     return;
                 }
