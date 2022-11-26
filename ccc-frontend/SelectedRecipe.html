@@ -212,10 +212,10 @@
                     alert("Added " + this.recipeName + " to favorites list");
                     sessionStorage.setItem("newFavorites", this.recipeName);
                 },
+                backToLanding() {
+                    window.location.href = "LandingPage.html";
+                }
 
-            },
-            backToLanding() {
-                window.location.href = "LandingPage.html";
             },
             beforeMount() {
                 const b = {
