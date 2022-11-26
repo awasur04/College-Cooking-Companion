@@ -18,6 +18,7 @@
     <table v-html="instructions" id="app"></table>
     <h2>Nutrition</h2>
     <table v-html="nutrition" id="app"></table>
+    <button @click="backToLanding()">Home</button>
     </div>
 
     <script>
@@ -212,6 +213,9 @@
                     sessionStorage.setItem("newFavorites", this.recipeName);
                 },
 
+            },
+            backToLanding() {
+                window.location.href = "LandingPage.html";
             },
             beforeMount() {
                 const b = {
