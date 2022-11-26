@@ -212,20 +212,20 @@
                     alert("Added " + this.recipeName + " to favorites list");
                     sessionStorage.setItem("newFavorites", this.recipeName);
                 },
+                backToLanding() {
+                    window.location.href = "LandingPage.html";
+                }
 
-            },
-            backToLanding() {
-                window.location.href = "LandingPage.html";
             },
             beforeMount() {
                 const b = {
                     id: sessionStorage.getItem("LoadRecipe")
                 }
                 fetch("http://localhost:8080/routes/recipes/id", {
-                    method: "GET",
+                    method: "POST",
                     body: JSON.stringify(b),
                     headers: {
-                            "Content-Type": "application/json"
+                        "Content-Type": "application/json"
                     }
                 }).then(data => data.json())
                 .then(data => {

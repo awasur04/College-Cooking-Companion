@@ -58,7 +58,7 @@
   //Find recipe by id
   //Use Case: <host>/routes/recipes/id
   //Body Text id:639492
-  router.get("/recipes/id", controller.findRecipeById);
+  router.post("/recipes/id", controller.findRecipeById);
 
   //Get PDF of recipe
   //Use Case: <host>/routes/recipes/pdf
