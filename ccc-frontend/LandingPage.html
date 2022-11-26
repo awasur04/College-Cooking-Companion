@@ -154,7 +154,7 @@
             },
         },
         beforeMount(){
-            if(sessionStorage.getItem("UUID") != 0 && sessionStorage.getItem("UUID") != null) {
+            if(sessionStorage.getItem("UUID") != null) {
                 this.loggedIn = true;
                 this.userLoginStatus = "Logout";
                 this.createNewOrFavorites = "Favorites";
