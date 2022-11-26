@@ -222,7 +222,7 @@
                     id: sessionStorage.getItem("LoadRecipe")
                 }
                 fetch("http://localhost:8080/routes/recipes/id", {
-                    method: "GET",
+                    method: "POST",
                     body: JSON.stringify(b),
                     headers: {
                         "Content-Type": "application/json"
