@@ -233,33 +233,39 @@ exports.deleteAll = (req, res) => {
 };
 
 
-// Retrieve all Uers from the database and send it to user as JSON
-exports.getSavedRecipes = (req, res) => {
+//Retreive users saved recipes from database
+//id = 639492,635788,636372
+exports.getSavedRecipes = (req, res) =>
+{
     const userID = req.body.id;
-    testdb.query("SELECT * FROM savedRecipes WHERE userID = ?", [userID], (err,result) =>
-    { 
+    testdb.query("SELECT * FROM savedRecipes WHERE userID = ?", [userID], (err, result) =>
+    {
         if (err)
         {
             console.log(err)
         }
         else
-        {   let dbresult = result.toString().split(",");
+        {
+            let dbresult = inputRecipes.toString().split(",");
             let recipeList = [];
             for (let i = 0; i < dbresult.length; i++)
             {
-                recipe_controller.findRecipeById(dbresult[i], recipeList, (result) =>
+                recipeList.push(await new Promise((resolve, reject) =>
                 {
-                    if (result == undefined)
+                    recipe_controller.findRecipeById(dbresult[i], (result) =>
                     {
-                        console.log("\nUNABLE TO RETRIEVE SAVED RECIPES");
-                        recipeList.push(result);
-                    } else {
-                        res.send(result).status(200).end();
-                    }
-                })
+                        if (result == undefined)
+                        {
+                            console.log("\nUNABLE TO RETRIEVE SAVED RECIPES");
+                            reject(error);
+                        } else
+                        {
+                            resolve(result);
+                        }
+                    })
+                }));
             }
-            let returnArray = JSON.stringify(recipeList);
-            res.send(returnArray).status(503).end();
+            res.send(recipeList).status(200).end();
         }
     })
 };
