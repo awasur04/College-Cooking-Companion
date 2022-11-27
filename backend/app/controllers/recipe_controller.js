@@ -295,9 +295,12 @@ function getInstructions(recipeId)
 				//Format our data response chunk into json format
 				const jsonData = JSON.parse(responseData);
 
-				for (let j = 0; j < jsonData[0].steps.length; j++)
+				if (jsonData[0].steps != undefined)
 				{
-					recipeInstructions[j] = jsonData[0].steps[j].step;
+					for (let j = 0; j < jsonData[0].steps.length; j++)
+					{
+						recipeInstructions[j] = jsonData[0].steps[j].step;
+					}
 				}
 				resolve(recipeInstructions);
 			});

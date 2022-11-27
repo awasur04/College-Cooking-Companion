@@ -16,9 +16,8 @@
   // Calls the controller.findId method to retrive the id of the user by email
   router.get("/userid", controller.findId);
 
-  //Gets the user saved recipes
-  router.get("/getsavedrecipes/id", controller.getSavedRecipes);
->>>>>>> Stashed changes
+//Gets the user saved recipes
+router.get("/getsavedrecipes/id", controller.testSavedRecipes);
 
   // Retrieve a single Tutorial with id
   router.get("/getoneuser/id", controller.findOne);
