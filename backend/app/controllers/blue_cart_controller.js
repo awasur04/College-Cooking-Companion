@@ -49,37 +49,41 @@ function getBlueCartItem(item){
 
 }
 
-//testing block
-const params = {
-  api_key: apiConfig.BLUECARTAPI.API_KEY,
-  search_term: "honey",
-  type: "search"
+exports.findItems = (item) =>{
+  (getBlueCartItem(item));
 }
 
-// make the http GET request to BlueCart API
-axios.get('https://api.bluecartapi.com/request', { params })
-.then(response => {
+// //testing block
+// const params = {
+//   api_key: apiConfig.BLUECARTAPI.API_KEY,
+//   search_term: "honey",
+//   type: "search"
+// }
 
-    // store and print the JSON response from BlueCart API
-    responseArr = response.data.search_results;
-    console.log(JSON.stringify(response.data, 0, 2));
-    resultArr = [];
+// // make the http GET request to BlueCart API
+// axios.get('https://api.bluecartapi.com/request', { params })
+// .then(response => {
 
-    //storing the result in a formatted array
-    for (let i = 0; i < 6; i++) {
-        itemName = responseArr[i].product.title;
-        description = responseArr[i].product.description;
-        if(description == undefined){
-          description = "No description provided";
-        }
-        image = responseArr[i].product.main_image;
-        link = responseArr[i].product.link;
-        resultArr[i] = new Blue_Cart_Item(itemName, description, image, link);
-    }
+//     // store and print the JSON response from BlueCart API
+//     responseArr = response.data.search_results;
+//     console.log(JSON.stringify(response.data, 0, 2));
+//     resultArr = [];
 
-}).catch(error => {
+//     //storing the result in a formatted array
+//     for (let i = 0; i < 6; i++) {
+//         itemName = responseArr[i].product.title;
+//         description = responseArr[i].product.description;
+//         if(description == undefined){
+//           description = "No description provided";
+//         }
+//         image = responseArr[i].product.main_image;
+//         link = responseArr[i].product.link;
+//         resultArr[i] = new Blue_Cart_Item(itemName, description, image, link);
+//     }
 
-  // catch and print the error
-  console.log(error);
+// }).catch(error => {
 
-})
+//   // catch and print the error
+//   console.log(error);
+
+// })
