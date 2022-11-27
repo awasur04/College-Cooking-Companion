@@ -6,60 +6,116 @@ const Blue_Cart_Item = require("../models/blue_cart_item.js");
 
 // Given the missing item, this function will return the result of a
 // BlueCart search with the first 5 items
-function getBlueCartItem(item){
+// function getBlueCartItem(item){
 
-  // set up the request parameters
-  const params = {
-  api_key: apiConfig.BLUECARTAPI.API_KEY,
-  search_term: item.toString(),
-  type: "search"
+//   // set up the request parameters
+//   const params = {
+//   api_key: apiConfig.BLUECARTAPI.API_KEY,
+//   search_term: item.toString(),
+//   type: "search"
 
-  }
+//   }
 
-  console.log("get blue cart items running...");
-  resultArr = new Array(5);
+//   console.log("get blue cart items running...");
+//   resultArr = new Array(5);
 
-  //Making the API request
-  axios.get('https://api.bluecartapi.com/request', { params })
-  .then(response => {
+//   //Making the API request
+//   axios.get('https://api.bluecartapi.com/request', { params })
+//   .then(response => {
   
-      // store and print the JSON response from BlueCart API
-      responseArr = response.data.search_results;
-      //console.log(JSON.stringify(response.data, 0, 2));
+//       // store and print the JSON response from BlueCart API
+//       responseArr = response.data.search_results;
+//       //console.log(JSON.stringify(response.data, 0, 2));
       
   
-      //storing the result in a formatted array
-      for (let i = 0; i < 6; i++) {
-          itemName = responseArr[i].product.title;
-          description = responseArr[i].product.description;
-          //Not every item has a description
-          if(description == undefined){
-            description = "No description provided";
-          }
-          image = responseArr[i].product.main_image;
-          link = responseArr[i].product.link;
-          resultArr[i] = new Blue_Cart_Item(itemName, description, image, link);
+//       //storing the result in a formatted array
+//       for (let i = 0; i < 6; i++) {
+//           itemName = responseArr[i].product.title;
+//           description = responseArr[i].product.description;
+//           //Not every item has a description
+//           if(description == undefined){
+//             description = "No description provided";
+//           }
+//           image = responseArr[i].product.main_image;
+//           link = responseArr[i].product.link;
+//           resultArr[i] = new Blue_Cart_Item(itemName, description, image, link);
+//       }
+
+//       console.log("result array built");
+//       console.log(JSON.stringify(resultArr));
+
+//       return (JSON.stringify(resultArr));
+  
+//   }).catch(error => {
+  
+//     // catch and print the error
+//     console.log(error);
+  
+//   })
+
+//   return (JSON.stringify(resultArr));
+
+// }
+
+const getBlueCartItem = (item) =>
+{
+  return new Promise((resolve, reject) => {
+
+    const params = {
+      api_key: apiConfig.BLUECARTAPI.API_KEY,
+      search_term: item.toString(),
+      type: "search"
+    
       }
 
-      console.log("result array built");
-      for (let i = 0; i < resultArr.length; i++){
-        console.log(JSON.stringify(resultArr[i]));
-      }
+    console.log("get blue cart items running...");
+    resultArr = new Array(5);
+    success = false;
+    
+    axios.get('https://api.bluecartapi.com/request', { params })
+    .then(response => {
+
+        // store and print the JSON response from BlueCart API
+        responseArr = response.data.search_results;
+        //console.log(JSON.stringify(response.data, 0, 2));
+        
+
+        //storing the result in a formatted array
+        for (let i = 0; i < 6; i++) {
+            itemName = responseArr[i].product.title;
+            description = responseArr[i].product.description;
+            //Not every item has a description
+            if(description == undefined){
+              description = "No description provided";
+            }
+            image = responseArr[i].product.main_image;
+            link = responseArr[i].product.link;
+            resultArr[i] = new Blue_Cart_Item(itemName, description, image, link);
+        }
+
+        success = true;
+        console.log("result array built");
+        console.log(JSON.stringify(resultArr));
+        resolve(resultArr);
   
   }).catch(error => {
   
     // catch and print the error
     console.log(error);
+    return error;
   
-  })
+  }).then((error) => {
+    reject(error);
+  });
 
-  return resultArr;
-
+  });
 }
 
-exports.findItems = (item) =>{
-  console.log("findItems executed");
-  return (getBlueCartItem(item));
+exports.findItems = async (item,itemsFound) =>{
+  console.log("findItems executed for item : " + item);
+  temp = await getBlueCartItem(item);
+  console.log("temp is " + temp);
+  itemsFound(temp);
 }
 
 // //testing block
