@@ -342,15 +342,19 @@ exports.getRecipePDF = (req, res) =>
 //Items = "Honey"
 exports.findItems = (req, res) =>
 {
-    let items = req.body.items;
+    //let items = req.body.items;
+    console.log("controller called");
+    items = "honey";
 
     if (items == undefined)
     {
-        res.send("No items specified").status(400).end();
+        res.send("No items specified" + " req.body: " + req.body + " items: " +items ).status(400).end();
         return;
     }
 
-    recipe_controller.findItems(items, (result) =>
+    console.log("about to find items");
+
+    blue_cart_controller.findItems(items, (result) =>
     {
         if (result == undefined)
         {

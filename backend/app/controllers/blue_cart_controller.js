@@ -16,14 +16,17 @@ function getBlueCartItem(item){
 
   }
 
+  console.log("get blue cart items running...");
+  resultArr = new Array(5);
+
   //Making the API request
   axios.get('https://api.bluecartapi.com/request', { params })
   .then(response => {
   
       // store and print the JSON response from BlueCart API
       responseArr = response.data.search_results;
-      console.log(JSON.stringify(response.data, 0, 2));
-      resultArr = [];
+      //console.log(JSON.stringify(response.data, 0, 2));
+      
   
       //storing the result in a formatted array
       for (let i = 0; i < 6; i++) {
@@ -36,6 +39,11 @@ function getBlueCartItem(item){
           image = responseArr[i].product.main_image;
           link = responseArr[i].product.link;
           resultArr[i] = new Blue_Cart_Item(itemName, description, image, link);
+      }
+
+      console.log("result array built");
+      for (let i = 0; i < resultArr.length; i++){
+        console.log(JSON.stringify(resultArr[i]));
       }
   
   }).catch(error => {
@@ -50,7 +58,8 @@ function getBlueCartItem(item){
 }
 
 exports.findItems = (item) =>{
-  (getBlueCartItem(item));
+  console.log("findItems executed");
+  return (getBlueCartItem(item));
 }
 
 // //testing block

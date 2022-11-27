@@ -1,16 +1,15 @@
 module.exports =
 {
 	BLUECARTAPI:{
-		API_KEY: "",
+		API_KEY: "520C69C4F08848A5984921A32856F81C",
 		//Kole's Key : "520C69C4F08848A5984921A32856F81C",
 		HOST: "api.spoonacular.com",
-
+		ITEMS_ENDPOINT: '/items'
 	},
 
 	SPOONACULAR:
 	{
-		API_KEY: "5feebd1613c646088af455c537e7f4fe", // Brian's key
-		// API_KEY: "",
+		API_KEY: "",
 		HOST: "api.spoonacular.com",
 		RECIPES: '/recipes/',
 		FIND_BY_INGREDIENTS: "findByIngredients",
