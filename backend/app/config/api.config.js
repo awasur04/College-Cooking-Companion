@@ -3,7 +3,6 @@ module.exports =
 	BLUECARTAPI:{
 		API_KEY: "520C69C4F08848A5984921A32856F81C",
 		//Kole's Key : "520C69C4F08848A5984921A32856F81C",
-		HOST: "api.spoonacular.com",
 		ITEMS_ENDPOINT: '/items'
 	},
 
