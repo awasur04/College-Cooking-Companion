@@ -65,4 +65,6 @@
   //Body Text id:639492
   router.get("/recipes/pdf", controller.getRecipePDF);
 
+  router.get("/items", controller.findItems);
+
   module.exports = router;

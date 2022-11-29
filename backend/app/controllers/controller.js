@@ -7,6 +7,7 @@
  * 
  */
 const recipe_controller = require("../controllers/recipe_controller");
+const blue_cart_controller = require("../controllers/blue_cart_controller");
 const mysql = require("mysql");
 const bcrypt = require('bcrypt');
 const testdb = mysql.createConnection({
@@ -377,4 +378,32 @@ exports.getRecipePDF = (req, res) =>
             res.send(result).status(200).end();
         }
     })
+};
+
+//Sample body input
+//Items = "Honey"
+exports.findItems = (req, res) =>
+{
+    let items = req.body.items;
+    console.log("controller called");
+    
+
+    if (items == undefined)
+    {
+        res.send("No items specified" + " req.body: " + req.body + " items: " +items ).status(400).end();
+        return;
+    }
+
+    console.log("about to find items");
+
+    blue_cart_controller.findItems(items, (result) =>
+    {
+        if (result == undefined)
+        {
+            res.send("Unable to find recipes").status(503).end();
+        } else {
+            res.send(result).status(200).end();
+        }
+    })
+    
 };

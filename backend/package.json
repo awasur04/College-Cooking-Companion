@@ -10,10 +10,11 @@
     "nodejs",
     "express",
     "mysql",
+    "sequelize",
     "rest",
     "api"
   ],
-  "author": "Adam, Brian, David, Alonoso, Kole",
+  "author": "Adam, Brian, David, Alonso, Kole",
   "license": "ISC",
   "dependencies": {
     "bcrypt": "^5.1.0",
