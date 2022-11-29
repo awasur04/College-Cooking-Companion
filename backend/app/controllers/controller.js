@@ -342,9 +342,9 @@ exports.getRecipePDF = (req, res) =>
 //Items = "Honey"
 exports.findItems = (req, res) =>
 {
-    //let items = req.body.items;
+    let items = req.body.items;
     console.log("controller called");
-    items = "honey";
+    
 
     if (items == undefined)
     {
