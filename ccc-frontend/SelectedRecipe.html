@@ -229,9 +229,9 @@
                     }
                 }).then(data => data.json())
                 .then(data => {
+                    console.log(data);
                     this.base = data;
-                })
-                this.recipeName = this.base.title;
+                    this.recipeName = this.base.title;
                 this.base.instructions.forEach((i) => {
                     this.instructions += "<tr><td>";
                     // this.instructions += "<p>";
@@ -255,6 +255,8 @@
                 this.nutrition += "<tr><td>Sodium</td><td>" + this.base.nutrition.Sodium.Amount + "</td></tr>";
                 this.nutrition += "<tr><td>Protein</td><td>" + this.base.nutrition.Protein.Amount + "</td></tr>";
                 this.nutrition += "<tr><td>Vitamin A</td><td>" + this.base.nutrition.Vitamin_A.Amount + "</td></tr>";
+                })
+                
             }
         })
     </script>
