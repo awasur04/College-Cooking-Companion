@@ -246,6 +246,26 @@
                         this.ingredients += i.amount;
                         this.ingredients += "</td></tr>";
                     })
+                    this.base.missingIngredients.forEach((i) => {
+                        const missedIngredient = {
+                            items: i.name
+                        }
+                        fetch("http://localhost:8080/routes/recipes/id", {
+                            method: "GET",
+                            body: JSON.stringify(missedIngredient),
+                            headers: {
+                                "Content-Type": "application/json"
+                            }
+                        }).then(shopping => shopping.json())
+                        .then(shopping => {
+                            this.ingredients += "<tr><td>";
+                            this.ingredients += "<a href=" + shopping.result + ">" + i.name + "</a>";
+                            this.ingredients += "</td><td>";
+                            this.ingredients += i.amount;
+                            this.ingredients += "</td></tr>";
+                            
+                        })
+                    })
                     this.nutrition += "<tr><td>Calories</td><td>" + this.base.nutrition.Calories.Amount + "</td></tr>";
                     this.nutrition += "<tr><td>Fat</td><td>" + this.base.nutrition.Fat.Amount + "</td></tr>";
                     this.nutrition += "<tr><td>Staturated Fat</td><td>" + this.base.nutrition.Saturated_Fat.Amount + "</td></tr>";
