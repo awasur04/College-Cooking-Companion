@@ -259,7 +259,7 @@
                         }).then(shopping => shopping.json())
                         .then(shopping => {
                             this.ingredients += "<tr><td>";
-                            this.ingredients += "<a href=" + shopping.result + ">" + i.name + "</a>";
+                            this.ingredients += "<a href=" + shopping.link + ">" + i.name + "</a>";
                             this.ingredients += "</td><td>";
                             this.ingredients += i.amount;
                             this.ingredients += "</td></tr>";
