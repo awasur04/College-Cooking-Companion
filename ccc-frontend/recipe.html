@@ -415,7 +415,11 @@
                 updateMessage() {
                     this.rows = "";
                     this.getRecipes().forEach((i) => {
-                        this.addRow(i);
+                        if(i.missingIngredientCount != 0 && sessionStorage.getItem("free")) {
+                            // Don't add if there are missing items and user selected free
+                        } else {
+                            this.addRow(i);
+                        }
                     })
                     this.addEventListener();
                 },
