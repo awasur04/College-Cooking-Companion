@@ -232,29 +232,29 @@
                     console.log(data);
                     this.base = data;
                     this.recipeName = this.base.title;
-                this.base.instructions.forEach((i) => {
-                    this.instructions += "<tr><td>";
-                    // this.instructions += "<p>";
-                    this.instructions += i;
-                    // this.instructions += "</p>";
-                    this.instructions += "</td></tr>";
-                })
-                this.base.ownedIngredients.forEach((i) => {
-                    this.ingredients += "<tr><td>";
-                    this.ingredients += i.name;
-                    this.ingredients += "</td><td>";
-                    this.ingredients += i.amount;
-                    this.ingredients += "</td></tr>";
-                })
-                this.nutrition += "<tr><td>Calories</td><td>" + this.base.nutrition.Calories.Amount + "</td></tr>";
-                this.nutrition += "<tr><td>Fat</td><td>" + this.base.nutrition.Fat.Amount + "</td></tr>";
-                this.nutrition += "<tr><td>Staturated Fat</td><td>" + this.base.nutrition.Saturated_Fat.Amount + "</td></tr>";
-                this.nutrition += "<tr><td>Carbohydrates</td><td>" + this.base.nutrition.Carbohydrates.Amount + "</td></tr>";
-                this.nutrition += "<tr><td>Sugar</td><td>" + this.base.nutrition.Sugar.Amount + "</td></tr>";
-                this.nutrition += "<tr><td>Cholesterol</td><td>" + this.base.nutrition.Cholesterol.Amount + "</td></tr>";
-                this.nutrition += "<tr><td>Sodium</td><td>" + this.base.nutrition.Sodium.Amount + "</td></tr>";
-                this.nutrition += "<tr><td>Protein</td><td>" + this.base.nutrition.Protein.Amount + "</td></tr>";
-                this.nutrition += "<tr><td>Vitamin A</td><td>" + this.base.nutrition.Vitamin_A.Amount + "</td></tr>";
+                    this.base.instructions.forEach((i) => {
+                        this.instructions += "<tr><td>";
+                        // this.instructions += "<p>";
+                        this.instructions += i;
+                        // this.instructions += "</p>";
+                        this.instructions += "</td></tr>";
+                    })
+                    this.base.ownedIngredients.forEach((i) => {
+                        this.ingredients += "<tr><td>";
+                        this.ingredients += i.name;
+                        this.ingredients += "</td><td>";
+                        this.ingredients += i.amount;
+                        this.ingredients += "</td></tr>";
+                    })
+                    this.nutrition += "<tr><td>Calories</td><td>" + this.base.nutrition.Calories.Amount + "</td></tr>";
+                    this.nutrition += "<tr><td>Fat</td><td>" + this.base.nutrition.Fat.Amount + "</td></tr>";
+                    this.nutrition += "<tr><td>Staturated Fat</td><td>" + this.base.nutrition.Saturated_Fat.Amount + "</td></tr>";
+                    this.nutrition += "<tr><td>Carbohydrates</td><td>" + this.base.nutrition.Carbohydrates.Amount + "</td></tr>";
+                    this.nutrition += "<tr><td>Sugar</td><td>" + this.base.nutrition.Sugar.Amount + "</td></tr>";
+                    this.nutrition += "<tr><td>Cholesterol</td><td>" + this.base.nutrition.Cholesterol.Amount + "</td></tr>";
+                    this.nutrition += "<tr><td>Sodium</td><td>" + this.base.nutrition.Sodium.Amount + "</td></tr>";
+                    this.nutrition += "<tr><td>Protein</td><td>" + this.base.nutrition.Protein.Amount + "</td></tr>";
+                    this.nutrition += "<tr><td>Vitamin A</td><td>" + this.base.nutrition.Vitamin_A.Amount + "</td></tr>";
                 })
                 
             }
