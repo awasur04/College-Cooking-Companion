@@ -162,7 +162,7 @@
                     id: sessionStorage.getItem("UUID")
                 }
                 fetch("http://localhost:8080/routes/getoneuser/id", {
-                    method: "GET", // This may need to be converted to a POST to work correctly 
+                    method: "POST", // This may need to be converted to a POST to work correctly 
                     body: JSON.stringify(b),
                     headers: {
                         "Content-Type": "application/json"

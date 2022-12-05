@@ -27,7 +27,7 @@
 
 
   //Calls the controller.findOne method to retive one user
-  router.get("/getoneuser/id", controller.findOne);
+  router.post("/getoneuser/id", controller.findOne);
 
   //Calls the controller.findOne method to Update on user
   router.put("/updateoneuser/id", controller.update);
