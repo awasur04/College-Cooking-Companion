@@ -8,7 +8,7 @@ module.exports =
 
 	SPOONACULAR:
 	{
-		API_KEY: "",
+		API_KEY: "5feebd1613c646088af455c537e7f4fe",
 		HOST: "api.spoonacular.com",
 		RECIPES: '/recipes/',
 		FIND_BY_INGREDIENTS: "findByIngredients",
