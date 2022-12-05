@@ -78,6 +78,10 @@
             saveIngredients() {
                 var ing = document.getElementById("ingredientsField").value;
                 this.validateIngredients(ing);
+                const toSend = {
+                    ingredients: ing,
+                    id: sessionStorage.getItem("UUID")
+                }
                 this.sendData(ing);
             },
             validateIngredients(ingredients) {
