@@ -79,9 +79,10 @@
                 var ing = document.getElementById("ingredientsField").value;
                 print("These are the ingredients from user", ing);
                 this.validateIngredients(ing);
-
-                ing ={ingredients: ing,
-                        id:4}
+                const toSend = {
+                    ingredients: ing,
+                    id: sessionStorage.getItem("UUID")
+                }
                 this.sendData(ing);
             },
             validateIngredients(ingredients) {
