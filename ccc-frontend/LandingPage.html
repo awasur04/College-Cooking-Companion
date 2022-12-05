@@ -77,13 +77,13 @@
             },
             saveIngredients() {
                 var ing = document.getElementById("ingredientsField").value;
-                print("These are the ingredients from user", ing);
+                //print("These are the ingredients from user", ing);
                 this.validateIngredients(ing);
                 const toSend = {
                     ingredients: ing,
                     id: sessionStorage.getItem("UUID")
                 }
-                this.sendData(ing);
+                this.sendData(toSend);
             },
             validateIngredients(ingredients) {
                 // TODO Implement at a later date
@@ -182,7 +182,9 @@
                         console.log("Bad call");
                     } else {
                         console.log("Good call");
-                        this.ingredientsList = data.ingredients // Set to relevant data from DB
+                        console.log("This is the data",data);
+                        this.ingredientsList = data[0].ingredients // Set to relevant data from DB
+                    
                     }
                 })
             } else {
