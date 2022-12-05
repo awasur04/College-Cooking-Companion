@@ -234,17 +234,22 @@ function getIngredients(usedIngredients, missingIngredients)
 {
 	let ownedIngredientList = [];
 	let missingIngredientList = [];
-
-	for (let i = 0; i < usedIngredients.length; i++)
+	if (usedIngredients != undefined)
 	{
-		let ing = new Ingredient(usedIngredients[i].id, usedIngredients[i].name, usedIngredients[i].image, usedIngredients[i].amount + " " + usedIngredients[i].unit, true);
-		ownedIngredientList.push(ing);
+		for (let i = 0; i < usedIngredients.length; i++)
+		{
+			let ing = new Ingredient(usedIngredients[i].id, usedIngredients[i].name, usedIngredients[i].image, usedIngredients[i].amount + " " + usedIngredients[i].unit, true);
+			ownedIngredientList.push(ing);
+		}
 	}
-
-	for (let i = 0; i < missingIngredients.length; i++)
+	
+	if (missingIngredients != undefined)
 	{
-		let ing = new Ingredient(missingIngredients[i].id, missingIngredients[i].name, missingIngredients[i].image, missingIngredients[i].amount + " " + missingIngredients[i].unit, false);
-		missingIngredientList.push(ing);
+		for (let i = 0; i < missingIngredients.length; i++)
+		{
+			let ing = new Ingredient(missingIngredients[i].id, missingIngredients[i].name, missingIngredients[i].image, missingIngredients[i].amount + " " + missingIngredients[i].unit, false);
+			missingIngredientList.push(ing);
+		}
 	}
 
 	return [ownedIngredientList, missingIngredientList];
@@ -295,7 +300,7 @@ function getInstructions(recipeId)
 				//Format our data response chunk into json format
 				const jsonData = JSON.parse(responseData);
 
-				if (jsonData[0].steps != undefined)
+				if (jsonData != undefined)
 				{
 					for (let j = 0; j < jsonData[0].steps.length; j++)
 					{

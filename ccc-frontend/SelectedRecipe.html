@@ -187,7 +187,45 @@
             "Percent_Of_Daily_Needs": 1.14
         }
     }
-                }
+                },
+                bluecart: [
+    {
+        "name": "Great Value Honey, 12 oz Plastic Bear Bottle",
+        "description": "<li>100% honey</li><li>Natural sweetener</li><li>Zero calories per serving</li>",
+        "image": "https://i5.walmartimages.com/asr/0805991d-0969-4cf7-9f1d-add72d3542e8.f0a9d7b663df6ad3702e64872c483d0c.jpeg?odnHeight=180&odnWidth=180&odnBg=FFFFFF",
+        "link": "https://www.walmart.com/ip/Great-Value-Honey-12-oz-Plastic-Bear-Bottle/20647992?athbdg=L1200"
+    },
+    {
+        "name": "Great Value Organic Strained Raw Honey, 16 oz Inverted Plastic Bottle",
+        "description": "<li>Natural sweetener</li><li>Great for tea, oatmeal, baked goods, yogurt, cottage cheese and more</li><li>Certified organic</li>",
+        "image": "https://i5.walmartimages.com/asr/06ae29ab-9339-49f8-b2ef-96a320fe48fe.17792653f22cbebcccbf13c847d110b8.jpeg?odnHeight=180&odnWidth=180&odnBg=ffffff",
+        "link": "https://www.walmart.com/ip/Great-Value-Organic-Strained-Raw-Honey-16-oz-Inverted-Plastic-Bottle/51881464"
+    },
+    {
+        "name": "Great Value Raw Honey, 16 oz Inverted Plastic Bottle",
+        "description": "<li>Natural Sweetener</li><li>100% Honey</li><li>Squeeze bottle makes it easy to drizzle on all your favorite foods</li><li>Gluten Free</li>",
+        "image": "https://i5.walmartimages.com/asr/38a70aca-79ca-4010-9c84-5707827f455e.18153bd9ca2bb7f70cbc828eb309ef46.jpeg?odnHeight=180&odnWidth=180&odnBg=ffffff",
+        "link": "https://www.walmart.com/ip/Great-Value-Raw-Honey-16-oz-Inverted-Plastic-Bottle/433628197"
+    },
+    {
+        "name": "Great Value Organic Strained Raw Honey, 12 oz Inverted Plastic Bottle",
+        "description": "<li>Raw organic honey</li><li>Certified kosher</li><li>U.S. Grade A</li>",
+        "image": "https://i5.walmartimages.com/asr/0d05e02c-44d3-4fde-9d00-602220b2bc2d.e67d04871c72ece69ff17df5b06f73a9.jpeg?odnHeight=180&odnWidth=180&odnBg=ffffff",
+        "link": "https://www.walmart.com/ip/Great-Value-Organic-Strained-Raw-Honey-12-oz-Inverted-Plastic-Bottle/495963399"
+    },
+    {
+        "name": "Local Hive, Raw & Unfiltered, 100% U.S. Midwest Honey Blend, 16oz",
+        "description": "<li>100% U.S. Honey</li><li>Straight from the hive, nothing added: nothing removed</li><li>Portion of proceeds from every bottle sold protects pollinators</li>",
+        "image": "https://i5.walmartimages.com/asr/9a64d86c-7a0a-428d-aedc-bdd354537acc.4a0ff7ab31ec478adcb18c67c63a8cc9.jpeg?odnHeight=180&odnWidth=180&odnBg=ffffff",
+        "link": "https://www.walmart.com/ip/Local-Hive-Raw-Unfiltered-100-U-S-Midwest-Honey-Blend-16oz/46583034"
+    },
+    {
+        "name": "Pure 'N Simple 100% Pure Honey, 80 oz  Plastic Bottle",
+        "description": "<div><p class=\"msonormal\"><span style=\"color:black\">? 100% honey with no added ingredients or preservatives</span></p><p class=\"msonormal\"><span style=\"color:black\">? Sweetly robust flavor and aroma</span></p><p class=\"msonormal\"></p></div>",
+        "image": "https://i5.walmartimages.com/asr/2ee26b5c-291b-46e2-9ac5-339f8deecbb0_1.5c5575ed46269733d68c806e49316911.jpeg?odnHeight=180&odnWidth=180&odnBg=FFFFFF",
+        "link": "https://www.walmart.com/ip/Pure-N-Simple-100-Pure-Honey-80-oz-Plastic-Bottle/19857743"
+    }
+]
 
             },
             methods: {
@@ -240,13 +278,24 @@
                         this.instructions += "</td></tr>";
                     })
                     this.base.ownedIngredients.forEach((i) => {
-                        this.ingredients += "<tr><td>";
-                        this.ingredients += i.name;
-                        this.ingredients += "</td><td>";
-                        this.ingredients += i.amount;
-                        this.ingredients += "</td></tr>";
+                        if(i.name!="honey") {
+                            this.ingredients += "<tr><td>";
+                            this.ingredients += i.name;
+                            this.ingredients += "</td><td>";
+                            this.ingredients += i.amount;
+                            this.ingredients += "</td></tr>";
+                        } else {
+                            this.ingredients += "<tr><td>";
+                            this.ingredients += "<a href=" + this.bluecart[0].link + ">" + i.name + "</a>";
+                            this.ingredients += "</td><td>";
+                            this.ingredients += i.amount;
+                            this.ingredients += "</td></tr>"; 
+                        }
+
                     })
                     this.base.missingIngredients.forEach((i) => {
+                        console.log("Missing ingredient ");
+                        console.log(i);
                         const missedIngredient = {
                             items: i.name
                         }
