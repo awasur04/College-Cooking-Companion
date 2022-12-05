@@ -48,21 +48,46 @@
                 console.log(info);
 
                 const port = 8080;
-                let valid = false;
+                var valid = false;
                 fetch("http://localhost:8080/routes/verifyUser", {
                     method: "POST",
                     body: JSON.stringify(info),
                     headers: {
                         "Content-Type": "application/json"
                     }
-                }).then(res => res.json)
+                }).then(res => res.json())
                 .then(res => {
+                    //console.log(res.verification);
                     if(res.length === 0) {
                         console.log("Bad call");
                     } else {
                         console.log("Good call");
-                        if(res.verification == true) {
-                            valid = true;
+                        //sessionStorage.setItem("UUID", 4);
+                        //console.log(res.verification + " / " +typeof res.verification);
+                        //console.log(res.verification === true)
+                        if(res.verification === true) {
+                            const b = {
+                            email: email
+                        }
+                            console.log("Good call pt.2");
+                            // this.loggedInUUID(4);
+                            // sessionStorage.setItem("UUID", 4);
+                            fetch("http://localhost:8080/routes/userid", {
+                        method: "POST",
+                        body: JSON.stringify(b),
+                        headers: {
+                            "Content-Type": "application/json"
+                        }
+                    }).then(data => data.json())
+                    .then(data => {
+                        console.log(data);
+                        // Assuming a good server call since the previous call was valid
+                        console.log(data.id);
+                        this.loggedInUUID(data[0].id); // TODO Verify this is the correct JSON key
+                    })
+                    window.location.href = "LandingPage.html";
+                        } else { 
+                            alert("Invalid login or could not reach server");
                         }
                     }
                 })
@@ -71,29 +96,30 @@
                     return;
                 })
 
-                const b = {
-                    email: email
-                }
-                if(valid) {
-                    fetch("http://localhost:8080/routes/userid", {
-                        method: "GET",
-                        body: JSON.stringify(b),
-                        headers: {
-                            "Content-Type": "application/json"
-                        }
-                    }).then(data => data.json())
-                    .then(data => {
-                        // Assuming a good server call since the previous call was valid
-                        this.loggedInUUID(data.result); // TODO Verify this is the correct JSON key
-                    })
-                    window.location.href = "LandingPage.html";
-                } else {
-                    alert("Invalid login or could not reach server");
-                }
+                // const b = {
+                //     email: email
+                // }
+                // console.log(valid);
+                
+                // if(true) {
+                //     fetch("http://localhost:8080/routes/userid", {
+                //         method: "GET",
+                //         body: JSON.stringify(b),
+                //         headers: {
+                //             "Content-Type": "application/json"
+                //         }
+                //     }).then(data => data.json())
+                //     .then(data => {
+                //         // Assuming a good server call since the previous call was valid
+                //         this.loggedInUUID(data.result); // TODO Verify this is the correct JSON key
+                //     })
+                //     window.location.href = "LandingPage.html";
+                // } else {
+                //     alert("Invalid login or could not reach server");
+                // }
             },
             loggedInUUID(uuid) {
                 sessionStorage.setItem("UUID", uuid);
-                return 0;
             },
             isValidEmailFormat(email) {
                 var pattern = /^[\w%\+\-]+(\.[\w%\+\-]+)*@[\w%\+\-]+(\.[\w%\+\-]+)+$/;

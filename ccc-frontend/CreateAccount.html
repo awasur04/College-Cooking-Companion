@@ -78,29 +78,44 @@
                     }
                 }).then(res => {
                     if(res.ok) {
+                        const b = {
+                            email: enteredEmail
+                        }
                         console.log("Good request");
-                        valid = true;
-                    } else {
-                        console.log("Bad request");
-                    }
-                })
-                
-                if(valid === true) {
-                    fetch("http://localhost:8080/routes/userid", {
-                        method: "GET",
+                        fetch("http://localhost:8080/routes/userid", {
+                        method: "POST",
                         body: JSON.stringify(b),
                         headers: {
                             "Content-Type": "application/json"
                         }
                     }).then(data => data.json())
                     .then(data => {
+                        console.log("Logging in")
                         // Assuming a good server call since the previous call was valid
-                        this.loggedInUUID(data.result); // TODO Verify this is the correct JSON key
+                        this.loggedInUUID(data[0].id); // TODO Verify this is the correct JSON key
+                        window.location.href = "LandingPage.html";
                     })
-                    window.location.href = "LandingPage.html";
-                } else {
-                    alert("Could not reach register server");
-                }
+                    } else {
+                        console.log("Bad request");
+                    }
+                })
+                
+                // if(valid === true) {
+                //     fetch("http://localhost:8080/routes/userid", {
+                //         method: "GET",
+                //         body: JSON.stringify(b),
+                //         headers: {
+                //             "Content-Type": "application/json"
+                //         }
+                //     }).then(data => data.json())
+                //     .then(data => {
+                //         // Assuming a good server call since the previous call was valid
+                //         this.loggedInUUID(data.result); // TODO Verify this is the correct JSON key
+                //     })
+                //     window.location.href = "LandingPage.html";
+                // } else {
+                //     alert("Could not reach register server");
+                // }
             }
         }
     })

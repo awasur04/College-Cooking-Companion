@@ -20,7 +20,7 @@
 
 
   // Calls the controller.findId method to retrive the id of the user by email
-  router.get("/userid", controller.findId);
+  router.post("/userid", controller.findId);
 
   //Gets the user saved recipes
   router.get("/getsavedrecipes/id", controller.getSavedRecipes);
@@ -43,7 +43,7 @@
   router.delete("/deleteoneuser/id", controller.delete);
 
   // Calls the controller.verifyUser method to retrive a boolean in JSON to see if user exsit true if yes and false if user does not exsit
-  router.get("/verifyUser", controller.verifyUser);
+  router.post("/verifyUser", controller.verifyUser);
 
 
 

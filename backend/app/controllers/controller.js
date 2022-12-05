@@ -202,7 +202,7 @@ exports.findId = (req, res) =>
             console.log("Success");
             let dbresult = JSON.stringify(result);
             res.send(dbresult).status(200).end();
-
+            
         }
     })
 };
@@ -248,7 +248,7 @@ exports.verifyUser = (req, res) =>
             const compareResult = bcrypt.compareSync(user.password, hash,)
             console.log("compare result ", compareResult)
             flag.verification = compareResult
-
+            
             res.send(flag).status(200).end();
 
         }
