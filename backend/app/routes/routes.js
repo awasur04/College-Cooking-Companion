@@ -36,7 +36,7 @@
   router.put("/updateusersavedrecipes", controller.updateSavedRecipes);
 
   //Calls the controller.findOne method to Update on user
-  router.put("/updateusersavedingredients", controller.updateSavedRIngredients);
+  router.post("/updateusersavedingredients", controller.updateSavedRIngredients);
 
 
   //Calls the controller.findOne method to delete one user
